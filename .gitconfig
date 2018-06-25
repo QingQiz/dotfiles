@@ -1,0 +1,13 @@
+[user]
+	name = Sofee
+	email = _s@mail.nwpu.edu.cn
+[alias]
+	co = checkout
+	st = status
+	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+	unadd = reset HEAD
+	cm = commit
+[http]
+	proxy = socks5://127.0.0.1:1080
+[https]
+	proxy = socks5://127.0.0.1:1080

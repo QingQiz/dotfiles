@@ -1,0 +1,23 @@
+[global_config]
+  putty_paste_style = True
+  scroll_tabbar = True
+  smart_copy = False
+  title_font = xos4 Terminess Powerline 7
+  title_hide_sizetext = True
+[keybindings]
+[layouts]
+  [[default]]
+    [[[child1]]]
+      parent = window0
+      type = Terminal
+    [[[window0]]]
+      parent = ""
+      type = Window
+[plugins]
+[profiles]
+  [[default]]
+    background_type = transparent
+    cursor_color = "#aaaaaa"
+    font = Monospace 14
+    scrollback_lines = 10000000
+    use_system_font = False

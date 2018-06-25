@@ -1,0 +1,9 @@
+### BEGIN DOTFILES compton ###
+compton --backend glx --vsync opengl-swc -GCb --config ~/.compton &
+### END DOTFILES compton ###
+### BEGIN DOTFILES weechat ###
+screen -DmS weechat /usr/bin/weechat &
+### END DOTFILES weechat ###
+### BEGIN DOTFILES ssh-add ###
+ssh-add &
+### END DOTFILES ssh-add ###
