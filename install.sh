@@ -43,6 +43,7 @@ install_c gcc
 install_c g++
 install_c clang
 install_n llvm
+ln_ .gitconfig
 # if ! [ -d "$script_dir/backup" ]; then
     # mkdir "$script_dir/backup"
 # fi
@@ -67,8 +68,6 @@ plugin_list2=(\
     "luochen1990/rainbow" \
     "mbbill/undotree" \
     )
-    # "Valloric/YouCompleteMe" \
-    # "jeaye/color_coded" \
 echo "config vim? (y/n)"
 read chc
 if [ "$chc" = "y" ]; then
@@ -93,7 +92,9 @@ if [ "$chc" = "y" ]; then
     echo "install color_coded? (y/n)"
     read chc
     if [ "$chc" = "y" ]; then
-        cd $script_dir/.vim/color_coded
+        cd $script_dir/.vim/vimfiles
+        git clone "https://github.com/jeaye/color_coded.git"
+        cd $script_dir/.vim/vimfiles/color_coded
         rm -f CMakeCache.txt
         if ! [ -d "$PWD/build" ]; then
             mkdir build 
@@ -109,6 +110,8 @@ if [ "$chc" = "y" ]; then
     echo "install YouCompleteMe? (y/n)"
     read chc
     if [ "$chc" = "y" ]; then
+        cd $script_dir/.vim/vimfiles
+        git clone "https://github.com/Valloric/YouCompleteMe.git"
         cd $script_dir/.vim/vimfiles/YouCompleteMe
         git submodule update --init --recursive
         ./install.py --clang-completer
@@ -130,6 +133,7 @@ if [ "$chc" = "y" ]; then
 
     echo "configing..."
     install_n zsh-syntax-highlighting
+    cd $script_dir/
     git clone https://github.com/robbyrussell/oh-my-zsh.git .oh-my-zsh
     if ! [ -d "$script_dir/.zsh" ]; then
         mkdir $script_dir/.zsh
@@ -155,6 +159,7 @@ echo "install i3? (y/n)"
 read chc
 if [ "$chc" = "y" ]; then
     echo 'installing...'
+    ln -sf $script_dir/.Xresources $script_dir/.Xdefaults
     install_n xorg-server
     install_n xorg-xinit
     install_n i3-gaps
@@ -175,8 +180,6 @@ if [ "$chc" = "y" ]; then
 
     ln_ .asoundrc
     ln_ .compton
-    ln_ .gitconfig
-    ln_ .mpd
     ln_ .Xauthority
     ln_ .Xdefaults
     ln_ .xinitrc
