@@ -64,7 +64,7 @@ font-3 = FontAwesome:pixelsize=14;2
 
 modules-left = i3 xwindow
 modules-center = mpd
-modules-right = xkeyboard wlan battery date 
+modules-right = alsa wlan battery date 
 
 tray-position = right
 tray-padding = 4
@@ -117,7 +117,7 @@ font-3 = FontAwesome:pixelsize=14;2
 
 modules-left = i3
 modules-center = networkspeedup networkspeeddown
-modules-right = alsa filesystem-slash temperature cpu memory powermenu
+modules-right = filesystem-slash temperature cpu memory powermenu
 
 tray-position = right
 tray-padding = 2

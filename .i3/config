@@ -63,7 +63,7 @@ bindsym Mod1+e layout toggle split
 bindsym Mod1+m floating toggle
 
 # change focus between tiling / floating windows
-bindsym $mod+space focus mode_toggle
+bindsym Mod1+space focus mode_toggle
 
 # focus the parent container
 # bindsym $mod+q focus parent
@@ -199,6 +199,14 @@ exec_always xset dpms 0 0 0
 
 # 更改边框样式
 bindsym Mod1+b border toggle
+
+# 触控板
+exec synclient VertScrollDelta=-66
+exec synclient CircularScrolling=1
+exec synclient TapButton1=1
+exec synclient TapButton2=3
+exec synclient TapButton3=2
+exec synclient MaxSpeed=1.5
 
 # Others
 bindsym XF86Mail exec --no-startup-id thunderbird

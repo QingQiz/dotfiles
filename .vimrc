@@ -247,7 +247,7 @@ augroup filetype_frmats " >>>>>>
       \ setlocal softtabstop=2|
       \ setlocal shiftwidth=2
 
-  au BufNewFile,BufRead *.html
+  au BufNewFile,BufRead *.html,*.php
       \ let b:AutoPairs = {"<": ">", '"': '"', "'": "'", '{': '}', '(': ')', '[': ']'}
 
   au BufNewFile,BufRead *.py,*.c,*.cc,*.cpp,*.h*.{vim,vimrc}

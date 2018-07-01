@@ -5,3 +5,5 @@ vimfiles
 
 .mpd/*
 !.mpd/mpd.conf
+
+aria2.session
