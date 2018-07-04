@@ -12,16 +12,22 @@ install_n() {
     sudo pacman -S $1 --needed
 }
 ln_() {
-    if [ -d "$HOME/$1" ]; then
-        # mv "$HOME/.config/$1" "$script_dir/backup"
-        rm -rf "$HOME/$1"
+    if [ -d "$HOME/$1" ] || [ -f "$HOME/$1" ]; then
+        if ! [ -L "$HOME/$1" ]; then
+            mv "$HOME/$1" $script_dir/backup/$1
+        else
+            rm "$HOME/$1"
+        fi
     fi
-    ln -sf $script_dir/$1 $HOME/$1
+    ln -s $script_dir/$1 $HOME/$1
 }
 ln_c() {
-    if [ -d "$HOME/.config/$1" ]; then
-        # mv "$HOME/.config/$1" "$script_dir/backup"
-        rm -rf "$HOME/.config/$1"
+    if [ -d "$HOME/.config/$1" ] || [ -f "$HOME/.config/$1" ]; then
+        if ! [ -L "$HOME/.config/$1" ]; then
+            mv "$HOME/.config/$1" $script_dir/backup/.config/$1
+        else
+            rm "$HOME/.config/$1"
+        fi
     fi
     ln -s "$script_dir/.config/$1" "$HOME/.config/"
 }
@@ -31,8 +37,10 @@ ln_c() {
 echo "recover mirrorlist? (y/n)"
 read chc
 if [ "$chc" = "y" ]; then
-    sudo cp $script_dir/archlinux/mirrirlist /etc/pacman.d/
-    sudo cp $script_dir/archlinux/pacman.config /etc/
+    sudo mv /etc/pacman.d/mirrorlist /etc/pacman.d/mirrorlist.bak
+    sudo mv /etc/pacman.conf /etc/pacman.conf.bak
+    sudo cp $script_dir/archlinux/mirrorlist /etc/pacman.d/
+    sudo cp $script_dir/archlinux/pacman.conf /etc/
     sudo pacman -Syy
 fi
 install_c yaourt
@@ -42,11 +50,13 @@ install_c git
 install_c gcc
 install_c g++
 install_c clang
-install_n llvm
 ln_ .gitconfig
-# if ! [ -d "$script_dir/backup" ]; then
-    # mkdir "$script_dir/backup"
-# fi
+if ! [ -d "$script_dir/backup" ]; then
+    mkdir "$script_dir/backup"
+    if ! [ -d "$script_dir/backup/.config" ]; then
+        mkdir "$script_dir/backup/.config"
+    fi
+fi
 #--------------------------------------------------
 # vim
 #--------------------------------------------------
@@ -93,16 +103,20 @@ if [ "$chc" = "y" ]; then
     read chc
     if [ "$chc" = "y" ]; then
         cd $script_dir/.vim/vimfiles
-        git clone "https://github.com/jeaye/color_coded.git"
-        cd $script_dir/.vim/vimfiles/color_coded
-        rm -f CMakeCache.txt
-        if ! [ -d "$PWD/build" ]; then
-            mkdir build 
+        if ! [ -d "color_coded" ]; then
+            git clone "https://github.com/jeaye/color_coded.git"
+            cd $script_dir/.vim/vimfiles/color_coded
+            rm -f CMakeCache.txt
+            if ! [ -f "color_coded.so" ]; then
+                if ! [ -d "$PWD/build" ]; then
+                    mkdir build
+                fi
+                cd build
+                cmake .. -DDOWNLOAD_CLANG=0
+                make -j && make install
+                make clean
+            fi
         fi
-        cd build
-        cmake .. -DDOWNLOAD_CLANG=0
-        make -j && make install
-        make clean
         ln -s $script_dir/.vim/syntax/color_coded.vim $script_dir/.vim/vimfiles/color_coded/after/syntax/color_coded.vim
         ln_c color_coded
     fi
@@ -111,11 +125,13 @@ if [ "$chc" = "y" ]; then
     read chc
     if [ "$chc" = "y" ]; then
         cd $script_dir/.vim/vimfiles
-        git clone "https://github.com/Valloric/YouCompleteMe.git"
-        cd $script_dir/.vim/vimfiles/YouCompleteMe
-        git submodule update --init --recursive
-        ./install.py --clang-completer
-        ln_c ycmd
+        if ! [ -d "YouCompleteMe" ]; then
+            git clone "https://github.com/Valloric/YouCompleteMe.git"
+            cd $script_dir/.vim/vimfiles/YouCompleteMe
+            git submodule update --init --recursive
+            ./install.py --clang-completer
+            ln_c ycmd
+        fi
     fi
 
     ln_ .vim
@@ -129,7 +145,9 @@ read chc
 if [ "$chc" = "y" ]; then
     echo "installing zsh..."
     install_c zsh
-    sudo chsh -s /bin/zsh
+    if [ $SHELL != "/bin/zsh" ]; then
+        chsh -s /bin/zsh
+    fi
 
     echo "configing..."
     install_n zsh-syntax-highlighting
@@ -145,8 +163,8 @@ if [ "$chc" = "y" ]; then
     git clone https://github.com/zsh-users/zsh-autosuggestions.git
     git clone https://github.com/sindresorhus/pure.git
 
-    ln -sf "$script_dir/.zsh/pure/pure.zsh" zfunctions/pure
-    ln -sf "$script_dir/.zsh/pure/async.zsh" zfunctions/async
+    ln -s "$script_dir/.zsh/pure/pure.zsh" zfunctions/pure
+    ln -s "$script_dir/.zsh/pure/async.zsh" zfunctions/async
 
     ln_ .oh-my-zsh
     ln_ .zsh
@@ -159,7 +177,7 @@ echo "install i3? (y/n)"
 read chc
 if [ "$chc" = "y" ]; then
     echo 'installing...'
-    ln -sf $script_dir/.Xresources $script_dir/.Xdefaults
+    ln -s $script_dir/.Xresources $script_dir/.Xdefaults
     install_n xorg-server
     install_n xorg-xinit
     install_n i3-gaps
@@ -202,16 +220,21 @@ fi
 #--------------------------------------------------
 # others
 #--------------------------------------------------
-echo "install aria2? (y/n)"
+echo "others??(y/n)"
 read chc
-if [ "$chc" = "y" ]; then
-    install_c aria2-fast
-    ln_c aria2
-fi
-echo "install mpd? (y/n)"
-read chc
-if [ "$chc" = "y" ]; then
-    install_c mpd
-    install_c mpc
-    ln_ .mpd
+if [ "$chc" == "y" ]; then
+    echo "install aria2? (y/n)"
+    read chc
+    if [ "$chc" = "y" ]; then
+        install_c aria2-fast
+        ln_c aria2
+    fi
+
+    echo "install mpd? (y/n)"
+    read chc
+    if [ "$chc" = "y" ]; then
+        install_c mpd
+        install_c mpc
+        ln_ .mpd
+    fi
 fi
