@@ -28,52 +28,51 @@ set rtp+=~/.vim/vimfiles/indentLine/after
 
 " set map >>>>>>
 let mapleader = " "
-nn <c-h>                  <c-w>h
-nn <c-j>                  <c-w>j
-nn <c-k>                  <c-w>k
-nn <c-l>                  <c-w>l
-nn <silent><leader>bn     :bn<CR>
-nn <silent>]b             :bn<CR>
-nn <silent><leader>bp     :bp<CR>
-nn <silent>[b             :bp<CR>
-nn <silent><leader>bd     :bd<CR>
+nn <c-h>                <c-w>h
+nn <c-j>                <c-w>j
+nn <c-k>                <c-w>k
+nn <c-l>                <c-w>l
+nn <silent>]b           :bn<CR>
+nn <silent>[b           :bp<CR>
 
-nn <silent><leader>Q      :q!<CR>
-nn <silent><leader>q      :q<CR>
-nn Q                      :q<CR>
+nn Q                    :q<CR>
 
-nn <silent><F3>           :NERDTreeToggle<CR>
-nn <silent><F2>           :TagbarToggle<CR>
+nn <silent><F3>         :NERDTreeToggle<CR>
+nn <silent><F2>         :TagbarToggle<CR>
 
-nn <silent>[<SPACE>       :<C-u>put! =repeat(nr2char(10), v:count1)<CR>
-nn <silent>]<SPACE>       :<C-u>put =repeat(nr2char(10), v:count1)<CR>
-nn <silent>[e             :<C-u>execute 'move -1-'. v:count1<CR>
-nn <silent>]e             :<C-u>execute 'move +'. v:count1<CR>
-nn <silent><leader>cl     :call Comments()<CR>
-nn <silent><F12>          :call AddHead()<CR>
-nn <silent><F5>           :w<CR>:call SmartComplier()<CR>
-nn <silent><F6>           :call RunResult()<CR>
+nn <silent>[<SPACE>     :call append(line('.') - 1, "")<CR>k
+nn <silent>]<SPACE>     :call append(line('.'), "")<CR>j
+nn <silent>[e           :move -1-1<CR>
+nn <silent>]e           :move +1<CR>
 
-ino jK                    <ESC>
-ino jk                    <ESC>
-nn <silent>gy             ggVG"+y''zz
-vn \y                     "+y
-nn \p                     "+p"
-nn \n                     :noh<CR>
-nn H                      ^
-nn L                      $
-ino <c-l>                 <right>
-ino <c-k>                 <up>
-ino <c-@>                 <nop>
+nn <silent><leader>cl   :call Comments()<CR>
+nn <silent><F5>         :w<CR>:call SmartComplier()<CR>
+nn <silent><F6>         :call RunResult()<CR>
+nn <expr>A              GoIndent()
+
+ino jK                  <ESC>
+ino jk                  <ESC>
+nn <silent>gy           ggVG"+y''zz
+vn \y                   "+y
+nn \p                   "+p"
+nn \n                   :noh<CR>
+nn H                    ^
+nn L                    $
+imap <c-l>              <right>
+imap <c-k>              <up>
+nn <up>                 <nop>
+nn <down>               <nop>
+ino <c-@>               <nop>
 " <<<<<<
 
 " set highlight >>>>>>
 colorscheme angel
-hi LineNr       ctermfg=black    ctermbg=NONE    cterm=BOLD
-hi NonText      ctermfg=234      ctermbg=NONE
-hi Search       ctermbg=NONE     ctermfg=red
-hi MatchParen   ctermbg=NONE     ctermfg=red     guibg=NONE     guifg=red
-hi YcmErrorSign ctermbg=NONE     ctermfg=red     guibg=NONE     guifg=red
+hi LineNr       ctermfg=black   ctermbg=NONE   cterm=BOLD
+hi CursorLineNr ctermbg=239     ctermfg=229     cterm=BOLD
+hi NonText      ctermfg=234     ctermbg=NONE
+hi Search       ctermbg=NONE    ctermfg=red
+hi MatchParen   ctermbg=NONE    ctermfg=red    guibg=NONE    guifg=red
+hi YcmErrorSign ctermbg=NONE    ctermfg=red    guibg=NONE    guifg=red
 hi BadWhiteSpace ctermbg=6
 
 " <<<<<<
@@ -96,7 +95,6 @@ command! Vimrc :e $HOME/.vimrc
 command! W :w !sudo tee %
 command! AddHead :call AddHead()
 command! Comments :call Comments()
-command! Compile :call SmartComplier()
 command! ColorCoded :!cp ~/.config/color_coded/.color_coded .
 command! Reload :source ~/.vimrc
 " <<<<<<
@@ -225,7 +223,14 @@ endf
 inoremap <return> <C-R>=Ulti_ExpandOrEnter()<CR>
 " <<<<<<
 
-" standardization for C >>>>>>
+" go indent >>>>>>
+fun! GoIndent()
+  if getline('.') == ""
+    return 'ddO'
+  else
+    return 'A'
+  endif
+endf
 " <<<<<<
 " <<<<<<
 
@@ -250,10 +255,17 @@ augroup filetype_frmats " >>>>>>
   au BufNewFile,BufRead *.html,*.php
       \ let b:AutoPairs = {"<": ">", '"': '"', "'": "'", '{': '}', '(': ')', '[': ']'}
 
-  au BufNewFile,BufRead *.py,*.c,*.cc,*.cpp,*.h*.{vim,vimrc}
+  au BufNewFile,BufRead *.py,*.c,*.cc,*.cpp,*.h*,.{vim,vimrc}
       \ match BadWhiteSpace /\v\s+$/
 
 augroup END " <<<<<<
+
+" jump to the last known position >>>>>>
+au BufReadPost *
+      \ if line("'\"") > 1 && line("'\"") <= line("$") && &ft !~# 'commit'|
+      \   exe "normal! g`\""                                              |
+      \ endif
+" <<<<<<
 " <<<<<<
 
 " Plugin >>>>>>
