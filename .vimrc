@@ -14,14 +14,16 @@ set expandtab
 set autoindent
 set encoding=utf-8
 
-set fillchars=fold:-,vert:\ 
+set fillchars=vert:\ ,fold:-
 
 " set ignorecase
 " set smartcase
 set hlsearch
+set wildmenu
 set foldmethod=marker foldmarker=>>>>>>,<<<<<<
 set gcr=a:block-blinkon0
 
+set path+=**
 set rtp+=~/.vim/vimfiles/*
 set rtp+=~/.vim/vimfiles/indentLine/after
 " <<<<<<
@@ -44,6 +46,7 @@ nn <silent>[<SPACE>     :call append(line('.') - 1, "")<CR>k
 nn <silent>]<SPACE>     :call append(line('.'), "")<CR>j
 nn <silent>[e           :move -1-1<CR>
 nn <silent>]e           :move +1<CR>
+nn <leader>Q            :q!
 
 nn <silent><leader>cl   :call Comments()<CR>
 nn <silent><F5>         :w<CR>:call SmartComplier()<CR>
@@ -74,7 +77,6 @@ hi Search       ctermbg=NONE    ctermfg=red
 hi MatchParen   ctermbg=NONE    ctermfg=red    guibg=NONE    guifg=red
 hi YcmErrorSign ctermbg=NONE    ctermfg=red    guibg=NONE    guifg=red
 hi BadWhiteSpace ctermbg=6
-
 " <<<<<<
 
 " set ui >>>>>>
@@ -89,14 +91,15 @@ endif
 set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ 12
 " <<<<<<
 
-" set commans >>>>>>
+" set commands >>>>>>
 " autocmd BufWritePost .vimrc source %
-command! Vimrc :e $HOME/.vimrc
-command! W :w !sudo tee %
-command! AddHead :call AddHead()
-command! Comments :call Comments()
-command! ColorCoded :!cp ~/.config/color_coded/.color_coded .
-command! Reload :source ~/.vimrc
+command! Vimrc e $HOME/.vimrc
+command! W w !sudo tee %
+command! AddHead call AddHead()
+command! Comments call Comments()
+command! ColorCoded !cp ~/.config/color_coded/.color_coded .
+command! Reload source ~/.vimrc
+command! MakeTags !ctags -R .
 " <<<<<<
 
 " set functions >>>>>>
@@ -106,7 +109,7 @@ func! Comments()
   if &ft == "cpp" || &ft == "cs"
     if line =~'.*\/\*.*$'
       s!/\*\(\_.\{-}\)\*/!\1!
-    elseif line =~'^\s*\/\/.*$'
+    *elseif line =~'^\s*\/\/.*$'
       s!^\(\s*\)//\s*!\1!
     else
       s!^\s*!&// !
@@ -134,6 +137,14 @@ func! Comments()
       s/^\(\s*\);\s*/\1/
     else
       s/^\s*/&; /
+    en
+  elseif &ft == "html"
+    if line =~ '^\s*<!--\s*.*\s*-->$'
+      s/\(\s*\)<!--\s*\(.*\)\s*-->/\1\2/
+      s/\s*$//
+    else
+      s/\s*$//
+      s/\(\s*\)\(.*\)\s*/\1<!-- \2 -->/
     en
   else
     if line =~'^\s*#.*'
@@ -252,7 +263,7 @@ augroup filetype_frmats " >>>>>>
       \ setlocal softtabstop=2|
       \ setlocal shiftwidth=2
 
-  au BufNewFile,BufRead *.html,*.php
+  au BufNewFile,BufRead *.html
       \ let b:AutoPairs = {"<": ">", '"': '"', "'": "'", '{': '}', '(': ')', '[': ']'}
 
   au BufNewFile,BufRead *.py,*.c,*.cc,*.cpp,*.h*,.{vim,vimrc}

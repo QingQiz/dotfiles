@@ -12,7 +12,8 @@ font pango: hack, Awesome 11
 new_window pixel
 
 # start a terminal
-bindsym Mod1+Return exec termite
+# bindsym Mod1+Return exec termite
+bindsym Mod1+Return exec termite -e tmux
 
 # start drofi dmenu
 bindsym Mod1+Tab exec --no-startup-id rofi -show window
@@ -188,7 +189,7 @@ bindsym XF86AudioPause exec mpc --port=6699 pause
 exec --no-startup-id ibus-daemon --xim -d
 
 # Wallpaper
-exec_always --no-startup-id feh --bg-fill /home/angel/Pictures/Pic/bg-05.jpg
+exec_always --no-startup-id feh --bg-fill /home/angel/Pictures/WallP/BG-7.jpg
 
 # local ss
 exec_always --no-startup-id ss-local -c /etc/shadowsocks/conf.json
@@ -198,7 +199,7 @@ exec_always xset s 0
 exec_always xset dpms 0 0 0
 
 # 更改边框样式
-bindsym Mod1+b border toggle
+bindsym Mod1+Shift+b border toggle
 
 # 触控板
 exec synclient VertScrollDelta=-66

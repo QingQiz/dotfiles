@@ -2,7 +2,7 @@
 background = #202020
 background-alt = #444
 foreground = #dfdfdf
-foreground-alt = #55
+foreground-alt = #555
 primary = #ffb52a
 secondary = #e60053
 alert = #bd2c40
@@ -35,7 +35,7 @@ screenchange-reload = true
 dpi = 72
 bottom = false
 width = 100%
-height = 20
+height = 23
 offset-x = 0
 offset-y = 0
 
@@ -66,10 +66,10 @@ modules-left = i3 xwindow
 modules-center = mpd
 modules-right = alsa wlan battery date 
 
-tray-position = right
-tray-padding = 4
-tray-transparent = true
-tray-background = #0063ff
+; tray-position = right
+; tray-padding = 4
+; tray-transparent = true
+; tray-background = #0063ff
 
 ;wm-restack = bspwm
 ;wm-restack = i3
@@ -119,8 +119,8 @@ modules-left = i3
 modules-center = networkspeedup networkspeeddown
 modules-right = filesystem-slash temperature cpu memory powermenu
 
-tray-position = right
-tray-padding = 2
+; tray-position = right
+; tray-padding = 2
 
 [module/xwindow]
 type = internal/xwindow
