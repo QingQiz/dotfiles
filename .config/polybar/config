@@ -352,7 +352,8 @@ label-disconnected-foreground = ${colors.foreground-alt}
 
 [module/networkspeedup]
 type = internal/network
-interface = wlp2s0
+; interface = wlp2s0
+interface = wlo1
 label-connected = "%upspeed:7%"
 format-connected = <label-connected>
 format-connected-prefix = " "
@@ -360,7 +361,8 @@ format-connected-prefix-foreground = #5b
 
 [module/networkspeeddown]
 type = internal/network
-interface = wlp2s0
+; interface = wlp2s0
+interface = wlo1
 label-connected = "%downspeed:7%"
 format-connected = <label-connected>
 format-connected-prefix = " "

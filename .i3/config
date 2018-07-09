@@ -191,7 +191,7 @@ bindsym XF86AudioPause exec mpc --port=6699 pause
 exec --no-startup-id ibus-daemon --xim -d
 
 # Wallpaper
-exec_always --no-startup-id feh --bg-fill /home/angel/Pictures/WallP/BG-7.jpg
+exec_always --no-startup-id feh --bg-fill /home/angel/Pictures/WallP/BG-8.jpg
 
 # local ss
 exec_always --no-startup-id ss-local -c /etc/shadowsocks/conf.json
@@ -205,13 +205,15 @@ bindsym Mod1+Shift+b border toggle
 
 # 触控板
 exec synclient VertScrollDelta=-66
-exec synclient CircularScrolling=1
+exec synclient HorizScrollDelta=-66
+# exec synclient CircularScrolling=1
 exec synclient TapButton1=1
 exec synclient TapButton2=3
 exec synclient TapButton3=2
 exec synclient MaxSpeed=1.5
 focus_follows_mouse no
 
+bindsym Mod1+z exec sh ~/.scr/touchpad.sh
 # Others
 bindsym XF86Mail exec --no-startup-id thunderbird
 exec i3-config-wizard
