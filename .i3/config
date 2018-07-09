@@ -148,15 +148,15 @@ bindsym Mod1+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
-        bindsym h       resize shrink width 10 px or 10 ppt
-        bindsym j       resize grow height 10 px or 10 ppt
-        bindsym k       resize shrink height 10 px or 10 ppt
-        bindsym l       resize grow width 10 px or 10 ppt
+        bindsym h       resize shrink width 3 px or 3 ppt
+        bindsym j       resize grow height 3 px or 3 ppt
+        bindsym k       resize shrink height 3 px or 3 ppt
+        bindsym l       resize grow width 3 px or 3 ppt
 
-        bindsym Left    resize shrink width 10 px or 10 ppt
-        bindsym Down    resize grow height 10 px or 10 ppt
-        bindsym Up      resize shrink height 10 px or 10 ppt
-        bindsym Right   resize grow width 10 px or 10 ppt
+        bindsym Left    resize shrink width 3 px or 3 ppt
+        bindsym Down    resize grow height 3 px or 3 ppt
+        bindsym Up      resize shrink height 3 px or 3 ppt
+        bindsym Right   resize grow width 3 px or 3 ppt
         bindsym Return  mode "default"
         bindsym Escape  mode "default"
 }
@@ -174,9 +174,11 @@ bindsym Mod1+Ctrl+s exec betterlockscreen --lock & exec systemctl suspend
 # screen cat
 bindsym Mod1+Ctrl+k exec import -window root screenshot.jpg
 
-# sound
+# sound & brightness
 bindsym XF86AudioRaiseVolume exec --no-startup-id amixer -q sset Master 5%+
 bindsym XF86AudioLowerVolume exec --no-startup-id amixer -q sset Master 5%-
+bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight +5
+bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -5
 
 # Audio
 bindsym XF86AudioNext exec mpc --port=6699 next
@@ -216,5 +218,5 @@ exec i3-config-wizard
 exec --no-startup-id i3-msg "workspace 1"
 exec compton &
 exec_always --no-startup-id mpd
-exec xrandr --output eDP1 --right-of HDMI1 --auto && i3 restart
+exec_always xrandr --output eDP1 --right-of HDMI1 --auto && i3 restart
 

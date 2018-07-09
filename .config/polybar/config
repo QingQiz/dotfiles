@@ -64,7 +64,7 @@ font-3 = FontAwesome:pixelsize=14;2
 
 modules-left = i3 xwindow
 modules-center = mpd
-modules-right = alsa wlan battery date 
+modules-right = backlight alsa wlan battery date 
 
 ; tray-position = right
 ; tray-padding = 4
@@ -314,7 +314,8 @@ bar-used-indicator =
 
 [module/wlan]
 type = internal/network
-interface = wlp2s0
+; interface = wlp2s0
+interface = wlo1
 interval = 3.0
 
 format-connected = <label-connected>
