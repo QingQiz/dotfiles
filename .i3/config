@@ -208,6 +208,7 @@ exec synclient TapButton1=1
 exec synclient TapButton2=3
 exec synclient TapButton3=2
 exec synclient MaxSpeed=1.5
+focus_follows_mouse no
 
 # Others
 bindsym XF86Mail exec --no-startup-id thunderbird
@@ -215,6 +216,5 @@ exec i3-config-wizard
 exec --no-startup-id i3-msg "workspace 1"
 exec compton &
 exec_always --no-startup-id mpd
-# exec_always emacs --daemon
-# exec aria2c -D --conf-path=/home/angel/.config/aria2/aria2.conf
 exec xrandr --output eDP1 --right-of HDMI1 --auto && i3 restart
+

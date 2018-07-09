@@ -57,7 +57,7 @@ ino jK                  <ESC>
 ino jk                  <ESC>
 nn <silent>gy           ggVG"+y''zz
 vn \y                   "+y
-nn \p                   "+p"
+nn \p                   "+p
 nn \n                   :noh<CR>
 nn H                    ^
 nn L                    $
@@ -109,7 +109,7 @@ func! Comments()
   if &ft == "cpp" || &ft == "cs"
     if line =~'.*\/\*.*$'
       s!/\*\(\_.\{-}\)\*/!\1!
-    *elseif line =~'^\s*\/\/.*$'
+    elseif line =~'^\s*\/\/.*$'
       s!^\(\s*\)//\s*!\1!
     else
       s!^\s*!&// !

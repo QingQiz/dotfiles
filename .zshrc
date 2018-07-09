@@ -1,5 +1,6 @@
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
+[ -z "$TMUX" ] && export TERM="xterm-256color"
 
 #turn on comments with # in shell
 setopt interactivecomments
