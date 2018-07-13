@@ -18,7 +18,7 @@ set fillchars=vert:\ ,fold:-
 
 " set ignorecase
 " set smartcase
-set hlsearch
+" set hlsearch
 set wildmenu
 set foldmethod=marker foldmarker=>>>>>>,<<<<<<
 set gcr=a:block-blinkon0
@@ -70,12 +70,12 @@ ino <c-@>               <nop>
 
 " set highlight >>>>>>
 colorscheme angel
-hi LineNr       ctermfg=black   ctermbg=NONE   cterm=BOLD
-hi CursorLineNr ctermbg=239     ctermfg=229     cterm=BOLD
-hi NonText      ctermfg=234     ctermbg=NONE
-hi Search       ctermbg=NONE    ctermfg=red
-hi MatchParen   ctermbg=NONE    ctermfg=red    guibg=NONE    guifg=red
-hi YcmErrorSign ctermbg=NONE    ctermfg=red    guibg=NONE    guifg=red
+hi LineNr        ctermfg=black ctermbg=NONE cterm=BOLD
+hi CursorLineNr  ctermbg=239   ctermfg=229  cterm=BOLD
+hi NonText       ctermfg=234   ctermbg=NONE
+hi Search        ctermbg=NONE  ctermfg=red
+hi MatchParen    ctermbg=NONE  ctermfg=red  guibg=NONE guifg=red
+hi YcmErrorSign  ctermbg=NONE  ctermfg=red  guibg=NONE guifg=red
 hi BadWhiteSpace ctermbg=6
 " <<<<<<
 
@@ -294,8 +294,38 @@ au BufReadPost *
     \ ['jeaye/color_coded'],
     \ ['guns/xterm-color-table.vim'],
     \ ['luochen1990/rainbow'],
-    \ ['mbbill/undotree']
+    \ ['mbbill/undotree'],
+    \ ['easymotion/vim-easymotion'],
+    \ ['junegunn/vim-easy-align.git']
     \ ]
+" <<<<<<
+
+" vim-easy-align >>>>>>
+xmap ga <Plug>(EasyAlign)
+nmap ga <Plug>(EasyAlign)
+" <<<<<<
+
+" vim-easymotion >>>>>>
+let g:EasyMotion_do_mapping = 0
+" `s{char}{label}`
+nmap c <Plug>(easymotion-overwin-f)
+" `s{char}{char}{label}`
+" Need one more keystroke, but on average, it may be more comfortable.
+nmap c <Plug>(easymotion-overwin-f2)
+" Turn on case insensitive feature
+let g:EasyMotion_smartcase = 1
+" JK motions: Line motions
+map <Leader>j <Plug>(easymotion-j)
+map <Leader>k <Plug>(easymotion-k)
+
+map  / <Plug>(easymotion-sn)
+omap / <Plug>(easymotion-tn)
+
+" These `n` & `N` mappings are options. You do not have to map `n` & `N` to EasyMotion.
+" Without these mappings, `n` & `N` works fine. (These mappings just provide
+" different highlight method and have some other features )
+map  n <Plug>(easymotion-next)
+map  N <Plug>(easymotion-prev)
 " <<<<<<
 
 " undotree >>>>>>
@@ -371,7 +401,7 @@ let g:tagbar_autoclose=1
 let g:ycm_server_python_interpreter='/usr/bin/python3.6'
 let g:ycm_global_ycm_extra_conf='~/.config/ycmd/ycmd_conf.py'
 let g:ycm_min_num_indentifier_candidate_chars=2
-let g:ycm_key_invoke_completion='<c-n>'
+let g:ycm_key_invoke_completion='<c-d>'
 " let g:ycm_key_invoke_completion='<c-@>'
 let g:ycm_complete_in_comments=1
 let g:ycm_complete_in_strings=1

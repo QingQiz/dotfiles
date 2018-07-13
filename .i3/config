@@ -12,7 +12,6 @@ font pango: hack, Awesome 11
 new_window pixel
 
 # start a terminal
-# bindsym Mod1+Return exec termite
 bindsym Mod1+Return exec termite -e tmux
 
 # start drofi dmenu
@@ -144,7 +143,8 @@ bindsym Mod1+Shift+0 move container to workspace 10
 # reload the configuration file
 bindsym Mod1+Shift+c reload
 bindsym Mod1+Shift+r restart
-bindsym Mod1+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+# bindsym Mod1+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+bindsym Mod1+Shift+e exit
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -191,7 +191,7 @@ bindsym XF86AudioPause exec mpc --port=6699 pause
 exec --no-startup-id ibus-daemon --xim -d
 
 # Wallpaper
-exec_always --no-startup-id feh --bg-fill /home/angel/Pictures/WallP/BG-8.jpg
+exec_always --no-startup-id feh --bg-fill /home/angel/Pictures/WallP/BG-7.jpg
 
 # local ss
 exec_always --no-startup-id ss-local -c /etc/shadowsocks/conf.json

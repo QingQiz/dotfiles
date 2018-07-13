@@ -77,6 +77,8 @@ plugin_list2=(\
     "guns/xterm-color-table.vim" \
     "luochen1990/rainbow" \
     "mbbill/undotree" \
+    "easymotion/vim-easymotion" \
+    "junegunn/vim-easy-align" \
     )
 echo "config vim? (y/n)"
 read chc

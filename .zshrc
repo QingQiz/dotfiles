@@ -1,6 +1,16 @@
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
-# [ -z "$TMUX" ] && export TERM="xterm-256color"
+
+# [[ $- != *i* ]] && return
+# [[ -z "$TMUX" ]] && exec tmux
+# if [[ -z "$TMUX" ]] ;then
+    # ID="`tmux ls | grep -m1 attached | cut -d: -f1`"
+    # if [[ -z "$ID" ]] ;then
+        # tmux new-session
+    # else
+        # tmux attach-session -t "$ID"
+    # fi
+# fi
 
 #turn on comments with # in shell
 setopt interactivecomments
@@ -104,6 +114,7 @@ alias unsetproxy='unset ALL_PROXY'
 alias nip='curl -i https://ip.cn'
 
 alias ColorCoded='cp ~/.config/color_coded/.color_coded .'
+alias YcmExtra='cp ~/.config/ycmd/.ycm_extra_conf.py .'
 alias AddCMakeList='cp ~/workspace/Progeaming-Practice/Note/CMakeLists.txt .'
 push() { cp ./"$1" ~/workspace/this_week/$1 }
 Done() { cp _.cc ./"$1" }
