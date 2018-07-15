@@ -15,9 +15,9 @@ new_window pixel
 bindsym Mod1+Return exec termite -e tmux
 
 # start drofi dmenu
-bindsym Mod1+Tab exec --no-startup-id rofi -show window
+bindsym Mod1+Tab     exec --no-startup-id rofi -show window
 bindsym Mod1+Shift+d exec --no-startup-id rofi -show run
-bindsym Mod1+d exec --no-startup-id rofi -show drun
+bindsym Mod1+d       exec --no-startup-id rofi -show drun
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier Mod1
@@ -103,9 +103,9 @@ bindsym Mod1+Control+t exec thunar
 # by class
 ## floatings
 for_window [class="CrossOver"] floating enable, border pixel 1
-for_window [class="XTerm"] floating enable, border pixel 1
-for_window [class="Wine"] floating enable, border pixel 1
-for_window [class="feh"] floating enable, border pixel 1
+for_window [class="XTerm"]     floating enable, border pixel 1
+for_window [class="Wine"]      floating enable, border pixel 1
+for_window [class="feh"]       floating enable, border pixel 1
 
 # assigns focus
 # assign [class="Connman-gtk"] $tag10
@@ -148,17 +148,17 @@ bindsym Mod1+Shift+e exit
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
-        bindsym h       resize shrink width 3 px or 3 ppt
-        bindsym j       resize grow height 3 px or 3 ppt
-        bindsym k       resize shrink height 3 px or 3 ppt
-        bindsym l       resize grow width 3 px or 3 ppt
+        bindsym h      resize shrink width  3 px or 3 ppt
+        bindsym j      resize grow   height 3 px or 3 ppt
+        bindsym k      resize shrink height 3 px or 3 ppt
+        bindsym l      resize grow   width  3 px or 3 ppt
 
-        bindsym Left    resize shrink width 3 px or 3 ppt
-        bindsym Down    resize grow height 3 px or 3 ppt
-        bindsym Up      resize shrink height 3 px or 3 ppt
-        bindsym Right   resize grow width 3 px or 3 ppt
-        bindsym Return  mode "default"
-        bindsym Escape  mode "default"
+        bindsym Left   resize shrink width  3 px or 3 ppt
+        bindsym Down   resize grow   height 3 px or 3 ppt
+        bindsym Up     resize shrink height 3 px or 3 ppt
+        bindsym Right  resize grow   width  3 px or 3 ppt
+        bindsym Return mode   "default"
+        bindsym Escape mode   "default"
 }
 
 bindsym Mod1+r mode "resize"
@@ -171,18 +171,18 @@ exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 bindsym Mod1+Ctrl+l exec betterlockscreen --lock
 bindsym Mod1+Ctrl+s exec betterlockscreen --lock & exec systemctl suspend
 
-# screen cat
+# screenshot
 bindsym Mod1+Ctrl+k exec import -window root screenshot.jpg
 
 # sound & brightness
-bindsym XF86AudioRaiseVolume exec --no-startup-id amixer -q sset Master 5%+
-bindsym XF86AudioLowerVolume exec --no-startup-id amixer -q sset Master 5%-
-bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight +5
+bindsym XF86AudioRaiseVolume  exec --no-startup-id amixer -q sset Master 5%+
+bindsym XF86AudioLowerVolume  exec --no-startup-id amixer -q sset Master 5%-
+bindsym XF86MonBrightnessUp   exec --no-startup-id xbacklight +5
 bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -5
 
 # Audio
-bindsym XF86AudioNext exec mpc --port=6699 next
-bindsym XF86AudioPrev exec mpc --port=6699 prev
+bindsym XF86AudioNext  exec mpc --port=6699 next
+bindsym XF86AudioPrev  exec mpc --port=6699 prev
 bindsym XF86AudioPause exec mpc --port=6699 pause
 # bindsym XF86AudioPlay exec mpc --port=6699 play
 # bindsym XF86AudioStop exec mpc --port=6699 stop

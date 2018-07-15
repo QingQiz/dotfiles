@@ -308,6 +308,7 @@ nmap ga <Plug>(EasyAlign)
 " vim-easymotion >>>>>>
 let g:EasyMotion_do_mapping = 0
 " `s{char}{label}`
+nmap c <nop>
 nmap c <Plug>(easymotion-overwin-f)
 " `s{char}{char}{label}`
 " Need one more keystroke, but on average, it may be more comfortable.
@@ -345,8 +346,8 @@ let g:rainbow_conf = {
 	\	'operators': '_,_',
 	\	'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
 	\	'separately': {
-	\		'lisp': {
-	\			'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3'],
+	\	  'lisp': {
+	\	    'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3'],
 	\		},
 	\	}
 	\}
