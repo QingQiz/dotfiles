@@ -1,5 +1,6 @@
 " basic set >>>>>>
 syntax on
+set nobackup
 set nocompatible
 set endofline binary nofixeol
 filetype plugin indent on
@@ -9,7 +10,6 @@ set nu relativenumber
 set cul
 set ts=4 sw=4
 set tabstop=4 softtabstop=4
-
 set expandtab
 set autoindent
 set encoding=utf-8
@@ -60,7 +60,9 @@ vn \y                   "+y
 nn \p                   "+p
 nn \n                   :noh<CR>
 nn H                    ^
-nn L                    $
+vn H                    ^
+vn L                    $
+vn L                    $
 imap <c-l>              <right>
 imap <c-k>              <up>
 nn <up>                 <nop>
@@ -70,16 +72,20 @@ ino <c-@>               <nop>
 
 " set highlight >>>>>>
 colorscheme angel
-hi LineNr        ctermfg=black ctermbg=NONE cterm=BOLD
-hi CursorLineNr  ctermbg=239   ctermfg=229  cterm=BOLD
+
+hi LineNr        ctermfg=black ctermbg=NONE cterm=Bold
+hi CursorLineNr  ctermfg=229   ctermbg=239  cterm=Bold
+hi Member        ctermfg=44    ctermbg=NONE cterm=Italic,Bold
+hi Normal        ctermfg=231   ctermbg=NONE cterm=NONE
+hi Variable      ctermfg=249   ctermbg=NONE
 hi NonText       ctermfg=234   ctermbg=NONE
-hi Search        ctermbg=NONE  ctermfg=red
-hi MatchParen    ctermbg=NONE  ctermfg=red  guibg=NONE guifg=red
-hi YcmErrorSign  ctermbg=NONE  ctermfg=red  guibg=NONE guifg=red
+hi Search        ctermfg=red   ctermbg=NONE
+hi MatchParen    ctermfg=red   ctermbg=NONE guibg=NONE guifg=red
+hi YcmErrorSign  ctermfg=red   ctermbg=NONE guibg=NONE guifg=red
 hi BadWhiteSpace ctermbg=6
 " <<<<<<
 
-" set ui >>>>>>
+" set gui >>>>>>
 if has("gui_running")
   set guioptions-=m
   set guioptions-=T
@@ -89,6 +95,16 @@ if has("gui_running")
   set showtabline=0
 endif
 set guifont=DejaVu\ Sans\ Mono\ for\ Powerline\ 12
+
+hi LineNr        guifg=black   guibg=NONE    gui=Bold
+hi CursorLineNr  guifg=#ffffaf guibg=#4e4e4e gui=NONE
+hi Member        guifg=#00dfdf guibg=NONE    gui=Italic,Bold
+hi Normal        guifg=#e4e4e4 guibg=NONE    gui=NONE
+hi NonText       guifg=#1c1c1c guibg=NONE    gui=NONE
+hi Search        guifg=red     guibg=NONE    gui=NONE
+hi MatchParen    guifg=red     guibg=NONE    gui=NONE
+hi YcmErrorSign  guifg=red     guibg=NONE    gui=NONE
+" hi BadWhiteSpace guifg=NONE    guibg=6       gui=NONE
 " <<<<<<
 
 " set commands >>>>>>
