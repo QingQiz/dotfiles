@@ -1,8 +1,8 @@
 " Vim global plugin for semantic highlighting using libclang
 " Maintainer: Jeaye <contact@jeaye.com>
 
-hi default Member       ctermfg=44     guifg=Cyan cterm=Italic,Bold ctermbg=NONE
-hi default Variable     ctermfg=244    guifg=Grey
+hi default Member       ctermfg=44     guifg=Cyan cterm=Italic,Bold
+hi default Variable     ctermfg=Cyan   guifg=Grey
 hi default Namespace    ctermfg=Yellow guifg=#BBBB00
 hi default EnumConstant ctermfg=85     guifg=LightGreen
 
