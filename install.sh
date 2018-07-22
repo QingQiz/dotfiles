@@ -43,6 +43,12 @@ if [ "$chc" = "y" ]; then
     sudo cp $script_dir/archlinux/pacman.conf /etc/
     sudo pacman -Syy
 fi
+if ! [ -d "$script_dir/backup" ]; then
+    mkdir "$script_dir/backup"
+    if ! [ -d "$script_dir/backup/.config" ]; then
+        mkdir "$script_dir/backup/.config"
+    fi
+fi
 install_c yaourt
 install_c make
 install_c cmake
@@ -51,12 +57,6 @@ install_c gcc
 install_c g++
 install_c clang
 ln_ .gitconfig
-if ! [ -d "$script_dir/backup" ]; then
-    mkdir "$script_dir/backup"
-    if ! [ -d "$script_dir/backup/.config" ]; then
-        mkdir "$script_dir/backup/.config"
-    fi
-fi
 #--------------------------------------------------
 # vim
 #--------------------------------------------------
@@ -71,6 +71,7 @@ plugin_list1=(\
     "vim-ultisnips" \
     )
 plugin_list2=(\
+    "mhinz/vim-startify" \
     "Yggdroot/indentLine" \
     "jiangmiao/auto-pairs" \
     "kshenoy/vim-signature" \
@@ -119,7 +120,7 @@ if [ "$chc" = "y" ]; then
                 make clean
             fi
         fi
-        ln -s $script_dir/.vim/syntax/color_coded.vim $script_dir/.vim/vimfiles/color_coded/after/syntax/color_coded.vim
+        ln -sf $script_dir/.vim/syntax/color_coded.vim $script_dir/.vim/vimfiles/color_coded/after/syntax/color_coded.vim
         ln_c color_coded
     fi
 
@@ -165,8 +166,8 @@ if [ "$chc" = "y" ]; then
     git clone https://github.com/zsh-users/zsh-autosuggestions.git
     git clone https://github.com/sindresorhus/pure.git
 
-    ln -s "$script_dir/.zsh/pure/pure.zsh" zfunctions/pure
-    ln -s "$script_dir/.zsh/pure/async.zsh" zfunctions/async
+    ln -sf "$script_dir/.zsh/pure/pure.zsh" zfunctions/pure
+    ln -sf "$script_dir/.zsh/pure/async.zsh" zfunctions/async
 
     ln_ .oh-my-zsh
     ln_ .zsh
@@ -179,7 +180,7 @@ echo "install i3? (y/n)"
 read chc
 if [ "$chc" = "y" ]; then
     echo 'installing...'
-    ln -s $script_dir/.Xresources $script_dir/.Xdefaults
+    ln -sf $script_dir/.Xresources $script_dir/.Xdefaults
     install_n xorg-server
     install_n xorg-xinit
     install_n i3-gaps
@@ -188,7 +189,7 @@ if [ "$chc" = "y" ]; then
     install_c rofi
     install_c neofetch
     install_c termite
-    install_c terminator
+    # install_c terminator
     install_c thunar
     install_n ttf-font-awesome
     install_n awesome-terminal-fonts
@@ -207,14 +208,15 @@ if [ "$chc" = "y" ]; then
     ln_ .xprofile
     ln_ .Xresources
     ln_ .Xresources.d
-    ln_ .i3
+    ln_ .tmux.conf
 
+    ln_c i3
     ln_c neofetch
     ln_c polybar
     ln_c rofi
     ln_c Thunar
     ln_c termite
-    ln_c terminator
+    # ln_c terminator
 fi
 #--------------------------------------------------
 # emacs
