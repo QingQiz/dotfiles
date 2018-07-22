@@ -24,11 +24,11 @@ set foldmethod=marker foldmarker=>>>>>>,<<<<<<
 set gcr=a:block-blinkon0
 
 set path+=**
-set rtp+=~/.vim/vimfiles/*
-set rtp+=~/.vim/vimfiles/indentLine/after
+set rtp+=/home/angel/.vim/vimfiles/*
+set rtp+=/home/angel/.vim/vimfiles/indentLine/after
 " <<<<<<
 
-" set map >>>>>>
+" map >>>>>>
 let mapleader = " "
 nn <c-h>                <c-w>h
 nn <c-j>                <c-w>j
@@ -61,31 +61,43 @@ nn \p                   "+p
 nn \n                   :noh<CR>
 nn H                    ^
 vn H                    ^
-vn L                    $
+nn L                    $
 vn L                    $
 imap <c-l>              <right>
+imap <c-f>              <right>
+imap <c-b>              <left>
 imap <c-k>              <up>
 nn <up>                 <nop>
 nn <down>               <nop>
 ino <c-@>               <nop>
 " <<<<<<
 
-" set highlight >>>>>>
+" highlight >>>>>>
+" colorscheme atomic
 colorscheme angel
 
 hi LineNr        ctermfg=black ctermbg=NONE cterm=Bold
 hi CursorLineNr  ctermfg=229   ctermbg=239  cterm=Bold
-hi Member        ctermfg=44    ctermbg=NONE cterm=Italic,Bold
 hi Normal        ctermfg=231   ctermbg=NONE cterm=NONE
-hi Variable      ctermfg=249   ctermbg=NONE
 hi NonText       ctermfg=234   ctermbg=NONE
 hi Search        ctermfg=red   ctermbg=NONE
 hi MatchParen    ctermfg=red   ctermbg=NONE guibg=NONE guifg=red
 hi YcmErrorSign  ctermfg=red   ctermbg=NONE guibg=NONE guifg=red
+hi PMenu         ctermfg=111
+hi vimOption     ctermfg=141   ctermbg=NONE cterm=bold
+
+" syntax
 hi BadWhiteSpace ctermbg=6
+" hi String        ctermfg=41    ctermbg=none cterm=bold
+
+" color coded
+hi Member        ctermfg=44    ctermbg=NONE cterm=Italic,Bold
+hi Variable      ctermfg=249   ctermbg=NONE
+hi VarDecl       ctermfg=111
+hi ParmDecl      ctermfg=111
 " <<<<<<
 
-" set gui >>>>>>
+" gui >>>>>>
 if has("gui_running")
   set guioptions-=m
   set guioptions-=T
@@ -107,7 +119,7 @@ hi YcmErrorSign  guifg=red     guibg=NONE    gui=NONE
 " hi BadWhiteSpace guifg=NONE    guibg=6       gui=NONE
 " <<<<<<
 
-" set commands >>>>>>
+" commands >>>>>>
 " autocmd BufWritePost .vimrc source %
 command! Vimrc e $HOME/.vimrc
 command! W w !sudo tee %
@@ -118,7 +130,7 @@ command! Reload source ~/.vimrc
 command! MakeTags !ctags -R .
 " <<<<<<
 
-" set functions >>>>>>
+" functions >>>>>>
 " Comments >>>>>>
 func! Comments()
   let line = getline('.')
@@ -312,8 +324,29 @@ au BufReadPost *
     \ ['luochen1990/rainbow'],
     \ ['mbbill/undotree'],
     \ ['easymotion/vim-easymotion'],
-    \ ['junegunn/vim-easy-align.git']
+    \ ['junegunn/vim-easy-align'],
+    \ ['mhinz/vim-startify']
     \ ]
+" <<<<<<
+
+" startify >>>>>>
+let g:startify_bookmarks = [
+      \ { 'v': '~/.vimrc' },
+      \ { 'z': '~/.zshrc' },
+      \ { 'i': '~/.config/i3/config' },
+      \ { 'p': '~/.config/polybar/config' }
+      \ ]
+let g:startify_files_number = 5
+let g:startify_custom_indices = ['a', 's', 'd']
+" <<<<<<
+
+" Indentline >>>>>>
+let g:indentLine_fileType = [
+      \ 'c', 'cpp', 'html', 'php', 'cs', 'shell',
+      \ 'config', 'vim', 'python', 'java', 'zsh', 'sh',
+      \ 'conf'
+      \ ]
+let g:indentLine_char = '┆'
 " <<<<<<
 
 " vim-easy-align >>>>>>
@@ -345,21 +378,15 @@ map  n <Plug>(easymotion-next)
 map  N <Plug>(easymotion-prev)
 " <<<<<<
 
-" undotree >>>>>>
-if has("persistent_undo")
-    set undodir=~/.cache/vim/undotree/
-    set undofile
-endif
+" AutoPairs & rainbow >>>>>>
+let g:AutoPairsFlyMode=0
+let g:AutoPairsMultilineClose=0
 
-nn <F7> :UndotreeToggle<CR>
-" <<<<<<
-
-" rainbow >>>>>>
 let g:rainbow_active = 1
 let g:rainbow_conf = {
 	\	'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
-	\	'ctermfgs': ['69', '94', '36', '133'],
-	\	'operators': '_,_',
+	\	'ctermfgs': ['69', '36', '75', '133', '94'],
+	\	'operators': '_,\|+\|-\|\*\|\/\(\s\)\@=\|=\|==\|<\|>\|!\|%\|\^\|&\||\|>>\|<<\|\.\|->_',
 	\	'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
 	\	'separately': {
 	\	  'lisp': {
@@ -369,18 +396,23 @@ let g:rainbow_conf = {
 	\}
 " <<<<<<
 
-" auto-pairs >>>>>>
-let g:AutoPairsFlyMode=0
-let g:AutoPairsMultilineClose=0
-" <<<<<<
-
-" NERDTree >>>>>>
+" NERDTree & tagbar & undotree >>>>>>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+let g:tagbar_left=0
+let g:tagbar_width=25
+let g:tagbar_autoclose=1
+
+if has("persistent_undo")
+    set undodir=~/.cache/vim/undotree/
+    set undofile
+endif
+
+nn <F7> :UndotreeToggle<CR>
 " <<<<<<
 
 " AirLine >>>>>>
 let g:airline_theme = 'badcat'
-" let g:airline_theme = 'distinguished'
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_idx_mode = 1
@@ -406,17 +438,28 @@ let g:airline#extensions#tabline#buffer_idx_format = {
     \ '8': '⁸',
     \ '9': '⁹'
     \ }
-" <<<<<<
-
-" TagBar >>>>>>
-let g:tagbar_left=0
-let g:tagbar_width=25
-let g:tagbar_autoclose=1
+let g:airline_mode_map = {
+    \ '__' : '-',
+    \ 'n'  : 'N',
+    \ 'i'  : 'I',
+    \ 'R'  : 'R',
+    \ 'c'  : 'C',
+    \ 'v'  : 'V',
+    \ 'V'  : 'VL',
+    \ '' : 'VB',
+    \ 's'  : 'S',
+    \ 'S'  : 'S',
+    \ '' : 'S',
+    \ }
+let g:airline_left_sep = ''
+let g:airline_right_sep = ''
+let g:airline_left_alt_sep = '|'
+let g:airline_right_alt_sep = '|'
 " <<<<<<
 
 " YouCompleteMe >>>>>>
 let g:ycm_server_python_interpreter='/usr/bin/python3.6'
-let g:ycm_global_ycm_extra_conf='~/.config/ycmd/ycmd_conf.py'
+let g:ycm_global_ycm_extra_conf='/home/angel/.config/ycmd/ycmd_conf.py'
 let g:ycm_min_num_indentifier_candidate_chars=2
 let g:ycm_key_invoke_completion='<c-d>'
 " let g:ycm_key_invoke_completion='<c-@>'
@@ -424,6 +467,7 @@ let g:ycm_complete_in_comments=1
 let g:ycm_complete_in_strings=1
 let g:ycm_collect_identifiers_from_comments_and_strings=1
 let g:ycm_enable_diagnostic_highlighting=0
+let g:ycm_enable_diagnostic_signs = 0
 set completeopt=longest,menuone
 " nn <F12> :YcmDiags<CR>
 

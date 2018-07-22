@@ -74,7 +74,7 @@ hi Type       guifg=#0087ff guibg=NONE    guisp=NONE    gui=bold ctermfg=33   ct
 hi Boolean    guifg=#AE81FF guibg=NONE    guisp=NONE    gui=NONE ctermfg=141  ctermbg=NONE cterm=bold
 hi Comment    guifg=#008787 guibg=NONE    guisp=NONE    gui=NONE ctermfg=30   ctermbg=NONE cterm=NONE
 hi LineNr     guifg=NONE    guibg=#000000 guisp=#1c1c1c gui=NONE ctermfg=NONE ctermbg=234  cterm=NONE
-hi Number     guifg=#d75fff guibg=NONE    guisp=NONE    gui=bold ctermfg=171  ctermbg=NONE cterm=NONE
+hi Number     guifg=#d75fff guibg=NONE    guisp=NONE    gui=bold ctermfg=141  ctermbg=NONE cterm=NONE
 hi String     guifg=#00af87 guibg=NONE    guisp=NONE    gui=bold ctermfg=36   ctermbg=NONE cterm=bold
 hi Repeat     guifg=#F92672 guibg=NONE    guisp=NONE    gui=bold ctermfg=197  ctermbg=NONE cterm=bold
 

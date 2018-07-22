@@ -36,7 +36,7 @@ autoload -U zmv
 source $ZSH/oh-my-zsh.sh
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
-source /home/angel/.oh-my-zsh/plugins/z/z.plugin.zsh
+source ~/.oh-my-zsh/plugins/z/z.plugin.zsh
 source ~/.oh-my-zsh/plugins/extract/extract.plugin.zsh
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
 fpath=( "$HOME/.zsh/zfunctions" $fpath )
@@ -80,8 +80,15 @@ export QT_IM_MODULE=ibus
 alias ggpush='git push origin master'
 alias gst='git status'
 alias gcl='git clone'
+alias gdf='git diff'
 alias gcam='git commit -am'
 
+alias l='ls'
+alias s='ls'
+alias ll='ls -al'
+alias la='ls -a'
+alias sl='ls'
+alias sls='ls'
 alias rm='trash'
 alias t='tmux'
 alias tks='tmux kill-session -t'
@@ -94,14 +101,12 @@ alias svim='vim -u ~/temp/SpaceVim/init.vim' # use SpaceVim
 alias cls='clear'
 alias py='python3'
 alias sx='startx'
-alias s='ls'
-alias sl='ls'
 alias scd='cd'
 alias prename='perl-rename'
 
 alias zsh='source ~/.zshrc'
 alias zshrc='vim ~/.zshrc'
-alias i3rc='vim ~/.i3/config'
+alias i3rc='vim ~/.config/i3/config'
 alias vimrc='vim ~/.vimrc'
 alias pipi='sudo pip install -i https://pypi.tuna.tsinghua.edu.cn/simple'
 alias aria2='aria2c --conf-path=/home/angel/.config/aria2/aria2.conf'
