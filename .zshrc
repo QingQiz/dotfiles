@@ -95,6 +95,7 @@ alias tks='tmux kill-session -t'
 alias f='feh'
 alias v='vim'
 alias vu='vim'
+alias vo='vim'
 alias vi='vim'
 alias svi='vim -u ~/temp/SpaceVim/init.vim' # use SpaceVim
 alias svim='vim -u ~/temp/SpaceVim/init.vim' # use SpaceVim

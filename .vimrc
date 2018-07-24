@@ -1,9 +1,8 @@
 " basic set >>>>>>
 syntax on
-set nobackup
-set nocompatible
-set endofline binary nofixeol
 filetype plugin indent on
+set nobackup nocompatible noerrorbells
+set endofline binary fixeol
 
 set mouse=
 set nu relativenumber
@@ -13,6 +12,7 @@ set tabstop=4 softtabstop=4
 set expandtab
 set autoindent
 set encoding=utf-8
+set backspace=indent,eol,start
 
 set fillchars=vert:\ ,fold:-
 
@@ -24,7 +24,7 @@ set foldmethod=marker foldmarker=>>>>>>,<<<<<<
 set gcr=a:block-blinkon0
 
 set path+=**
-set rtp+=/home/angel/.vim/vimfiles/*
+set rtp+=/home/angel/.vim/vimfiles/*  "rtp for root
 set rtp+=/home/angel/.vim/vimfiles/indentLine/after
 " <<<<<<
 
@@ -76,25 +76,30 @@ ino <c-@>               <nop>
 " colorscheme atomic
 colorscheme angel
 
-hi LineNr        ctermfg=black ctermbg=NONE cterm=Bold
-hi CursorLineNr  ctermfg=229   ctermbg=239  cterm=Bold
-hi Normal        ctermfg=231   ctermbg=NONE cterm=NONE
-hi NonText       ctermfg=234   ctermbg=NONE
-hi Search        ctermfg=red   ctermbg=NONE
-hi MatchParen    ctermfg=red   ctermbg=NONE guibg=NONE guifg=red
-hi YcmErrorSign  ctermfg=red   ctermbg=NONE guibg=NONE guifg=red
-hi PMenu         ctermfg=111
-hi vimOption     ctermfg=141   ctermbg=NONE cterm=bold
+function! InitColors()
+  hi LineNr        ctermfg=black ctermbg=NONE cterm=Bold
+  hi CursorLineNr  ctermfg=229   ctermbg=239  cterm=Bold
+  hi Normal        ctermfg=231   ctermbg=NONE cterm=NONE
+  hi NonText       ctermfg=234   ctermbg=NONE
+  hi Search        ctermfg=red   ctermbg=NONE
+  hi MatchParen    ctermfg=red   ctermbg=NONE guibg=NONE guifg=red
+  hi YcmErrorSign  ctermfg=red   ctermbg=NONE guibg=NONE guifg=red
+  hi PMenu         ctermfg=111
+  hi vimOption     ctermfg=141   ctermbg=NONE cterm=bold
 
-" syntax
-hi BadWhiteSpace ctermbg=6
-" hi String        ctermfg=41    ctermbg=none cterm=bold
+  " syntax
+  hi BadWhiteSpace ctermbg=6
+  " hi String        ctermfg=41    ctermbg=none cterm=bold
 
-" color coded
-hi Member        ctermfg=44    ctermbg=NONE cterm=Italic,Bold
-hi Variable      ctermfg=249   ctermbg=NONE
-hi VarDecl       ctermfg=111
-hi ParmDecl      ctermfg=111
+  " color coded
+  hi Member        ctermfg=44    ctermbg=NONE cterm=Italic,Bold
+  hi Variable      ctermfg=249   ctermbg=NONE
+  hi VarDecl       ctermfg=111
+  hi ParmDecl      ctermfg=111
+endfunction
+call InitColors()
+
+au ColorScheme * call InitColors()
 " <<<<<<
 
 " gui >>>>>>
@@ -121,13 +126,15 @@ hi YcmErrorSign  guifg=red     guibg=NONE    gui=NONE
 
 " commands >>>>>>
 " autocmd BufWritePost .vimrc source %
-command! Vimrc e $HOME/.vimrc
+cabbrev w!! w !sudo tee %
 command! W w !sudo tee %
+command! Vimrc e $HOME/.vimrc
 command! AddHead call AddHead()
 command! Comments call Comments()
-command! ColorCoded !cp ~/.config/color_coded/.color_coded .
+command! CCPut !cp ~/.config/color_coded/.color_coded .
 command! Reload source ~/.vimrc
 command! MakeTags !ctags -R .
+command! CLS g/./d
 " <<<<<<
 
 " functions >>>>>>
@@ -277,32 +284,56 @@ endf
 augroup filetype_frmats " >>>>>>
   au!
   au BufNewFile,BufRead *.{vim,vimrc}
-      \ setlocal tabstop=2    |
-      \ setlocal softtabstop=2|
-      \ setlocal shiftwidth=2
-
+        \ setlocal tabstop=2                                       |
+        \ setlocal softtabstop=2                                   |
+        \ setlocal shiftwidth=2
   au BufNewFile,BufRead *.py
-      \ setlocal autoindent   |
-      \ setlocal nowrap       |
-      \ setlocal sidescroll=5
-
+        \ setlocal autoindent                                      |
+        \ setlocal nowrap                                          |
+        \ setlocal sidescroll=5
   au BufNewFile,BufRead *.js,*.html,*.php
-      \ setlocal tabstop=2    |
-      \ setlocal softtabstop=2|
-      \ setlocal shiftwidth=2
-
+        \ setlocal tabstop=2                                       |
+        \ setlocal softtabstop=2                                   |
+        \ setlocal shiftwidth=2
   au BufNewFile,BufRead *.html
-      \ let b:AutoPairs = {"<": ">", '"': '"', "'": "'", '{': '}', '(': ')', '[': ']'}
-
+        \ let b:AutoPairs = {"<": ">", '"': '"', "'": "'", '{': '}', '(': ')', '[': ']'}
   au BufNewFile,BufRead *.py,*.c,*.cc,*.cpp,*.h*,.{vim,vimrc}
-      \ match BadWhiteSpace /\v\s+$/
+        \ match BadWhiteSpace /\v\s+$/
 
 augroup END " <<<<<<
 
+" Add FileHeaders >>>>>>
+augroup AddFileHeaders
+  au!
+  au BufNewFile *.sh
+        \ call setline(1, '#!/usr/bin/env bash')                   |
+        \ call append(line('.'), '')                               |
+        \ normal! Go
+  au BufNewFile *.py
+        \ call setline(1, '#!/usr/bin/env bash')                   |
+        \ call append(line('.'), '# -*- coding: utf-8 -*-')        |
+        \ call append(line('.')+1, '')                             |
+        \ normal! Go
+  au BufNewFile *.{cpp,cc}
+        \ call setline(1, '#include <iostream>')                   |
+        \ call append(line('.'), '')                               |
+        \ normal! Go
+  au BufNewFile *.c
+        \ call setline(1, '#include <stdio.h>')                    |
+        \ call append(line('.'), '')                               |
+        \ normal! Go
+  au BufNewFile *.h,*.hpp
+        \ call setline(1, '#ifndef _'.toupper(expand('%:r')).'_H') |
+        \ call setline(2, '#define _'.toupper(expand('%:r')).'_H') |
+        \ call setline(3, '#endif')                                |
+        \ normal! Go
+augroup END
+" <<<<<<
+
 " jump to the last known position >>>>>>
 au BufReadPost *
-      \ if line("'\"") > 1 && line("'\"") <= line("$") && &ft !~# 'commit'|
-      \   exe "normal! g`\""                                              |
+      \ if line("'\"") > 1 && line("'\"") <= line("$") && &ft !~# 'commit' |
+      \   exe "normal! g`\""                                               |
       \ endif
 " <<<<<<
 " <<<<<<
@@ -356,24 +387,17 @@ nmap ga <Plug>(EasyAlign)
 
 " vim-easymotion >>>>>>
 let g:EasyMotion_do_mapping = 0
-" `s{char}{label}`
-nmap c <nop>
-nmap c <Plug>(easymotion-overwin-f)
-" `s{char}{char}{label}`
-" Need one more keystroke, but on average, it may be more comfortable.
-nmap c <Plug>(easymotion-overwin-f2)
-" Turn on case insensitive feature
 let g:EasyMotion_smartcase = 1
-" JK motions: Line motions
+nmap <leader>f <Plug>(easymotion-overwin-f)
+nmap <leader>f <Plug>(easymotion-overwin-f2)
+nmap <leader>w <Plug>(easymotion-bd-w)
+map <leader>w <Plug>(easymotion-overwin-w)
 map <Leader>j <Plug>(easymotion-j)
 map <Leader>k <Plug>(easymotion-k)
 
 map  / <Plug>(easymotion-sn)
 omap / <Plug>(easymotion-tn)
 
-" These `n` & `N` mappings are options. You do not have to map `n` & `N` to EasyMotion.
-" Without these mappings, `n` & `N` works fine. (These mappings just provide
-" different highlight method and have some other features )
 map  n <Plug>(easymotion-next)
 map  N <Plug>(easymotion-prev)
 " <<<<<<
@@ -407,7 +431,6 @@ if has("persistent_undo")
     set undodir=~/.cache/vim/undotree/
     set undofile
 endif
-
 nn <F7> :UndotreeToggle<CR>
 " <<<<<<
 
@@ -455,6 +478,15 @@ let g:airline_left_sep = ''
 let g:airline_right_sep = ''
 let g:airline_left_alt_sep = '|'
 let g:airline_right_alt_sep = '|'
+
+let g:airline_highlighting_cache = 1
+let g:airline_skip_empty_sections = 1
+let g:airline#extensions#ale#enabled = 0
+let g:airline#extensions#branch#enabled = 0
+let g:airline#extensions#wordcount#enabled = 0
+let g:airline#extensions#whitespace#enabled = 0
+let g:airline#extensions#fugitiveline#enabled = 0
+let g:airline#extensions#hunks#enabled = 0
 " <<<<<<
 
 " YouCompleteMe >>>>>>
