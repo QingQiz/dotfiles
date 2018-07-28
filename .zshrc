@@ -115,13 +115,13 @@ alias aria2='aria2c --conf-path=/home/angel/.config/aria2/aria2.conf'
 alias WAcCEpTEd='netctl start wlp2s0-WAcCEpTEd'
 alias CHANGAN='netctl start wlp2s0-NWPU-CHANGAN'
 
-alias setproxy='export ALL_PROXY=socks5://127.0.0.1:1080'
-alias unsetproxy='unset ALL_PROXY'
 alias nip='curl -i https://ip.cn'
 
 alias ColorCoded='cp ~/.config/color_coded/.color_coded .'
 alias YcmExtra='cp ~/.config/ycmd/.ycm_extra_conf.py .'
 alias AddCMakeList='cp ~/workspace/Progeaming-Practice/Note/CMakeLists.txt .'
+
 push() { cp ./"$1" ~/workspace/this_week/$1 }
 Done() { cp _.cc ./"$1" }
 DoneinJava() { cp ~/workspace/java-workspace/ACM/src/Main.java ./"$1" }
+pushmod() { cp ./$1 ~/workspace/Progeaming-Practice/ACM-ICPC/Mod/$2 }

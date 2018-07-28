@@ -14,6 +14,7 @@ set autoindent
 set encoding=utf-8
 set backspace=indent,eol,start
 
+set colorcolumn=81
 set fillchars=vert:\ ,fold:-
 
 " set ignorecase
@@ -63,7 +64,7 @@ nn H                    ^
 vn H                    ^
 nn L                    $
 vn L                    $
-imap <c-l>              <right>
+imap <c-l>              <C-r>=execute("normal! $")<CR><right>
 imap <c-f>              <right>
 imap <c-b>              <left>
 imap <c-k>              <up>
@@ -85,10 +86,11 @@ function! InitColors()
   hi MatchParen    ctermfg=red   ctermbg=NONE guibg=NONE guifg=red
   hi YcmErrorSign  ctermfg=red   ctermbg=NONE guibg=NONE guifg=red
   hi PMenu         ctermfg=111
+  hi ColorColumn   ctermbg=0
   hi vimOption     ctermfg=141   ctermbg=NONE cterm=bold
 
   " syntax
-  hi BadWhiteSpace ctermbg=6
+  hi BadWhiteSpace ctermbg=0
   " hi String        ctermfg=41    ctermbg=none cterm=bold
 
   " color coded
@@ -131,7 +133,7 @@ command! W w !sudo tee %
 command! Vimrc e $HOME/.vimrc
 command! AddHead call AddHead()
 command! Comments call Comments()
-command! CCPut !cp ~/.config/color_coded/.color_coded .
+command! CCput !cp ~/.config/color_coded/.color_coded .
 command! Reload source ~/.vimrc
 command! MakeTags !ctags -R .
 command! CLS g/./d

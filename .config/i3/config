@@ -191,7 +191,7 @@ bindsym XF86AudioPause exec mpc --port=6699 pause
 exec --no-startup-id ibus-daemon --xim -d
 
 # Wallpaper
-exec_always --no-startup-id feh --bg-fill /home/angel/Pictures/WallP/BG-7.jpg
+exec_always --no-startup-id feh --bg-fill /home/angel/Pictures/WallP/BG-3.jpg
 
 # local ss
 exec_always --no-startup-id ss-local -c /etc/shadowsocks/conf.json
