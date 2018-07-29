@@ -85,15 +85,20 @@ int main(int argc, char *argv[]) {
 
     string url = "http://202.117.80.137:8080/portal/pws?t=";
     string custom_post = "userName=2017302344&userPwd=MDQwNDU5MTI=";
-    string save_path = "./download/test.html";
-
-    // string sample_url = "baidu.com";
-    // string sample_source = \
-"<html>\
-<meta http-equiv=\"refresh\" content=\"0;url=http://www.baidu.com/\">\
-</html>";
+    string save_path = "./test";
 
     URL handle;
+    int action = 1;
+    if (argc == 1 || string(argv[1]) == "login" || string(argv[1]) == "i")
+        url += "li";
+    else if (string(argv[1]) == "logout" || string(argv[1]) == "o") {
+        url += "lo";
+        action = 0;
+    } else {
+        puts("FAILED");
+        return -1;
+    }
+
     handle.setHttpHeader();
     handle.setURL(url);
     handle.setPost(custom_post);
@@ -101,16 +106,7 @@ int main(int argc, char *argv[]) {
     handle.setDataWirter(save_path);
 
     if (!handle.success()) { puts("FAILED"); return -1; }
-    if (argc == 1 || string(argv[1]) == "login" || string(argv[1]) == "i")
-        url += "li";
-    else if (string(argv[1]) == "logout" || string(argv[1]) == "o") {
-        url += "lo";
-        handle.request();
-        return 0;
-    } else {
-        puts("FAILED");
-        return -1;
-    }
+    if (action == 0) { handle.request(); return 0; }
 
     while (true) {
         handle.request();
