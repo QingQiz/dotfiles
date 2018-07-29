@@ -200,6 +200,9 @@ exec_always --no-startup-id ss-local -c /etc/shadowsocks/conf.json
 exec_always xset s 0
 exec_always xset dpms 0 0 0
 
+# network
+exec ~/.scr/ruijie_login &
+
 # 更改边框样式
 bindsym Mod1+Shift+b border toggle
 
@@ -221,4 +224,5 @@ exec --no-startup-id i3-msg "workspace 1"
 exec compton &
 exec_always --no-startup-id mpd
 exec_always xrandr --output eDP1 --right-of HDMI1 --auto && i3 restart
+
 
