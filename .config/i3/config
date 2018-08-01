@@ -175,17 +175,19 @@ bindsym Mod1+Ctrl+s exec betterlockscreen --lock & exec systemctl suspend
 bindsym Mod1+Ctrl+k exec import -window root screenshot.jpg
 
 # sound & brightness
-bindsym XF86AudioRaiseVolume  exec --no-startup-id amixer -q sset Master 5%+
-bindsym XF86AudioLowerVolume  exec --no-startup-id amixer -q sset Master 5%-
-bindsym XF86MonBrightnessUp   exec --no-startup-id xbacklight +5
-bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -5
+bindsym XF86AudioRaiseVolume  exec --no-startup-id amixer -q sset Master 3%+
+bindsym XF86AudioLowerVolume  exec --no-startup-id amixer -q sset Master 3%-
+bindsym XF86MonBrightnessUp   exec --no-startup-id xbacklight +3
+bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -3
 
 # Audio
-bindsym XF86AudioNext  exec mpc --port=6699 next
-bindsym XF86AudioPrev  exec mpc --port=6699 prev
-bindsym XF86AudioPause exec mpc --port=6699 pause
-# bindsym XF86AudioPlay exec mpc --port=6699 play
-# bindsym XF86AudioStop exec mpc --port=6699 stop
+# bindsym Ctrl+Left  exec mpc --port=6699 prev
+# bindsym Ctrl+Right exec mpc --port=6699 next
+# bindsym XF86AudioNext  exec mpc --port=6699 next
+# bindsym XF86AudioPrev  exec mpc --port=6699 prev
+# bindsym XF86AudioPause exec mpc --port=6699 pause
+# bindsym XF86AudioPlay  exec mpc --port=6699 play
+# bindsym XF86AudioStop  exec mpc --port=6699 stop
 
 # ibus 
 exec --no-startup-id ibus-daemon --xim -d
