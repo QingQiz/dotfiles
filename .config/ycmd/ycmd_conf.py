@@ -61,7 +61,7 @@ get_python_inc(),
 '-I',
 './ClangCompleter',
 '-isystem',
-'/usr/include/c++/8.1.1',
+'/usr/include/c++/8.2.0',
 ]
 
 # Clang automatically sets the '-std=' flag to 'c++14' for MSVC 2015 or later,
