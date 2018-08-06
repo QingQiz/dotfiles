@@ -93,7 +93,7 @@ int main(int argc, char *argv[]) {
     url[0] = "http://202.117.80.138:8080/portal/pws?t=";
     url[1] = "http://202.117.80.137:8080/portal/pws?t=";
     string custom_post = "userName=2017302344&userPwd=MDQwNDU5MTI=";
-    string save_path = "./test";
+    string save_path = "/dev/null";
 
     URL handle;
     int action = 1, urlUse = 0;

@@ -35,7 +35,7 @@ screenchange-reload = true
 dpi = 72
 bottom = false
 width = 100%
-height = 23
+height = 21
 offset-x = 0
 offset-y = 0
 

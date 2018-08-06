@@ -193,7 +193,7 @@ bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -3
 exec --no-startup-id ibus-daemon --xim -d
 
 # Wallpaper
-exec_always --no-startup-id feh --bg-fill /home/angel/Pictures/WallP/BG-3.jpg
+exec_always --no-startup-id feh --bg-fill /home/angel/Pictures/WallP/B-009.jpg
 
 # local ss
 exec_always --no-startup-id ss-local -c /etc/shadowsocks/conf.json
@@ -219,12 +219,13 @@ exec_always synclient MaxSpeed=1.5
 focus_follows_mouse no
 
 bindsym Mod1+z exec sh ~/.scr/touchpad.sh
+bindsym Mod1+x exec sh ~/.scr/touchtouch.sh
 # Others
 bindsym XF86Mail exec --no-startup-id thunderbird
 exec i3-config-wizard
 exec --no-startup-id i3-msg "workspace 1"
 exec compton &
-exec_always --no-startup-id mpd
+# exec_always --no-startup-id mpd
 exec_always xrandr --output eDP1 --right-of HDMI1 --auto && i3 restart
 
 

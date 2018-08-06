@@ -104,6 +104,7 @@ alias py='python3'
 alias sx='startx'
 alias scd='cd'
 alias prename='perl-rename'
+alias p='ping qq.com'
 
 alias zsh='source ~/.zshrc'
 alias zshrc='vim ~/.zshrc'
