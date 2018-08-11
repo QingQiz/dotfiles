@@ -1,8 +1,10 @@
-" basic set >>>>>>
+" basic set {{{
 syntax on
 filetype plugin indent on
 set nobackup nocompatible noerrorbells
 set endofline binary fixeol
+set modeline
+set autoread
 
 set mouse=
 set nu relativenumber
@@ -21,15 +23,15 @@ set fillchars=vert:\ ,fold:-
 " set smartcase
 " set hlsearch
 set wildmenu
-set foldmethod=marker foldmarker=>>>>>>,<<<<<<
+set foldmethod=marker foldmarker={{{,}}}
 set gcr=a:block-blinkon0
 
 set path+=**
 set rtp+=/home/angel/.vim/vimfiles/*  "rtp for root
 set rtp+=/home/angel/.vim/vimfiles/indentLine/after
-" <<<<<<
+" }}}
 
-" map >>>>>>
+" map {{{
 let mapleader = " "
 
 nn <c-h>              <c-w>h
@@ -47,13 +49,12 @@ nn <silent>[e         :move -1-1<CR>
 nn <silent>]e         :move +1<CR>
 nn <leader>Q          :q!
 nn <silent><leader>cl :call Comments()<CR>
+nn <silent><leader>cc :call ChangeFor()<CR>
 nn <silent><F5>       :w<CR>:call SmartComplier()<CR>
 nn <silent><F6>       :call RunResult()<CR>
 nn <expr>A            GoIndent()
-ino jK                 <ESC>
-ino jk                 <ESC>
-ino Jk                 <ESC>
-ino JK                 <ESC>
+ino JK                <ESC>
+ino <c-j>             <ESC>
 nn <silent>gy         ggVG"+y''zz
 vn \y                 "+y
 nn \p                 "+p
@@ -64,15 +65,17 @@ nn L                  $
 vn L                  $
 imap <c-l>              <C-r>=execute("normal! $")<CR><right>
 smap <c-l>              <ESC>A
+imap <c-e>              <c-l>
+imap <c-a>              <C-r>=execute("normal! ^")<CR>
 imap <c-f>              <right>
 imap <c-b>              <left>
 imap <c-k>              <up>
 nn <down>             <nop>
 nn <up>               <nop>
 ino <c-@>              <nop>
-" <<<<<<
+" }}}
 
-" highlight >>>>>>
+" highlight {{{
 " colorscheme atomic
 colorscheme angel
 
@@ -101,9 +104,9 @@ endfunction
 call InitColors()
 
 au ColorScheme * call InitColors()
-" <<<<<<
+" }}}
 
-" gui >>>>>>
+" gui {{{
 if has("gui_running")
   set guioptions-=m
   set guioptions-=T
@@ -123,25 +126,26 @@ hi Search        guifg=red     guibg=NONE    gui=NONE
 hi MatchParen    guifg=red     guibg=NONE    gui=NONE
 hi YcmErrorSign  guifg=red     guibg=NONE    gui=NONE
 " hi BadWhiteSpace guifg=NONE    guibg=6       gui=NONE
-" <<<<<<
+" }}}
 
-" commands >>>>>>
+" commands {{{
 " autocmd BufWritePost .vimrc source %
 cabbrev w!! w !sudo tee %
 cabbrev vimrc e $HOME/.vimrc
+cabbrev cls %s/\s*$//
+command! Format !clang-format -i 
+      \ -style="{BasedOnStyle: Google, IndentWidth: 4}" %
 command! W w !sudo tee %
-command! Clear %s/\s*$//
+command! Cls %s/\s*$//
 command! Vimrc e $HOME/.vimrc
 command! AddHead call AddHead()
 command! Comments call Comments()
-command! CCput !cp ~/.config/color_coded/.color_coded .
 command! Reload source ~/.vimrc
 command! MakeTags !ctags -R .
-command! CLS g/./d
-" <<<<<<
+" }}}
 
-" functions >>>>>>
-" Comments >>>>>>
+" functions {{{
+" Comments {{{
 func! Comments()
   let line = getline('.')
   if &ft == "cpp" || &ft == "cs"
@@ -193,22 +197,23 @@ func! Comments()
   endif
   noh
 endf
-" <<<<<<
 
-" Tittle >>>>>>
+" }}}
+
+" Tittle {{{
 fun! AddHead()
-  call append(0, "======================================================================")
+  call append(0, "=============================================================================")
   " call append(2, "Last modified: ".strftime("%Y-%m-%d %H-%M"))
   " call append(3, "file name: ".expand("%:t"))
   call append(1, "Dsp: ")
   call append(2, "URL: ")
   call append(3, "Author: Sofee ( _s@mail.nwpu.edu.cn )")
-  call append(4, "======================================================================")
+  call append(4, "=============================================================================")
   1,5 call Comments()
 endf
-" <<<<<<
+" }}}
 
-" Compiler >>>>>>
+" Compiler {{{
 fun! SmartComplier()
   if &ft == "cpp"
     if findfile('Makefile', '.') == 'Makefile'
@@ -238,11 +243,13 @@ func! RunResult()
     exec "!php %"
   elseif &ft == "html"
     exec "!chromium %"
+  elseif &ft == "sh"
+    exec "!sh %"
   endif
 endf
-" <<<<<<
+" }}}
 
-" Ultisnips >>>>>>
+" Ultisnips {{{
 fun! g:UltiSnips_Complete()
   call UltiSnips#ExpandSnippet()
   if g:ulti_expand_res == 0
@@ -270,9 +277,9 @@ fun! Ulti_ExpandOrEnter()
   endif
 endf
 inoremap <return> <C-R>=Ulti_ExpandOrEnter()<CR>
-" <<<<<<
+" }}}
 
-" go indent >>>>>>
+" go indent {{{
 fun! GoIndent()
   if getline('.') == ""
     return 'ddO'
@@ -280,11 +287,24 @@ fun! GoIndent()
     return 'A'
   endif
 endf
-" <<<<<<
-" <<<<<<
+" }}}
 
-" Autocmd >>>>>>
-augroup filetype_frmats " >>>>>>
+" change for {{{
+func! ChangeFor()
+  let line = getline('.')
+  if line =~ '^\s*for\s*(.*=\s*0.*'
+    s/\(=\s*\)\@<=0/1/
+    s/<\(=\)\@!/<=/
+  elseif line =~ '^\s*for\s*(.*=\s*1.*'
+    s/\(=\s*\)\@<=1/0/
+    s/<=/</
+  endif
+endf
+" }}}
+" }}}
+
+" Autocmd {{{
+augroup filetype_frmats " {{{
   au!
   au BufNewFile,BufRead *.{vim,vimrc}
         \ setlocal tabstop=2                                       |
@@ -303,9 +323,9 @@ augroup filetype_frmats " >>>>>>
   au BufNewFile,BufRead *.py,*.c,*.cc,*.cpp,*.h*,.{vim,vimrc}
         \ match BadWhiteSpace /\v\s+$/
 
-augroup END " <<<<<<
+augroup END " }}}
 
-" Add FileHeaders >>>>>>
+" Add FileHeaders {{{
 augroup AddFileHeaders
   au!
   au BufNewFile *.sh
@@ -331,18 +351,18 @@ augroup AddFileHeaders
         \ call setline(3, '#endif')                                |
         \ normal! Go
 augroup END
-" <<<<<<
+" }}}
 
-" jump to the last known position >>>>>>
+" jump to the last known position {{{
 au BufReadPost *
       \ if line("'\"") > 1 && line("'\"") <= line("$") && &ft !~# 'commit' |
       \   exe "normal! g`\""                                               |
       \ endif
-" <<<<<<
-" <<<<<<
+" }}}
+" }}}
 
-" Plugin >>>>>>
-" plugin list >>>>>>
+" Plugin {{{
+" plugin list {{{
 " PluginList = [ \
     \ ['Yggdroot/indentLine'],
     \ ['scrooloose/nerdtree'],
@@ -361,9 +381,9 @@ au BufReadPost *
     \ ['junegunn/vim-easy-align'],
     \ ['mhinz/vim-startify']
     \ ]
-" <<<<<<
+" }}}
 
-" startify >>>>>>
+" startify {{{
 let g:startify_bookmarks = [
       \ { 'v': '~/.vimrc' },
       \ { 'z': '~/.zshrc' },
@@ -372,23 +392,23 @@ let g:startify_bookmarks = [
       \ ]
 let g:startify_files_number = 5
 let g:startify_custom_indices = ['a', 's', 'd']
-" <<<<<<
+" }}}
 
-" Indentline >>>>>>
+" Indentline {{{
 let g:indentLine_fileType = [
       \ 'c', 'cpp', 'html', 'php', 'cs', 'shell',
       \ 'config', 'vim', 'python', 'java', 'zsh', 'sh',
       \ 'conf'
       \ ]
 let g:indentLine_char = '┆'
-" <<<<<<
+" }}}
 
-" vim-easy-align >>>>>>
+" vim-easy-align {{{
 xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
-" <<<<<<
+" }}}
 
-" vim-easymotion >>>>>>
+" vim-easymotion {{{
 let g:EasyMotion_do_mapping = 0
 let g:EasyMotion_smartcase = 1
 nmap <leader>f <Plug>(easymotion-overwin-f)
@@ -403,9 +423,9 @@ omap / <Plug>(easymotion-tn)
 
 map  n <Plug>(easymotion-next)
 map  N <Plug>(easymotion-prev)
-" <<<<<<
+" }}}
 
-" AutoPairs & rainbow >>>>>>
+" AutoPairs & rainbow {{{
 let g:AutoPairsFlyMode=0
 let g:AutoPairsMultilineClose=0
 
@@ -421,9 +441,9 @@ let g:rainbow_conf = {
 	\		},
 	\	}
 	\}
-" <<<<<<
+" }}}
 
-" NERDTree & tagbar & undotree >>>>>>
+" NERDTree & tagbar & undotree {{{
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 let g:tagbar_left=0
@@ -435,9 +455,9 @@ if has("persistent_undo")
     set undofile
 endif
 nn <F7> :UndotreeToggle<CR>
-" <<<<<<
+" }}}
 
-" AirLine >>>>>>
+" AirLine {{{
 let g:airline_theme = 'badcat'
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
@@ -490,11 +510,12 @@ let g:airline#extensions#wordcount#enabled = 0
 let g:airline#extensions#whitespace#enabled = 0
 let g:airline#extensions#fugitiveline#enabled = 0
 let g:airline#extensions#hunks#enabled = 0
-" <<<<<<
+" }}}
 
-" YouCompleteMe >>>>>>
+" YouCompleteMe {{{
 let g:ycm_server_python_interpreter='/usr/bin/python3.7'
 let g:ycm_global_ycm_extra_conf='/home/angel/.config/ycmd/ycmd_conf.py'
+let g:ycm_python_binary_path = '/usr/bin/python'
 let g:ycm_min_num_indentifier_candidate_chars=2
 let g:ycm_key_invoke_completion='<c-d>'
 " let g:ycm_key_invoke_completion='<c-@>'
@@ -511,5 +532,5 @@ let g:ycm_semantic_triggers =  {
     \ }
 nn <silent>gd :YcmCompleter GoTo<CR>
 nn <silent><F12> :YcmDiags<CR>
-" <<<<<<
-" <<<<<<
+" }}}
+" }}}

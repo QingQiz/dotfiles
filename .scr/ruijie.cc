@@ -1,12 +1,11 @@
-#include <iostream>
-#include <ctime>
-#include <string>
 #include <curl/curl.h>
-#include <functional>
 #include <fstream>
+#include <functional>
+#include <iostream>
+#include <string>
 
-using std::string;
 using std::ofstream;
+using std::string;
 
 class URL {
     CURL* handle;
@@ -15,8 +14,9 @@ class URL {
     string url;
     ofstream* fout;
     CURLcode status;
-public:
-    URL(): http_header(nullptr), post(), url(), status(CURLE_OK) {
+
+   public:
+    URL() : http_header(nullptr), post(), url(), status(CURLE_OK) {
         handle = curl_easy_init();
         if (handle == nullptr) {
             status = CURLE_FAILED_INIT;
@@ -26,8 +26,10 @@ public:
     void setHttpHeader() {
         if (status != CURLE_OK) return;
 #define SET(x) http_header = curl_slist_append(http_header, x)
-        SET("User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:61.0) Gecko/20100101 Firefox/61.0");
-        SET("Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
+        SET("User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:61.0) "
+            "Gecko/20100101 Firefox/61.0");
+        SET("Accept: "
+            "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8");
         SET("Accept-Language: en-US,en;q=0.5");
         SET("Accept-Encoding: gzip, deflate");
         SET("Connection: keep-alive");
@@ -41,13 +43,14 @@ public:
         url = addr;
         curl_easy_setopt(handle, CURLOPT_URL, url.c_str());
     }
-    void setOutFunc(size_t(*wf)(void*, size_t, size_t, void*) =
-            [](void* buffer, size_t size, size_t nmemb, void* userp) -> size_t {
-                reinterpret_cast<ofstream*>(userp)->write(reinterpret_cast<char*>(buffer), size * nmemb);
-                // std::cout << (char *)buffer << std::endl;
-                return size * nmemb;
-            })
-    {
+    void setOutFunc(size_t (*wf)(void*, size_t, size_t, void*) =
+                        [](void* buffer, size_t size, size_t nmemb,
+                           void* userp) -> size_t {
+        reinterpret_cast<ofstream*>(userp)->write(
+            reinterpret_cast<char*>(buffer), size * nmemb);
+        // std::cout << (char *)buffer << std::endl;
+        return size * nmemb;
+    }) {
         if (status != CURLE_OK) return;
         curl_easy_setopt(handle, CURLOPT_WRITEFUNCTION, *wf);
     }
@@ -58,7 +61,8 @@ public:
     }
     void setDataWirter(string savePath) {
         if (status != CURLE_OK) return;
-        fout = new ofstream(savePath, ofstream::app | ofstream::out | ofstream::binary);
+        fout = new ofstream(savePath,
+                            ofstream::app | ofstream::out | ofstream::binary);
         if (!(*fout)) {
             status = CURLE_READ_ERROR;
             return;
@@ -73,17 +77,16 @@ public:
         if (status != CURLE_OK) return status;
         CURLcode ret = curl_easy_perform(handle);
         if (ret != CURLE_OK) {
-            fout -> close();
+            fout->close();
             return ret;
         }
-        fout -> close();
+        fout->close();
         return ret;
     }
     bool success() { return status != CURLE_OK ? false : true; }
 };
 
-
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
     if (curl_global_init(CURL_GLOBAL_ALL) != CURLE_OK) {
         puts("FAILED");
         return -1;
@@ -108,8 +111,9 @@ int main(int argc, char *argv[]) {
     } else {
         std::cout << "ruijie_login: invalid option " << argv[1] << std::endl;
         puts("Usage: option i(login) to login or o(logout) to logout");
-        puts("\nExample:\n\t`ruijie_login i`\t\tto keep login\n\t`ruijie_login i"
-                " once`\t\tto login in once");
+        puts(
+            "\nExample:\n\t`ruijie_login i`\t\tto keep login\n\t`ruijie_login i"
+            " once`\t\tto login in once");
         return -1;
     }
 
@@ -120,7 +124,10 @@ int main(int argc, char *argv[]) {
     handle.setDataWirter(save_path);
     handle.TimeOut(2L);
 
-    if (!handle.success()) { puts("FAILED"); return -1; }
+    if (!handle.success()) {
+        puts("FAILED");
+        return -1;
+    }
 
     CURLcode check;
     if (action == 0) {
