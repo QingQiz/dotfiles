@@ -126,3 +126,4 @@ push() { cp ./"$1" ~/workspace/this_week/$1 }
 Done() { cp _.cc ./"$1" }
 DoneinJava() { cp ~/workspace/java-workspace/ACM/src/Main.java ./"$1" }
 pushmod() { cp ./$1 ~/workspace/Progeaming-Practice/ACM-ICPC/Mod/$2 }
+pushcode() { cp ./$1 ~/workspace/Progeaming-Practice/ACM-ICPC/CodeHub/$2 }

@@ -184,6 +184,7 @@ if [ "$chc" = "y" ]; then
     install_n xorg-server
     install_n xorg-xinit
     install_n i3-gaps
+    install_c tmux
     install_c compton
     install_c polybar
     install_c rofi

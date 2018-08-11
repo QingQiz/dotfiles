@@ -1,9 +1,9 @@
-snippet us
+snippet using
 using namespace ${1:std};
 endsnippet
 
-snippet using
-using ${1:std}::${2}
+snippet us
+using ${1:std}::${2};
 endsnippet
 
 snippet inc
@@ -18,22 +18,58 @@ snippet que
 std::queue<${1:int}>
 endsnippet
 
+snippet cout
+std::cout << ${1};
+endsnippet
+
 snippet endl
-std::endl;${0}
+std::endl${0}
 endsnippet
 
 snippet def
-#define ${1:TEST}
+#define ${1}
 endsnippet
 
 snippet idef
-#ifdef ${1:TEST}/*>>>>>>*/
+#ifdef ${1}
 $0
-#endif/*<<<<<<*/
+#endif
 endsnippet
 
 snippet indef
-#ifndef ${1:TEST}/*>>>>>>*/
+#ifndef ${1}
 $0
-#endif/*<<<<<<*/
+#endif
+endsnippet
+
+snippet for
+for (int ${1:i} = ${2:0}; $1 <${3: n}; ${4:++$1}) {
+	$0
+}
+endsnippet
+
+snippet for1
+for (int ${1:i} = ${2:1}; $1 <= ${3:n}; ${4:++$1}) {
+	$0
+}
+endsnippet
+
+snippet whi
+while (${1:true}) {
+	$0
+}
+endsnippet
+
+snippet else
+else {
+	$0
+}
+endsnippet
+
+snippet mem
+memset(${1:a}, ${2:0}, sizeof $1);
+endsnippet
+
+snippet pcas
+printf("Case %d: ${1:%d}\n", ${2:c}${3});
 endsnippet
