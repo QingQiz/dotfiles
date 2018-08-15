@@ -9,9 +9,9 @@ set autoread
 set mouse=
 set nu relativenumber
 set cul
+set expandtab
 set ts=4 sw=4
 set tabstop=4 softtabstop=4
-set expandtab
 set autoindent
 set encoding=utf-8
 set backspace=indent,eol,start
@@ -69,7 +69,6 @@ imap <c-e>              <c-l>
 imap <c-a>              <C-r>=execute("normal! ^")<CR>
 imap <c-f>              <right>
 imap <c-b>              <left>
-imap <c-k>              <up>
 nn <down>             <nop>
 nn <up>               <nop>
 ino <c-@>              <nop>
@@ -133,9 +132,9 @@ hi YcmErrorSign  guifg=red     guibg=NONE    gui=NONE
 cabbrev w!! w !sudo tee %
 cabbrev vimrc e $HOME/.vimrc
 cabbrev cls %s/\s*$//
-command! Format !clang-format -i 
+command! W w
+command! Format !clang-format -i
       \ -style="{BasedOnStyle: Google, IndentWidth: 4}" %
-command! W w !sudo tee %
 command! Cls %s/\s*$//
 command! Vimrc e $HOME/.vimrc
 command! AddHead call AddHead()

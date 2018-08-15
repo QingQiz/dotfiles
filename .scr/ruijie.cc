@@ -1,7 +1,9 @@
 #include <curl/curl.h>
+#include <ctime>
 #include <fstream>
 #include <functional>
 #include <iostream>
+#include <random>
 #include <string>
 
 using std::ofstream;
@@ -137,6 +139,7 @@ int main(int argc, char* argv[]) {
         return 0;
     }
 
+    std::default_random_engine e(clock());
     while (true) {
         check = handle.request();
         if (check == CURLE_OPERATION_TIMEDOUT) {
@@ -145,6 +148,8 @@ int main(int argc, char* argv[]) {
             handle.setURL(url[urlUse]);
             std::system("sleep 0.2");
         } else {
+            // e.seed(clock());
+            // std::system(("sleep " + std::to_string(e() % 29)).c_str());
             std::system("sleep 15");
         }
     }
