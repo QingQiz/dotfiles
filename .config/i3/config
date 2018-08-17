@@ -102,10 +102,12 @@ bindsym Mod1+Control+t exec thunar
 
 # by class
 ## floatings
-for_window [class="CrossOver"] floating enable, border pixel 1
-for_window [class="XTerm"]     floating enable, border pixel 1
-for_window [class="Wine"]      floating enable, border pixel 1
-for_window [class="feh"]       floating enable, border pixel 1
+for_window [class="CrossOver"]           floating enable, border pixel 1
+for_window [class="XTerm"]               floating enable, border pixel 1
+for_window [class="Wine"]                floating enable, border pixel 1
+for_window [class="feh"]                 floating enable, border pixel 1
+# for_window [class="Cloud Music"]         floating enable, border pixel 1
+for_window [class="netease-cloud-music"] floating enable, border pixel 1
 
 # assigns focus
 # assign [class="Connman-gtk"] $tag10

@@ -1,0 +1,244 @@
+syntax enable
+filetype plugin indent on
+set nobackup nocompatible noerrorbells
+set modeline
+set autoread
+
+set mouse=
+set expandtab
+set ts=4 sw=4
+set tabstop=4 softtabstop=4
+set autoindent
+set cindent
+set encoding=utf-8
+set backspace=indent,eol,start
+set foldmethod=marker
+
+set colorcolumn=81
+
+" map {{{
+let mapleader = " "
+nn <c-h>              <c-w>h
+nn <c-j>              <c-w>j
+nn <c-k>              <c-w>k
+nn <c-l>              <c-w>l
+nn <silent>]b         :bn<CR>
+nn <silent>[b         :bp<CR>
+nn <silent>[<SPACE>   :call append(line('.') - 1, "")<CR>k
+nn <silent>]<SPACE>   :call append(line('.'), "")<CR>j
+nn <silent>[e         :move -1-1<CR>
+nn <silent>]e         :move +1<CR>
+nn <silent><leader>cl :call Comments()<CR>
+nn <silent><leader>cc :call ChangeFor()<CR>
+nn <silent><F5>       :w<CR>:call SmartComplier()<CR>
+nn <silent><F6>       :call RunResult()<CR>
+nn <expr>A            GoIndent()
+nn <silent>gy         ggVG"+y''zz
+vn \y "+y
+nn \p "+p
+nn H  ^
+vn H  ^
+nn L  $
+vn L  $
+imap <c-l> <C-r>=execute("normal! $")<CR><right>
+smap <c-l> <ESC>A
+imap <c-e> <c-l>
+imap <c-a> <C-r>=execute("normal! ^")<CR>
+imap <c-f> <right>
+imap <c-b> <left>
+nn  <down> <nop>
+nn  <up>   <nop>
+ino <c-@>  <nop>
+vn a' <C-g>'<C-R>-'<ESC>
+vn a` <C-g>`<C-R>-`<ESC>
+vn a" <C-g>"<C-R>-"<ESC>
+vn a( <C-g>(<C-R>-)<ESC>
+vn a) <C-g>(<C-R>-)<ESC>
+vn a[ <C-g>[<C-R>-]<ESC>
+vn a] <C-g>[<C-R>-]<ESC>
+vn a{ <C-g>{<C-R>-}<ESC>
+vn a} <C-g>{<C-R>-}<ESC>
+vn a< <C-g><<C-R>-><ESC>
+vn a> <C-g><<C-R>-><ESC>
+" }}}
+
+" let g:atomic_mode = 3
+" let g:atomic_italic = 1
+" let g:atomic_bold = 1
+" let g:atomic_underline = 1
+" let g:atomic_undercurl = 1
+" colorscheme atomic
+
+hi MatchParen    ctermfg=red   ctermbg=NONE
+hi PMenu         ctermfg=111
+hi BadWhiteSpace ctermbg=0
+hi ColorColumn   ctermbg=0
+hi Visual        ctermfg=NONE ctermbg=238  cterm=NONE
+hi Folded        ctermfg=240  ctermbg=NONE cterm=NONE
+
+cabbrev w!! w !sudo tee %
+cabbrev vimrc e /home/angel/.vimrc_simple
+cabbrev cls %s/\s*$//
+command! Format !clang-format -i
+      \ -style="{BasedOnStyle: Google, IndentWidth: 4}" %
+command! Cls %s/\s*$//
+command! AddHead call AddHead()
+command! Reload source ~/.vimrc_simple
+
+" functions {{{
+" Comments {{{
+func! Comments()
+  let line = getline('.')
+  if &ft == "cpp" || &ft == "cs"
+    if line =~'.*\/\*.*$'
+      s!/\*\(\_.\{-}\)\*/!\1!
+    elseif line =~'^\s*\/\/.*$'
+      s!^\(\s*\)//\s*!\1!
+    else
+      s!^\s*!&// !
+    endif
+  elseif &ft == "java"
+    if line =~'^\s*\/\/.*$'
+      s!^\(\s*\)//\s*!\1!
+    else
+      s!^\s*!&// !
+    endif
+  elseif &ft == "vim"
+    if line =~'^\s*\".*'
+      s/^\(\s*\)"\s*/\1/
+    else
+      s/^\s*/&" /
+    endif
+  elseif &ft == "lisp"
+    if line =~'^\s*;;.*'
+      s/^\(\s*\);;\s*/\1/
+    else
+      s/^\s*/&;; /
+    endif
+  elseif &ft == 'dosini'
+    if line =~'^\s*;.*'
+      s/^\(\s*\);\s*/\1/
+    else
+      s/^\s*/&; /
+    en
+  elseif &ft == "html"
+    if line =~ '^\s*<!--\s*.*\s*-->$'
+      s/\(\s*\)<!--\s*\(.*\)\s*-->/\1\2/
+      s/\s*$//
+    else
+      s/\s*$//
+      s/\(\s*\)\(.*\)\s*/\1<!-- \2 -->/
+    en
+  else
+    if line =~'^\s*#.*'
+      s/^\(\s*\)#\s*/\1/
+    else
+      s/^\s*/&# /
+    endif
+  endif
+  noh
+endf
+
+" }}}
+
+" Tittle {{{
+fun! AddHead()
+  call append(0, "=============================================================================")
+  " call append(2, "Last modified: ".strftime("%Y-%m-%d %H-%M"))
+  " call append(3, "file name: ".expand("%:t"))
+  call append(1, "Dsp: ")
+  call append(2, "URL: ")
+  call append(3, "Author: Sofee ( _s@mail.nwpu.edu.cn )")
+  call append(4, "=============================================================================")
+  1,5 call Comments()
+endf
+" }}}
+
+" Compiler {{{
+fun! SmartComplier()
+  if &ft == "cpp"
+    if findfile('Makefile', '.') == 'Makefile'
+      exec "!make"
+    elseif findfile('Makefile') == '' && findfile('CMakeLists.txt', '.') == 'CMakeLists.txt'
+      exec "!(cmake . && make)"
+    else
+      exec "!g++ -Wall -o now % -g -lm"
+    en
+  elseif &ft == "java"
+    exec "!javac %"
+  elseif &ft == "cs"
+    exec "!mcs %"
+  endif
+endf
+
+func! RunResult()
+  if &ft == "cpp"
+    exec "!./now"
+  elseif &ft == "python"
+    exec "!python3 %"
+  elseif &ft == "java"
+    exec "!java %<"
+  elseif &ft == "cs"
+    exec "!mono ./%<.exe"
+  elseif &ft == "php"
+    exec "!php %"
+  elseif &ft == "html"
+    exec "!chromium %"
+  elseif &ft == "sh"
+    exec "!sh %"
+  endif
+endf
+" }}}
+
+" go indent {{{
+fun! GoIndent()
+  if getline('.') == ""
+    return 'ddO'
+  else
+    return 'A'
+  endif
+endf
+" }}}
+
+" change for {{{
+func! ChangeFor()
+  let line = getline('.')
+  if line =~ '^\s*for\s*(.*=\s*0.*'
+    s/\(=\s*\)\@<=0/1/
+    s/<\(=\)\@!/<=/
+  elseif line =~ '^\s*for\s*(.*=\s*1.*'
+    s/\(=\s*\)\@<=1/0/
+    s/<=/</
+  endif
+endf
+" }}}
+" }}}
+
+augroup filetype_frmats " {{{
+  au!
+  au BufNewFile,BufRead *.{vim,vimrc}
+        \ setlocal tabstop=2                                       |
+        \ setlocal softtabstop=2                                   |
+        \ setlocal shiftwidth=2                                    |
+        \ setlocal foldmarker={{{,}}}
+  au BufNewFile,BufRead *.py
+        \ setlocal autoindent                                      |
+        \ setlocal nowrap                                          |
+        \ setlocal sidescroll=5
+  au BufNewFile,BufRead *.js,*.html,*.php
+        \ setlocal tabstop=2                                       |
+        \ setlocal softtabstop=2                                   |
+        \ setlocal shiftwidth=2
+  au BufNewFile,BufRead *.cc,*.c,*.cpp
+        \ setlocal foldmarker=#ifdef,#endif
+  au BufNewFile,BufRead *.py,*.c,*.cc,*.cpp,*.h*,.{vim,vimrc}
+        \ match BadWhiteSpace /\v\s+$/
+
+augroup END " }}}
+
+" jump to the last known position {{{
+au BufReadPost *
+      \ if line("'\"") > 1 && line("'\"") <= line("$") && &ft !~# 'commit' |
+      \   exe "normal! g`\""                                               |
+      \ endif
+" }}}

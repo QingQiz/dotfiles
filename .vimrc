@@ -34,44 +34,52 @@ set rtp+=/home/angel/.vim/vimfiles/indentLine/after
 " map {{{
 let mapleader = " "
 
-nn <c-h>              <c-w>h
-nn <c-j>              <c-w>j
-nn <c-k>              <c-w>k
-nn <c-l>              <c-w>l
-nn <silent>]b         :bn<CR>
-nn <silent>[b         :bp<CR>
-nn Q                  :q<CR>
+nn <c-h> <c-w>h
+nn <c-j> <c-w>j
+nn <c-k> <c-w>k
+nn <c-l> <c-w>l
+nn <silent>]b :bn<CR>
+nn <silent>[b :bp<CR>
 nn <silent><F3>       :NERDTreeToggle<CR>
 nn <silent><F2>       :TagbarToggle<CR>
 nn <silent>[<SPACE>   :call append(line('.') - 1, "")<CR>k
 nn <silent>]<SPACE>   :call append(line('.'), "")<CR>j
 nn <silent>[e         :move -1-1<CR>
 nn <silent>]e         :move +1<CR>
-nn <leader>Q          :q!
 nn <silent><leader>cl :call Comments()<CR>
 nn <silent><leader>cc :call ChangeFor()<CR>
 nn <silent><F5>       :w<CR>:call SmartComplier()<CR>
 nn <silent><F6>       :call RunResult()<CR>
 nn <expr>A            GoIndent()
-ino JK                <ESC>
-ino <c-j>             <ESC>
 nn <silent>gy         ggVG"+y''zz
-vn \y                 "+y
-nn \p                 "+p
-nn \n                 :noh<CR>
-nn H                  ^
-vn H                  ^
-nn L                  $
-vn L                  $
-imap <c-l>              <C-r>=execute("normal! $")<CR><right>
-smap <c-l>              <ESC>A
-imap <c-e>              <c-l>
-imap <c-a>              <C-r>=execute("normal! ^")<CR>
-imap <c-f>              <right>
-imap <c-b>              <left>
-nn <down>             <nop>
-nn <up>               <nop>
-ino <c-@>              <nop>
+vn \y "+y
+nn \p "+p
+nn \n :noh<CR>
+nn H  ^
+vn H  ^
+nn L  $
+vn L  $
+imap <c-l> <C-r>=execute("normal! $")<CR><right>
+smap <c-l> <ESC>A
+imap <c-e> <c-l>
+imap <c-a> <C-r>=execute("normal! ^")<CR>
+imap <c-f> <right>
+imap <c-b> <left>
+nn  <down> <nop>
+nn  <up>   <nop>
+ino <c-@>  <nop>
+
+vn a' <C-g>'<C-R>-'<ESC>
+vn a` <C-g>`<C-R>-`<ESC>
+vn a" <C-g>"<C-R>-"<ESC>
+vn a( <C-g>(<C-R>-)<ESC>
+vn a) <C-g>(<C-R>-)<ESC>
+vn a[ <C-g>[<C-R>-]<ESC>
+vn a] <C-g>[<C-R>-]<ESC>
+vn a{ <C-g>{<C-R>-}<ESC>
+vn a} <C-g>{<C-R>-}<ESC>
+vn a< <C-g><<C-R>-><ESC>
+vn a> <C-g><<C-R>-><ESC>
 " }}}
 
 " highlight {{{
