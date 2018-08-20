@@ -18,48 +18,47 @@ set colorcolumn=81
 
 " map {{{
 let mapleader = " "
-nn <c-h>              <c-w>h
-nn <c-j>              <c-w>j
-nn <c-k>              <c-w>k
-nn <c-l>              <c-w>l
-nn <silent>]b         :bn<CR>
-nn <silent>[b         :bp<CR>
-nn <silent>[<SPACE>   :call append(line('.') - 1, "")<CR>k
-nn <silent>]<SPACE>   :call append(line('.'), "")<CR>j
-nn <silent>[e         :move -1-1<CR>
-nn <silent>]e         :move +1<CR>
-nn <silent><leader>cl :call Comments()<CR>
-nn <silent><leader>cc :call ChangeFor()<CR>
-nn <silent><F5>       :w<CR>:call SmartComplier()<CR>
-nn <silent><F6>       :call RunResult()<CR>
-nn <expr>A            GoIndent()
-nn <silent>gy         ggVG"+y''zz
-vn \y "+y
-nn \p "+p
-nn H  ^
-vn H  ^
-nn L  $
-vn L  $
-imap <c-l> <C-r>=execute("normal! $")<CR><right>
-smap <c-l> <ESC>A
-imap <c-e> <c-l>
-imap <c-a> <C-r>=execute("normal! ^")<CR>
-imap <c-f> <right>
-imap <c-b> <left>
-nn  <down> <nop>
-nn  <up>   <nop>
-ino <c-@>  <nop>
-vn a' <C-g>'<C-R>-'<ESC>
-vn a` <C-g>`<C-R>-`<ESC>
-vn a" <C-g>"<C-R>-"<ESC>
-vn a( <C-g>(<C-R>-)<ESC>
-vn a) <C-g>(<C-R>-)<ESC>
-vn a[ <C-g>[<C-R>-]<ESC>
-vn a] <C-g>[<C-R>-]<ESC>
-vn a{ <C-g>{<C-R>-}<ESC>
-vn a} <C-g>{<C-R>-}<ESC>
-vn a< <C-g><<C-R>-><ESC>
-vn a> <C-g><<C-R>-><ESC>
+nnoremap <c-h>              <c-w>h
+nnoremap <c-j>              <c-w>j
+nnoremap <c-k>              <c-w>k
+nnoremap <c-l>              <c-w>l
+nnoremap <silent>]b         :bn<CR>
+nnoremap <silent>[b         :bp<CR>
+nnoremap <silent>[<SPACE>   :call append(line('.') - 1, "")<CR>k
+nnoremap <silent>]<SPACE>   :call append(line('.'), "")<CR>j
+nnoremap <silent>[e         :move -1-1<CR>
+nnoremap <silent>]e         :move +1<CR>
+nnoremap <silent><leader>cl :call Comments()<CR>
+nnoremap <silent><leader>cc :call ChangeFor()<CR>
+nnoremap <silent><F5>       :w<CR>:call SmartComplier()<CR>
+nnoremap <silent><F6>       :call RunResult()<CR>
+nnoremap <expr>A            GoIndent()
+nnoremap <silent>gy         ggVG"+y''zz
+vnoremap \y                 "+y
+nnoremap \p                 "+p
+nnoremap H                  ^
+vnoremap H                  ^
+nnoremap L                  $
+vnoremap L                  $
+inoremap <c-l>              <C-r>=execute("normal! $")<CR><right>
+inoremap <c-a>              <C-r>=execute("normal! ^")<CR>
+snoremap <c-l>              <ESC>A
+inoremap <c-f>              <right>
+inoremap <c-b>              <left>
+nnoremap <down>             <nop>
+nnoremap <up>               <nop>
+inoremap <c-@>              <nop>
+vnoremap a'                 <C-g>'<C-R>-'<ESC>
+vnoremap a`                 <C-g>`<C-R>-`<ESC>
+vnoremap a"                 <C-g>"<C-R>-"<ESC>
+vnoremap a(                 <C-g>(<C-R>-)<ESC>
+vnoremap a)                 <C-g>(<C-R>-)<ESC>
+vnoremap a[                 <C-g>[<C-R>-]<ESC>
+vnoremap a]                 <C-g>[<C-R>-]<ESC>
+vnoremap a{                 <C-g>{<C-R>-}<ESC>
+vnoremap a}                 <C-g>{<C-R>-}<ESC>
+vnoremap a<                 <C-g><<C-R>-><ESC>
+vnoremap a>                 <C-g><<C-R>-><ESC>
 " }}}
 
 " let g:atomic_mode = 3
@@ -69,7 +68,7 @@ vn a> <C-g><<C-R>-><ESC>
 " let g:atomic_undercurl = 1
 " colorscheme atomic
 
-hi MatchParen    ctermfg=red   ctermbg=NONE
+hi MatchParen    ctermfg=red  ctermbg=NONE
 hi PMenu         ctermfg=111
 hi BadWhiteSpace ctermbg=0
 hi ColorColumn   ctermbg=0
@@ -192,8 +191,12 @@ endf
 
 " go indent {{{
 fun! GoIndent()
-  if getline('.') == ""
-    return 'ddO'
+  if getline('.') =~ '^\s*$'
+    if line('.') == line('$')
+      return 'ddo'
+    else
+      return 'ddO'
+    endif
   else
     return 'A'
   endif
@@ -216,7 +219,7 @@ endf
 
 augroup filetype_frmats " {{{
   au!
-  au BufNewFile,BufRead *.{vim,vimrc}
+  au BufNewFile,BufRead *.{vim,vimrc,vimrc_simple}
         \ setlocal tabstop=2                                       |
         \ setlocal softtabstop=2                                   |
         \ setlocal shiftwidth=2                                    |

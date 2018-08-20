@@ -19,67 +19,61 @@ set backspace=indent,eol,start
 set colorcolumn=81
 set fillchars=vert:\ ,fold:-
 
-" set ignorecase
-" set smartcase
-" set hlsearch
 set wildmenu
-set foldmethod=marker foldmarker={{{,}}}
+set foldmethod=marker
 set gcr=a:block-blinkon0
 
 set path+=**
-set rtp+=/home/angel/.vim/vimfiles/*  "rtp for root
+set rtp+=/home/angel/.vim/vimfiles/*
 set rtp+=/home/angel/.vim/vimfiles/indentLine/after
 " }}}
 
 " map {{{
 let mapleader = " "
-
-nn <c-h> <c-w>h
-nn <c-j> <c-w>j
-nn <c-k> <c-w>k
-nn <c-l> <c-w>l
-nn <silent>]b :bn<CR>
-nn <silent>[b :bp<CR>
-nn <silent><F3>       :NERDTreeToggle<CR>
-nn <silent><F2>       :TagbarToggle<CR>
-nn <silent>[<SPACE>   :call append(line('.') - 1, "")<CR>k
-nn <silent>]<SPACE>   :call append(line('.'), "")<CR>j
-nn <silent>[e         :move -1-1<CR>
-nn <silent>]e         :move +1<CR>
-nn <silent><leader>cl :call Comments()<CR>
-nn <silent><leader>cc :call ChangeFor()<CR>
-nn <silent><F5>       :w<CR>:call SmartComplier()<CR>
-nn <silent><F6>       :call RunResult()<CR>
-nn <expr>A            GoIndent()
-nn <silent>gy         ggVG"+y''zz
-vn \y "+y
-nn \p "+p
-nn \n :noh<CR>
-nn H  ^
-vn H  ^
-nn L  $
-vn L  $
-imap <c-l> <C-r>=execute("normal! $")<CR><right>
-smap <c-l> <ESC>A
-imap <c-e> <c-l>
-imap <c-a> <C-r>=execute("normal! ^")<CR>
-imap <c-f> <right>
-imap <c-b> <left>
-nn  <down> <nop>
-nn  <up>   <nop>
-ino <c-@>  <nop>
-
-vn a' <C-g>'<C-R>-'<ESC>
-vn a` <C-g>`<C-R>-`<ESC>
-vn a" <C-g>"<C-R>-"<ESC>
-vn a( <C-g>(<C-R>-)<ESC>
-vn a) <C-g>(<C-R>-)<ESC>
-vn a[ <C-g>[<C-R>-]<ESC>
-vn a] <C-g>[<C-R>-]<ESC>
-vn a{ <C-g>{<C-R>-}<ESC>
-vn a} <C-g>{<C-R>-}<ESC>
-vn a< <C-g><<C-R>-><ESC>
-vn a> <C-g><<C-R>-><ESC>
+nnoremap <c-h>              <c-w>h
+nnoremap <c-j>              <c-w>j
+nnoremap <c-k>              <c-w>k
+nnoremap <c-l>              <c-w>l
+nnoremap <silent>]b         :bn<CR>
+nnoremap <silent>[b         :bp<CR>
+nnoremap <silent><F3>       :NERDTreeToggle<CR>
+nnoremap <silent><F2>       :TagbarToggle<CR>
+nnoremap <silent>[<SPACE>   :call append(line('.') - 1, "")<CR>k
+nnoremap <silent>]<SPACE>   :call append(line('.'), "")<CR>j
+nnoremap <silent>[e         :move -1-1<CR>
+nnoremap <silent>]e         :move +1<CR>
+nnoremap <silent><leader>cl :call Comments()<CR>
+nnoremap <silent><leader>cc :call ChangeFor()<CR>
+nnoremap <silent><F5>       :w<CR>:call SmartComplier()<CR>
+nnoremap <silent><F6>       :call RunResult()<CR>
+nnoremap <expr>A            GoIndent()
+nnoremap <silent>gy         ggVG"+y''zz
+vnoremap \y                 "+y
+nnoremap \p                 "+p
+nnoremap \n                 :noh<CR>
+nnoremap H                  ^
+vnoremap H                  ^
+nnoremap L                  $
+vnoremap L                  $
+inoremap <c-l>              <C-r>=execute("normal! $")<CR><right>
+snoremap <c-l>              <ESC>A
+inoremap <c-a>              <C-r>=execute("normal! ^")<CR>
+inoremap <c-f>              <right>
+inoremap <c-b>              <left>
+nnoremap <down>             <nop>
+nnoremap <up>               <nop>
+inoremap <c-@>              <nop>
+vnoremap a'                 <C-g>'<C-R>-'<ESC>
+vnoremap a`                 <C-g>`<C-R>-`<ESC>
+vnoremap a"                 <C-g>"<C-R>-"<ESC>
+vnoremap a(                 <C-g>(<C-R>-)<ESC>
+vnoremap a)                 <C-g>(<C-R>-)<ESC>
+vnoremap a[                 <C-g>[<C-R>-]<ESC>
+vnoremap a]                 <C-g>[<C-R>-]<ESC>
+vnoremap a{                 <C-g>{<C-R>-}<ESC>
+vnoremap a}                 <C-g>{<C-R>-}<ESC>
+vnoremap a<                 <C-g><<C-R>-><ESC>
+vnoremap a>                 <C-g><<C-R>-><ESC>
 " }}}
 
 " highlight {{{
@@ -289,7 +283,11 @@ inoremap <return> <C-R>=Ulti_ExpandOrEnter()<CR>
 " go indent {{{
 fun! GoIndent()
   if getline('.') == ""
-    return 'ddO'
+    if line('.') == line('$')
+      return 'ddo'
+    else
+      return 'ddO'
+    endif
   else
     return 'A'
   endif
@@ -313,10 +311,11 @@ endf
 " Autocmd {{{
 augroup filetype_frmats " {{{
   au!
-  au BufNewFile,BufRead *.{vim,vimrc}
+  au BufNewFile,BufRead *.{vim,vimrc,vimrc_simple}
         \ setlocal tabstop=2                                       |
         \ setlocal softtabstop=2                                   |
-        \ setlocal shiftwidth=2
+        \ setlocal shiftwidth=2                                    |
+        \ setlocal foldmarker={{{,}}}
   au BufNewFile,BufRead *.py
         \ setlocal autoindent                                      |
         \ setlocal nowrap                                          |
@@ -325,6 +324,8 @@ augroup filetype_frmats " {{{
         \ setlocal tabstop=2                                       |
         \ setlocal softtabstop=2                                   |
         \ setlocal shiftwidth=2
+  au BufNewFile,BufRead *.c,*.cc,*.cpp
+        \ setlocal foldmarker=#ifdef,#endif
   au BufNewFile,BufRead *.html
         \ let b:AutoPairs = {"<": ">", '"': '"', "'": "'", '{': '}', '(': ')', '[': ']'}
   au BufNewFile,BufRead *.py,*.c,*.cc,*.cpp,*.h*,.{vim,vimrc}
