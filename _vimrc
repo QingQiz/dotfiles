@@ -74,7 +74,7 @@ hi Visual        ctermfg=NONE ctermbg=238  cterm=NONE
 hi Folded        ctermfg=240  ctermbg=NONE cterm=NONE
 
 cabbrev c call SmartComplier()
-cabbrev r !.\now.exe
+cabbrev r call RunResult()
 cabbrev vimrc e $HOME/_vimrc
 cabbrev cls %s/\s*$//
 command! AddHead call AddHead()
@@ -157,7 +157,7 @@ fun! SmartComplier()
     elseif findfile('Makefile') == '' && findfile('CMakeLists.txt', '.') == 'CMakeLists.txt'
       exec "!(cmake . && make)"
     else
-      exec "!g++ -Wall --std=c++11 -o now % -g -lm"
+      exec "!g++ -Wall -std=c++11 -o now % -g -lm"
     en
   elseif &ft == "java"
     exec "!javac %"
@@ -168,7 +168,7 @@ endf
 
 func! RunResult()
   if &ft == "cpp"
-    exec "!./now"
+    !.\now.exe
   elseif &ft == "python"
     exec "!python3 %"
   elseif &ft == "java"
