@@ -131,9 +131,13 @@ hi YcmErrorSign  guifg=red     guibg=NONE    gui=NONE
 
 " commands {{{
 " autocmd BufWritePost .vimrc source %
+cabbrev c call SmartComplier()
+cabbrev r call RunResult()
 cabbrev w!! w !sudo tee %
 cabbrev vimrc e $HOME/.vimrc
 cabbrev cls %s/\s*$//
+command! Compile call SmartComplier();
+command! Run call RunResult();
 command! W w
 command! Format !clang-format -i
       \ -style="{BasedOnStyle: Google, IndentWidth: 4}" %
@@ -211,6 +215,15 @@ fun! AddHead()
   call append(3, "Author: Sofee ( _s@mail.nwpu.edu.cn )")
   call append(4, "=============================================================================")
   1,5 call Comments()
+endf
+
+fun! AddTail()
+  call append('$', "=============================================================================")
+  call append('$', "Keys:")
+  call append('$', "Description:")
+  call append('$', "Solution:")
+  call append('$', "=============================================================================")
+  $-4,$ call Comments()
 endf
 " }}}
 

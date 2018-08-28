@@ -11,14 +11,7 @@ for i in *.jpg; do
 done
 range=${#files[@]}
 
-chc=$(cat $script_dir/.nowpap)
-[[ $chc == "" ]] && chc=0
-
-if [[ $# == 0 ]]; then
-    chc=$(($chc + 1))
-else
-    chc=$(($chc + $1))
-fi
+chc=$RANDOM
 chc=$(($chc % $range))
 
 feh --bg-fill ${files[$chc]}

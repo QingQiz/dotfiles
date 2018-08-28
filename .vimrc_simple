@@ -75,9 +75,13 @@ hi ColorColumn   ctermbg=0
 hi Visual        ctermfg=NONE ctermbg=238  cterm=NONE
 hi Folded        ctermfg=240  ctermbg=NONE cterm=NONE
 
+cabbrev c call SmartComplier()
+cabbrev r call RunResult()
 cabbrev w!! w !sudo tee %
 cabbrev vimrc e /home/angel/.vimrc_simple
 cabbrev cls %s/\s*$//
+command! Compile call SmartComplier();
+command! Run call RunResult();
 command! Format !clang-format -i
       \ -style="{BasedOnStyle: Google, IndentWidth: 4}" %
 command! Cls %s/\s*$//
@@ -145,11 +149,17 @@ fun! AddHead()
   call append(0, "=============================================================================")
   " call append(2, "Last modified: ".strftime("%Y-%m-%d %H-%M"))
   " call append(3, "file name: ".expand("%:t"))
-  call append(1, "Dsp: ")
+  call append(1, "Tittle: ")
   call append(2, "URL: ")
   call append(3, "Author: Sofee ( _s@mail.nwpu.edu.cn )")
   call append(4, "=============================================================================")
+  call append('$', "=============================================================================")
+  call append('$', "Keys:")
+  call append('$', "Description:")
+  call append('$', "Solution:")
+  call append('$', "=============================================================================")
   1,5 call Comments()
+  $-4,$ call Comments()
 endf
 " }}}
 

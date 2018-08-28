@@ -174,7 +174,7 @@ bindsym Mod1+Ctrl+l exec betterlockscreen --lock
 bindsym Mod1+Ctrl+s exec betterlockscreen --lock & exec systemctl suspend
 
 # screenshot
-bindsym Mod1+Ctrl+k exec import -window root screenshot.jpg
+bindsym Mod1+Ctrl+k exec sh ~/.scr/screenshot.sh
 
 # sound & brightness
 bindsym XF86AudioRaiseVolume  exec --no-startup-id amixer -q sset Master 3%+
@@ -225,6 +225,8 @@ bindsym Mod1+x exec sh ~/.scr/touchtouch.sh
 # Others
 bindsym XF86Mail exec --no-startup-id thunderbird
 bindsym Mod1+n exec sh ~/.config/i3/wallpaper.sh
+bindsym Mod1+p exec sh ~/.config/i3/wallpaper.sh -1
+bindsym Mod1+Shift+n exec sh ~/.config/i3/wallpaper_random.sh
 exec i3-config-wizard
 exec --no-startup-id i3-msg "workspace 1"
 exec compton &

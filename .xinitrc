@@ -35,4 +35,3 @@ fi
 [ -f ~/.xprofile ] && source ~/.xprofile
 
 exec i3
-#exec i3 -V >> ~/i3log-$(date +'%F-%k-%M-%S') 2>&1
