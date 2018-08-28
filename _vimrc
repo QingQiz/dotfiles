@@ -1,0 +1,243 @@
+syntax enable
+filetype plugin indent on
+set nobackup nocompatible noerrorbells
+set modeline
+set autoread
+
+set mouse=
+set expandtab
+set ts=4 sw=4
+set tabstop=4 softtabstop=4
+set autoindent
+set cindent
+set encoding=utf-8
+set backspace=indent,eol,start
+set foldmethod=marker
+
+" map {{{
+let mapleader = " "
+nnoremap <c-h>              <c-w>h
+nnoremap <c-j>              <c-w>j
+nnoremap <c-k>              <c-w>k
+nnoremap <c-l>              <c-w>l
+nnoremap <silent>]b         :bn<CR>
+nnoremap <silent>[b         :bp<CR>
+nnoremap <silent>[<SPACE>   :call append(line('.') - 1, "")<CR>k
+nnoremap <silent>]<SPACE>   :call append(line('.'), "")<CR>j
+nnoremap <silent>[e         :move -1-1<CR>
+nnoremap <silent>]e         :move +1<CR>
+nnoremap <silent><leader>cl :call Comments()<CR>
+nnoremap <silent><leader>cc :call ChangeFor()<CR>
+nnoremap <expr>A            GoIndent()
+nnoremap <silent>gy         ggVG"+y''zz
+vnoremap \y                 "+y
+nnoremap \p                 "+p
+nnoremap H                  ^
+vnoremap H                  ^
+nnoremap L                  $
+vnoremap L                  $
+inoremap <c-l>              <C-r>=execute("normal! $")<CR><right>
+inoremap <c-a>              <C-r>=execute("normal! ^")<CR>
+snoremap <c-l>              <ESC>A
+inoremap <c-f>              <right>
+inoremap <c-b>              <left>
+nnoremap <down>             <nop>
+nnoremap <up>               <nop>
+inoremap <c-@>              <nop>
+vnoremap a'                 <C-g>'<C-R>-'<ESC>
+vnoremap a`                 <C-g>`<C-R>-`<ESC>
+vnoremap a"                 <C-g>"<C-R>-"<ESC>
+vnoremap a(                 <C-g>(<C-R>-)<ESC>
+vnoremap a)                 <C-g>(<C-R>-)<ESC>
+vnoremap a[                 <C-g>[<C-R>-]<ESC>
+vnoremap a]                 <C-g>[<C-R>-]<ESC>
+vnoremap a{                 <C-g>{<C-R>-}<ESC>
+vnoremap a}                 <C-g>{<C-R>-}<ESC>
+vnoremap a<                 <C-g><<C-R>-><ESC>
+vnoremap a>                 <C-g><<C-R>-><ESC>
+" }}}
+
+if has("gui_running")
+  set guioptions-=m
+  set guioptions-=T
+  set guioptions-=L
+  set guioptions-=r
+  set guioptions-=b
+  set showtabline=0
+endif
+
+hi MatchParen    ctermfg=red  ctermbg=NONE
+hi PMenu         ctermfg=111
+hi BadWhiteSpace ctermbg=0
+hi ColorColumn   ctermbg=0
+hi Visual        ctermfg=NONE ctermbg=238  cterm=NONE
+hi Folded        ctermfg=240  ctermbg=NONE cterm=NONE
+
+cabbrev c call SmartComplier()
+cabbrev r call RunResult()
+cabbrev vimrc e $HOME/_vimrc
+cabbrev cls %s/\s*$//
+command! AddHead call AddHead()
+command! Reload source $HOME/_vimrc
+
+" functions {{{
+" Comments {{{
+func! Comments()
+  let line = getline('.')
+  if &ft == "cpp" || &ft == "cs"
+    if line =~'.*\/\*.*$'
+      s!/\*\(\_.\{-}\)\*/!\1!
+    elseif line =~'^\s*\/\/.*$'
+      s!^\(\s*\)//\s*!\1!
+    else
+      s!^\s*!&// !
+    endif
+  elseif &ft == "java"
+    if line =~'^\s*\/\/.*$'
+      s!^\(\s*\)//\s*!\1!
+    else
+      s!^\s*!&// !
+    endif
+  elseif &ft == "vim"
+    if line =~'^\s*\".*'
+      s/^\(\s*\)"\s*/\1/
+    else
+      s/^\s*/&" /
+    endif
+  elseif &ft == "lisp"
+    if line =~'^\s*;;.*'
+      s/^\(\s*\);;\s*/\1/
+    else
+      s/^\s*/&;; /
+    endif
+  elseif &ft == 'dosini'
+    if line =~'^\s*;.*'
+      s/^\(\s*\);\s*/\1/
+    else
+      s/^\s*/&; /
+    en
+  elseif &ft == "html"
+    if line =~ '^\s*<!--\s*.*\s*-->$'
+      s/\(\s*\)<!--\s*\(.*\)\s*-->/\1\2/
+      s/\s*$//
+    else
+      s/\s*$//
+      s/\(\s*\)\(.*\)\s*/\1<!-- \2 -->/
+    en
+  else
+    if line =~'^\s*#.*'
+      s/^\(\s*\)#\s*/\1/
+    else
+      s/^\s*/&# /
+    endif
+  endif
+  noh
+endf
+
+" }}}
+
+" Tittle {{{
+fun! AddHead()
+  call append(0, "=============================================================================")
+  " call append(2, "Last modified: ".strftime("%Y-%m-%d %H-%M"))
+  " call append(3, "file name: ".expand("%:t"))
+  call append(1, "Dsp: ")
+  call append(2, "URL: ")
+  call append(3, "Author: Sofee ( _s@mail.nwpu.edu.cn )")
+  call append(4, "=============================================================================")
+  1,5 call Comments()
+endf
+" }}}
+
+" Compiler {{{
+fun! SmartComplier()
+  if &ft == "cpp"
+    if findfile('Makefile', '.') == 'Makefile'
+      exec "!make"
+    elseif findfile('Makefile') == '' && findfile('CMakeLists.txt', '.') == 'CMakeLists.txt'
+      exec "!(cmake . && make)"
+    else
+      exec "!g++ -Wall -std=c++11 -o now % -g -lm"
+    en
+  elseif &ft == "java"
+    exec "!javac %"
+  elseif &ft == "cs"
+    exec "!mcs %"
+  endif
+endf
+
+func! RunResult()
+  if &ft == "cpp"
+    !.\now.exe
+  elseif &ft == "python"
+    exec "!python3 %"
+  elseif &ft == "java"
+    exec "!java %<"
+  elseif &ft == "cs"
+    exec "!mono ./%<.exe"
+  elseif &ft == "php"
+    exec "!php %"
+  elseif &ft == "html"
+    exec "!chromium %"
+  elseif &ft == "sh"
+    exec "!sh %"
+  endif
+endf
+" }}}
+
+" go indent {{{
+fun! GoIndent()
+  if getline('.') =~ '^\s*$'
+    if line('.') == line('$')
+      return 'ddo'
+    else
+      return 'ddO'
+    endif
+  else
+    return 'A'
+  endif
+endf
+" }}}
+
+" change for {{{
+func! ChangeFor()
+  let line = getline('.')
+  if line =~ '^\s*for\s*(.*=\s*0.*'
+    s/\(=\s*\)\@<=0/1/
+    s/<\(=\)\@!/<=/
+  elseif line =~ '^\s*for\s*(.*=\s*1.*'
+    s/\(=\s*\)\@<=1/0/
+    s/<=/</
+  endif
+endf
+" }}}
+" }}}
+
+augroup filetype_frmats
+  au!
+  au BufNewFile,BufRead *.{vim,vimrc,vimrc_simple}
+        \ setlocal tabstop=2                                       |
+        \ setlocal softtabstop=2                                   |
+        \ setlocal shiftwidth=2                                    |
+        \ setlocal foldmarker={{{,}}}
+  au BufNewFile,BufRead *.py
+        \ setlocal autoindent                                      |
+        \ setlocal nowrap                                          |
+        \ setlocal sidescroll=5
+  au BufNewFile,BufRead *.js,*.html,*.php
+        \ setlocal tabstop=2                                       |
+        \ setlocal softtabstop=2                                   |
+        \ setlocal shiftwidth=2
+  au BufNewFile,BufRead *.cc,*.c,*.cpp
+        \ setlocal foldmarker=#ifdef,#endif
+  au BufNewFile,BufRead *.py,*.c,*.cc,*.cpp,*.h*,.{vim,vimrc}
+        \ match BadWhiteSpace /\v\s+$/
+
+augroup END
+
+au BufReadPost *
+      \ if line("'\"") > 1 && line("'\"") <= line("$") && &ft !~# 'commit' |
+      \   exe "normal! g`\""                                               |
+      \ endif
+
+au VimEnter * cd $HOME
