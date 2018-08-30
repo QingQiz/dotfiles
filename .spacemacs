@@ -25,42 +25,36 @@ values."
    ;; a layer lazily. (default t)
    dotspacemacs-ask-for-lazy-installation t
    ;; If non-nil layers with lazy install support are lazy installed.
-   ;; List of additional paths where to look for configuration layers. ;; Paths must have a trailing slash (i.e. `~/.mycontribs/')
+   ;; List of additional paths where to look for configuration layers.
+   ;; Paths must have a trailing slash (i.e. `~/.mycontribs/')
    dotspacemacs-configuration-layer-path '()
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
-    python
-    vimscript
-    ;; java
-    javascript
-    ;; ----------------------------------------------------------------
-    ;; Example of useful layers you may want to use right away.
-    ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
-    ;; <M-m f e R> (Emacs style) to install them.
-    ;; ----------------------------------------------------------------
-    ;; chinese
-    ycmd
-    imenu-list
-    ;; flyspell
-    ;; flycheck
-    ;; auto-dictionary-mode
-    ;; flycheck-ycmd
-    c-c++
-    helm
-    auto-completion
-    better-defaults
-    emacs-lisp
-    ;; git
-    markdown
-    ;; org
-    ;; (shell :variables
-           ;; shell-default-height 30
-           ;; shell-default-position 'bottom)
-    ;; spell-checking
-    ;; version-control
-    syntax-checking
-    )
+     python
+     vimscript
+     javascript
+     c-c++
+     ycmd
+     ;; ----------------------------------------------------------------
+     ;; Example of useful layers you may want to use right away.
+     ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
+     ;; <M-m f e R> (Emacs style) to install them.
+     ;; ----------------------------------------------------------------
+     helm
+     auto-completion
+     ;; better-defaults
+     emacs-lisp
+     ;; git
+     markdown
+     ;; org
+     (shell :variables
+            shell-default-height 30
+            shell-default-position 'bottom)
+     ;; spell-checking
+     syntax-checking
+     ;; version-control
+     )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
@@ -96,7 +90,7 @@ values."
    ;; (default t)
    dotspacemacs-elpa-https t
    ;; Maximum allowed time in seconds to contact an ELPA repository.
-   dotspacemacs-elpa-timeout 300
+   dotspacemacs-elpa-timeout 5
    ;; If non nil then spacemacs will check for updates at startup
    ;; when the current branch is not `develop'. Note that checking for
    ;; new versions works via git commands, thus it calls GitHub services
@@ -128,7 +122,7 @@ values."
    ;; `recents' `bookmarks' `projects' `agenda' `todos'."
    ;; List sizes may be nil, in which case
    ;; `spacemacs-buffer-startup-lists-length' takes effect.
-   dotspacemacs-startup-lists '((recents . 10)
+   dotspacemacs-startup-lists '((recents . 5)
                                 (projects . 7))
    ;; True if the home buffer should respond to resize events.
    dotspacemacs-startup-buffer-responsive t
@@ -144,7 +138,7 @@ values."
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
    dotspacemacs-default-font '("Source Code Pro"
-                               :size 16
+                               :size 15
                                :weight normal
                                :width normal
                                :powerline-scale 1.1)
@@ -301,7 +295,7 @@ values."
    ;; `trailing' to delete only the whitespace at end of lines, `changed'to
    ;; delete only whitespace for changed lines or `nil' to disable cleanup.
    ;; (default nil)
-   dotspacemacs-whitespace-cleanup t
+   dotspacemacs-whitespace-cleanup nil
    ))
 
 (defun dotspacemacs/user-init ()
@@ -311,7 +305,7 @@ executes.
  This function is mostly useful for variables that need to be set
 before packages are loaded. If you are unsure, you should try in setting them in
 `dotspacemacs/user-config' first."
-  )
+)
 
 (defun dotspacemacs/user-config ()
   "Configuration function for user code.
@@ -321,14 +315,44 @@ This is the place where most of your configurations should be done. Unless it is
 explicitly specified that a variable should be set before a package is loaded,
 you should place your code here."
 
-;; set indent
+
+
 (setq default-tab-width 4)
 (setq-default indent-tabs-mode nil)
 (setq c-default-style "linux")
 (setq c-basic-offset 4)
+(setq ycmd-force-semantic-completion t)
+(setq x-select-enable-clipboard nil)
 
-;; set compiler
+;; disable mouse in insert ans normal mode
+(dolist (k '([mouse-1] [down-mouse-1] [drag-mouse-1] [double-mouse-1] [triple-mouse-1]
+             [mouse-2] [down-mouse-2] [drag-mouse-2] [double-mouse-2] [triple-mouse-2]
+             [mouse-3] [down-mouse-3] [drag-mouse-3] [double-mouse-3] [triple-mouse-3]
+             [mouse-4] [down-mouse-4] [drag-mouse-4] [double-mouse-4] [triple-mouse-4]
+             [mouse-5] [down-mouse-5] [drag-mouse-5] [double-mouse-5] [triple-mouse-5]))
+  (global-unset-key k))
+
+(define-key evil-motion-state-map [down-mouse-1] nil)
+(define-key evil-motion-state-map [mouse-1] nil)
+
+
+;; C-c to escape
+(defun my-esc (prompt)
+  (cond
+   ((or (evil-insert-state-p) (evil-normal-state-p) (evil-replace-state-p) (evil-visual-state-p)) [escape])
+   (t (kbd "C-g"))))
+(define-key key-translation-map (kbd "C-c") 'my-esc)
+(define-key evil-operator-state-map (kbd "C-c") 'keyboard-quit)
+(set-quit-char "C-c")
+
+(evil-define-key 'insert global-map (kbd "C-l") 'evil-end-of-visual-line)
+(evil-define-key 'normal global-map (kbd "L") 'evil-end-of-line)
+(evil-define-key 'normal global-map (kbd "H") 'evil-beginning-of-line)
+
 (global-set-key (kbd "<f5>") 'smart-compile)
+(global-set-key (kbd "<f3>") 'neotree-toggle)
+
+;; complier
 (defun smart-compile()
   (interactive)
   (let ((candidate-make-file-name '("makefile" "Makefile" "GNUmakefile"))
@@ -349,9 +373,9 @@ you should place your code here."
                           " -g -lm "))
           (if (eq major-mode 'c++-mode)
               (setq command
-                    (concat "g++ -Wall -o "
-                            (file-name-sans-extension
-                             (file-name-nondirectory buffer-file-name))
+                    (concat "g++ -Wall -o now"
+                            ;; (file-name-sans-extension
+                            ;; (file-name-nondirectory buffer-file-name))
                             " "
                             (file-name-nondirectory buffer-file-name)
                             " -g -lm "))
@@ -360,30 +384,20 @@ you should place your code here."
         (let ((command (read-from-minibuffer "Compile command: " command)))
           (compile command)))))
 
-(setq evil-escape-key-sequence "jk")
 
-;; set ycmd
-(require 'ycmd)
-(set-variable 'ycmd-server-command '("/usr/bin/python3.6" "-u" "/home/angel/.emacs.d/elpa/ycmd/ycmd/ycmd/"))
+(set-variable 'ycmd-server-command '("/usr/bin/python3.7" "-u" "/home/angel/.dotfile/.vim/vimfiles/YouCompleteMe/third_party/ycmd/ycmd"))
 (set-variable 'ycmd-global-config "/home/angel/.config/ycmd/ycmd_conf.py")
-(require 'company-ycmd)
-(company-ycmd-setup)
-(provide 'init-ycmd)
 
-;; hook
-(add-hook 'c++-mode-hook 'company-mode)
+
 (add-hook 'c++-mode-hook 'ycmd-mode)
-(add-hook 'python-mode-hook 'ycmd-mode)
-(add-hook 'after-init-hook #'global-ycmd-mode)
 
-;; set default
-(setq ycmd-force-semantic-completion t)
-(server-start)
-(ycmd-open)
 
-(setenv "IPY_TEST_SIMPLE_PROMPT" "1")
 
-)
+
+
+
+  )
+
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
 (custom-set-variables
@@ -393,13 +407,12 @@ you should place your code here."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (yapfify pyvenv pytest pyenv-mode py-isort pip-requirements live-py-mode hy-mode helm-pydoc cython-mode company-anaconda anaconda-mode pythonic vimrc-mode dactyl-mode company-emacs-eclim eclim key-chord unfill mwim imenu-list flycheck-irony xterm-color shell-pop multi-term flyspell-correct-helm flyspell-correct eshell-z eshell-prompt-extras esh-help auto-dictionary pyim find-by-pinyin-dired ace-pinyin pyim-basedict pangu-spacing disaster company-c-headers cmake-mode clang-format pinyinlib web-beautify livid-mode skewer-mode simple-httpd json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc company-tern dash-functional tern coffee-mode flycheck-ycmd company-ycmd ycmd request-deferred deferred git-gutter-fringe+ git-gutter-fringe fringe-helper git-gutter+ git-gutter flycheck-pos-tip pos-tip flycheck diff-hl ws-butler winum volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline powerline smeargle restart-emacs rainbow-delimiters popwin persp-mode pcre2el paradox spinner orgit org-plus-contrib org-bullets open-junk-file neotree move-text markdown-toc markdown-mode magit-gitflow macrostep lorem-ipsum linum-relative link-hint indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make projectile pkg-info epl helm-gitignore request helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link gh-md fuzzy flx-ido flx fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-magit magit magit-popup git-commit ghub let-alist with-editor evil-lisp-state smartparens evil-indent-plus evil-iedit-state iedit evil-exchange evil-escape evil-ediff evil-args evil-anzu anzu evil goto-chg eval-sexp-fu highlight elisp-slime-nav dumb-jump diminish define-word column-enforce-mode clean-aindent-mode bind-map bind-key auto-yasnippet auto-highlight-symbol auto-compile packed ace-link ace-jump-helm-line helm helm-core ac-ispell auto-complete popup yasnippet mmm-mode company-statistics company hydra which-key undo-tree evil-unimpaired async aggressive-indent adaptive-wrap ace-window)))
- '(paradox-github-token t)
- '(send-mail-function (quote mailclient-send-it)))
+    (xterm-color shell-pop multi-term eshell-z eshell-prompt-extras esh-help yapfify web-beautify vimrc-mode pyvenv pytest pyenv-mode py-isort pip-requirements mmm-mode markdown-toc markdown-mode livid-mode skewer-mode simple-httpd live-py-mode json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc hy-mode helm-pydoc helm-company helm-c-yasnippet gh-md fuzzy flycheck-ycmd flycheck-pos-tip pos-tip flycheck disaster dactyl-mode cython-mode company-ycmd ycmd request-deferred deferred company-tern dash-functional tern company-statistics company-c-headers company-anaconda company coffee-mode cmake-mode clang-format auto-yasnippet yasnippet anaconda-mode pythonic ac-ispell auto-complete ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu elisp-slime-nav dumb-jump diminish define-word column-enforce-mode clean-aindent-mode auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
 ;; vim: ft=lisp

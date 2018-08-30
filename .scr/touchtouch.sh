@@ -8,7 +8,7 @@ if [ $s = 0 ]; then
     synclient TapButton3=2
 else
     synclient TapButton1=0
-    synclient TapButton2=0
-    synclient TapButton3=0
+    synclient TapButton2=1
+    synclient TapButton3=3
 fi
 

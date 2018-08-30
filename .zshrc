@@ -124,6 +124,7 @@ alias ColorCoded='cp ~/.config/color_coded/.color_coded .'
 alias YcmExtra='cp ~/.config/ycmd/.ycm_extra_conf.py .'
 alias AddCMakeList='cp ~/workspace/Progeaming-Practice/Note/CMakeLists.txt .'
 
+c() { g++ -Wall -o now $1 -g -lm }
 push() { cp ./"$1" ~/workspace/this_week/$1 }
 Done() { cp _.cc ./"$1" }
 DoneinJava() { cp ~/workspace/java-workspace/ACM/src/Main.java ./"$1" }

@@ -15,55 +15,55 @@ new_window pixel
 bindsym Mod1+Return exec termite -e tmux
 
 # start drofi dmenu
-bindsym Mod1+Tab     exec --no-startup-id rofi -show window
-bindsym Mod1+Shift+d exec --no-startup-id rofi -show run
-bindsym Mod1+d       exec --no-startup-id rofi -show drun
+bindsym Mod4+Tab     exec --no-startup-id rofi -show window
+bindsym Mod4+Shift+d exec --no-startup-id rofi -show run
+bindsym Mod4+d       exec --no-startup-id rofi -show drun
 
 # Use Mouse+$mod to drag floating windows to their wanted position
-floating_modifier Mod1
+floating_modifier Mod4
 
 # kill focused window
-bindsym Mod1+q kill
+bindsym Mod4+q kill
 
 # change focus
-bindsym Mod1+j      focus down
-bindsym Mod1+k      focus up
-bindsym Mod1+l      focus right
-bindsym Mod1+h      focus left
+bindsym Mod4+j      focus down
+bindsym Mod4+k      focus up
+bindsym Mod4+l      focus right
+bindsym Mod4+h      focus left
 bindsym $mod+Left   focus left
 bindsym $mod+Down   focus down
 bindsym $mod+Up     focus up
 bindsym $mod+Right  focus right
 
 # move focused window
-bindsym Mod1+Shift+h        move left
-bindsym Mod1+Shift+j        move down
-bindsym Mod1+Shift+k        move up
-bindsym Mod1+Shift+l        move right
+bindsym Mod4+Shift+h        move left
+bindsym Mod4+Shift+j        move down
+bindsym Mod4+Shift+k        move up
+bindsym Mod4+Shift+l        move right
 bindsym $mod+Shift+Left     move left
 bindsym $mod+Shift+Down     move down
 bindsym $mod+Shift+Up       move up
 bindsym $mod+Shift+Right    move right
 
 # split in horizontal orientation
-bindsym Mod1+g split h
+bindsym Mod4+g split h
 
 # split in vertical orientation
-bindsym Mod1+v split v
+bindsym Mod4+v split v
 
 # enter fullscreen mode for the focused container
-bindsym Mod1+f fullscreen toggle
+bindsym Mod4+f fullscreen toggle
 
 # change container layout (stacked, tabbed, toggle split)
-bindsym Mod1+s layout stacking
-bindsym Mod1+w layout tabbed
-bindsym Mod1+e layout toggle split
+bindsym Mod4+s layout stacking
+bindsym Mod4+w layout tabbed
+bindsym Mod4+e layout toggle split
 
 # toggle tiling / floating
-bindsym Mod1+m floating toggle
+bindsym Mod4+m floating toggle
 
 # change focus between tiling / floating windows
-bindsym Mod1+space focus mode_toggle
+bindsym Mod4+space focus mode_toggle
 
 # focus the parent container
 # bindsym $mod+q focus parent
@@ -94,10 +94,10 @@ smart_gaps on
 smart_borders on
 
 #rofi_power menu
-bindsym Mod1+Shift+q exec ~/.config/rofi/powermenu.sh
+bindsym Mod4+Shift+q exec ~/.config/rofi/powermenu.sh
 
 # apps
-bindsym Mod1+Control+t exec thunar
+bindsym Mod4+Control+t exec thunar
 # bindsym $mod+Control+n exec connman-gtk
 
 # by class
@@ -143,10 +143,10 @@ bindsym Mod1+Shift+0 move container to workspace 10
 
 
 # reload the configuration file
-bindsym Mod1+Shift+c reload
-bindsym Mod1+Shift+r restart
-bindsym Mod1+Shift+e exec "i3-nagbar -t warning -m 'This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
-# bindsym Mod1+Shift+e exit
+bindsym Mod4+Shift+c reload
+bindsym Mod4+Shift+r restart
+bindsym Mod4+Shift+e exec "i3-nagbar -t warning -m 'This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+# bindsym Mod4+Shift+e exit
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -163,13 +163,13 @@ mode "resize" {
         bindsym Escape mode   "default"
 }
 
-bindsym Mod1+r mode "resize"
+bindsym Mod4+r mode "resize"
 
 # polybar exec
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 
 # bindsym $mod+l exec i3lock -i '/home/angel/Pictures/lock_pic.png'
-# bindsym Mod1+Ctrl+l exec i3lock -c 000000 && exec systemctl suspend
+# bindsym Mod4+Ctrl+l exec i3lock -c 000000 && exec systemctl suspend
 bindsym Mod1+Ctrl+l exec betterlockscreen --lock
 bindsym Mod1+Ctrl+s exec betterlockscreen --lock & exec systemctl suspend
 
@@ -208,7 +208,7 @@ exec_always xset dpms 0 0 0
 exec ~/.scr/ruijie_login &
 
 # 更改边框样式
-bindsym Mod1+Shift+b border toggle
+bindsym Mod4+Shift+b border toggle
 
 # 触控板
 exec_always synclient VertScrollDelta=-66
@@ -220,13 +220,13 @@ exec_always synclient TapButton3=2
 exec_always synclient MaxSpeed=1.5
 focus_follows_mouse no
 
-bindsym Mod1+z exec sh ~/.scr/touchpad.sh
-bindsym Mod1+x exec sh ~/.scr/touchtouch.sh
+bindsym Mod4+Shift+z exec sh ~/.scr/touchpad.sh
+bindsym Mod4+Shift+x exec sh ~/.scr/touchtouch.sh
 # Others
 bindsym XF86Mail exec --no-startup-id thunderbird
-bindsym Mod1+n exec sh ~/.config/i3/wallpaper.sh
-bindsym Mod1+p exec sh ~/.config/i3/wallpaper.sh -1
-bindsym Mod1+Shift+n exec sh ~/.config/i3/wallpaper_random.sh
+bindsym Mod4+n exec sh ~/.config/i3/wallpaper.sh
+bindsym Mod4+p exec sh ~/.config/i3/wallpaper.sh -1
+bindsym Mod4+Shift+n exec sh ~/.config/i3/wallpaper_random.sh
 exec i3-config-wizard
 exec --no-startup-id i3-msg "workspace 1"
 exec compton &
