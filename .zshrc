@@ -1,17 +1,6 @@
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
-# [[ $- != *i* ]] && return
-# [[ -z "$TMUX" ]] && exec tmux
-# if [[ -z "$TMUX" ]] ;then
-    # ID="`tmux ls | grep -m1 attached | cut -d: -f1`"
-    # if [[ -z "$ID" ]] ;then
-        # tmux new-session
-    # else
-        # tmux attach-session -t "$ID"
-    # fi
-# fi
-
 #turn on comments with # in shell
 setopt interactivecomments
 
@@ -19,17 +8,13 @@ setopt interactivecomments
 export LANG='en_US.UTF-8'
 export EDITOR='vim'
 export VISUAL='vim'
-export BROWSER='google-chrome-stable'
 export POWERLINE_CONFIG_COMMAND='powerline-config'
 export PAGER='most'
-export PATH=${PATH}:~/.gem/ruby/2.4.0/bin
 
 
 ### ARCHLINUX INCLUDE
 dupkg() { expac '%m\t%n' | sort -h | awk '{cmd = "numfmt --to=si "$1; cmd | getline n; close(cmd); print n, $2}' }
 dupkg_ex() { expac -H M "%011m\t%-20n\t%10d" $(comm -23 <(pacman -Qqen | sort) <(pacman -Qqg base base-devel | sort)) | sort -n }
-### ZSHRC NODE
-# source ~/.zshrc_node
 
 ### ZSH PURE
 autoload -U zmv
@@ -51,14 +36,9 @@ plugins=(
         colored-man-pages 
         colorize 
         sprunge 
-        web-search
         )
 
 ### ALIASES
-
-alias zshconfig_node="vi ~/.zshrc_node"
-alias sshconfig="vi ~/.ssh/config"
-
 alias lh="du -ahd1 | sort -h"
 # lhs() { for list in $(ls -a | sed 's/\ /\\ /g'); do du -hs $list; done | sort -hr }
 
@@ -89,7 +69,6 @@ alias ll='ls -al'
 alias la='ls -a'
 alias sl='ls'
 alias sls='ls'
-alias rm='trash'
 alias t='tmux'
 alias tks='tmux kill-session -t'
 alias f='feh'
@@ -97,7 +76,6 @@ alias v='vim'
 alias vu='vim'
 alias vo='vim'
 alias vi='vim'
-alias svi='vim -u ~/.vimrc_simple --noplugin'
 alias vs='vim -u ~/.vimrc_simple --noplugin'
 alias sv='vim -u ~/.vimrc_simple --noplugin'
 alias cls='clear'
@@ -115,18 +93,13 @@ alias pipi='sudo pip install -i https://pypi.tuna.tsinghua.edu.cn/simple'
 alias aria2='aria2c --conf-path=/home/angel/.config/aria2/aria2.conf'
 alias ruijie='ruijie i once'
 
-alias WAcCEpTEd='netctl start wlp2s0-WAcCEpTEd'
-alias CHANGAN='netctl start wlp2s0-NWPU-CHANGAN'
-
 alias nip='curl -i https://ip.cn'
 
 alias ColorCoded='cp ~/.config/color_coded/.color_coded .'
 alias YcmExtra='cp ~/.config/ycmd/.ycm_extra_conf.py .'
 alias AddCMakeList='cp ~/workspace/Progeaming-Practice/Note/CMakeLists.txt .'
 
-c() { g++ -Wall -o now $1 -g -lm }
-push() { cp ./"$1" ~/workspace/this_week/$1 }
-Done() { cp _.cc ./"$1" }
-DoneinJava() { cp ~/workspace/java-workspace/ACM/src/Main.java ./"$1" }
+C() { g++ -Wall -o now $1 -g -lm && ./now }
+c() { g++ -Wall -o now _.cc -g -lm && ./now }
 pushmod() { cp ./$1 ~/workspace/Progeaming-Practice/ACM-ICPC/Mod/$2 }
 pushcode() { cp ./$1 ~/workspace/Progeaming-Practice/ACM-ICPC/CodeHub/$2 }

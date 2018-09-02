@@ -47,7 +47,7 @@ nnoremap <silent><leader>cc :call ChangeFor()<CR>
 nnoremap <silent><F5>       :w<CR>:call SmartComplier()<CR>
 nnoremap <silent><F6>       :call RunResult()<CR>
 nnoremap <expr>A            GoIndent()
-nnoremap <silent>gy         ggVG"+y''zz
+nnoremap <silent>gy         :let @+ = join(getline("^", "$"), "\n")<CR>
 vnoremap \y                 "+y
 nnoremap \p                 "+p
 nnoremap \n                 :noh<CR>

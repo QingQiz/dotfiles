@@ -43,7 +43,7 @@ values."
      ;; ----------------------------------------------------------------
      helm
      auto-completion
-     ;; better-defaults
+     better-defaults
      emacs-lisp
      ;; git
      markdown
@@ -323,6 +323,10 @@ you should place your code here."
 (setq c-basic-offset 4)
 (setq ycmd-force-semantic-completion t)
 (setq x-select-enable-clipboard nil)
+(setq sp-escape-quotes-after-insert nil)
+
+;; set powerline
+(setq powerline-default-separator 'slant)
 
 ;; disable mouse in insert ans normal mode
 (dolist (k '([mouse-1] [down-mouse-1] [drag-mouse-1] [double-mouse-1] [triple-mouse-1]
@@ -347,9 +351,9 @@ you should place your code here."
 
 (evil-define-key 'insert global-map (kbd "C-l") 'evil-end-of-visual-line)
 (evil-define-key 'normal global-map (kbd "L") 'evil-end-of-line)
-(evil-define-key 'normal global-map (kbd "H") 'evil-beginning-of-line)
+(evil-define-key 'normal global-map (kbd "H") 'evil-first-non-blank)
 
-(global-set-key (kbd "<f5>") 'smart-compile)
+;; (global-set-key (kbd "<f5>") 'smart-compile)
 (global-set-key (kbd "<f3>") 'neotree-toggle)
 
 ;; complier
@@ -384,6 +388,18 @@ you should place your code here."
         (let ((command (read-from-minibuffer "Compile command: " command)))
           (compile command)))))
 
+(defun addhead()
+  (interactive)
+  (insert
+   (format
+    "\
+// =============================================================================
+// Dsp:
+// URL:
+// Author: Sofee <  sofeeys@outlook.com  >
+// =============================================================================\n"
+   )))
+
 
 (set-variable 'ycmd-server-command '("/usr/bin/python3.7" "-u" "/home/angel/.dotfile/.vim/vimfiles/YouCompleteMe/third_party/ycmd/ycmd"))
 (set-variable 'ycmd-global-config "/home/angel/.config/ycmd/ycmd_conf.py")
@@ -400,14 +416,7 @@ you should place your code here."
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   (quote
-    (xterm-color shell-pop multi-term eshell-z eshell-prompt-extras esh-help yapfify web-beautify vimrc-mode pyvenv pytest pyenv-mode py-isort pip-requirements mmm-mode markdown-toc markdown-mode livid-mode skewer-mode simple-httpd live-py-mode json-mode json-snatcher json-reformat js2-refactor multiple-cursors js2-mode js-doc hy-mode helm-pydoc helm-company helm-c-yasnippet gh-md fuzzy flycheck-ycmd flycheck-pos-tip pos-tip flycheck disaster dactyl-mode cython-mode company-ycmd ycmd request-deferred deferred company-tern dash-functional tern company-statistics company-c-headers company-anaconda company coffee-mode cmake-mode clang-format auto-yasnippet yasnippet anaconda-mode pythonic ac-ispell auto-complete ws-butler winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package toc-org spaceline restart-emacs request rainbow-delimiters popwin persp-mode pcre2el paradox org-plus-contrib org-bullets open-junk-file neotree move-text macrostep lorem-ipsum linum-relative link-hint indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu elisp-slime-nav dumb-jump diminish define-word column-enforce-mode clean-aindent-mode auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line))))
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -416,3 +425,11 @@ you should place your code here."
  )
 
 ;; vim: ft=lisp
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   (quote
+    (unfill mwim emms yapfify xterm-color ws-butler winum which-key web-beautify volatile-highlights vimrc-mode vi-tilde-fringe uuidgen use-package toc-org spaceline shell-pop restart-emacs rainbow-delimiters pyvenv pytest pyenv-mode py-isort popwin pip-requirements persp-mode pcre2el paradox org-plus-contrib org-bullets open-junk-file neotree multi-term move-text mmm-mode markdown-toc macrostep lorem-ipsum livid-mode live-py-mode linum-relative link-hint json-mode js2-refactor js-doc indent-guide hy-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gh-md fuzzy flycheck-ycmd flycheck-pos-tip flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help elisp-slime-nav dumb-jump disaster diminish define-word dactyl-mode cython-mode company-ycmd company-tern company-statistics company-c-headers company-anaconda column-enforce-mode coffee-mode cmake-mode clean-aindent-mode clang-format auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell))))
