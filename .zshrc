@@ -99,7 +99,18 @@ alias ColorCoded='cp ~/.config/color_coded/.color_coded .'
 alias YcmExtra='cp ~/.config/ycmd/.ycm_extra_conf.py .'
 alias AddCMakeList='cp ~/workspace/Progeaming-Practice/Note/CMakeLists.txt .'
 
-C() { g++ -Wall -o now $1 -g -lm && ./now }
-c() { g++ -Wall -o now _.cc -g -lm && ./now }
+c() {
+    if [[ $# == 0 ]]; then
+        g++ -Wall -o now _.cc -g -lm && ./now
+    else
+        g++ -Wall -o now $1 -g -lm && ./now
+    fi
+}
 pushmod() { cp ./$1 ~/workspace/Progeaming-Practice/ACM-ICPC/Mod/$2 }
-pushcode() { cp ./$1 ~/workspace/Progeaming-Practice/ACM-ICPC/CodeHub/$2 }
+pushcode() {
+    if [[ $# == 1 ]]; then
+        cp ./_.cc ~/workspace/Progeaming-Practice/ACM-ICPC/CodeHub/$1
+    else
+        cp ./$1 ~/workspace/Progeaming-Practice/ACM-ICPC/CodeHub/$2
+    fi
+}

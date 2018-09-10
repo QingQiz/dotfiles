@@ -12,6 +12,7 @@ font pango: hack, Awesome 11
 new_window pixel
 
 # start a terminal
+bindsym Mod4+Return exec termite -e tmux
 bindsym Mod1+Return exec termite -e tmux
 
 # start drofi dmenu
@@ -118,28 +119,28 @@ bindsym $mod+- move workspace to output right
 bindsym $mod+Shift+- move workspace to output up
 
 # switch to workspace
-bindsym Mod1+1 workspace 1
-bindsym Mod1+2 workspace 2
-bindsym Mod1+3 workspace 3
-bindsym Mod1+4 workspace 4
-bindsym Mod1+5 workspace 5
-bindsym Mod1+6 workspace 6
-bindsym Mod1+7 workspace 7
-bindsym Mod1+8 workspace 8
-bindsym Mod1+9 workspace 9
-bindsym Mod1+0 workspace 10
+bindsym Mod4+1 workspace 1
+bindsym Mod4+2 workspace 2
+bindsym Mod4+3 workspace 3
+bindsym Mod4+4 workspace 4
+bindsym Mod4+5 workspace 5
+bindsym Mod4+6 workspace 6
+bindsym Mod4+7 workspace 7
+bindsym Mod4+8 workspace 8
+bindsym Mod4+9 workspace 9
+bindsym Mod4+0 workspace 10
 
 # move focused container to workspace
-bindsym Mod1+Shift+1 move container to workspace 1
-bindsym Mod1+Shift+2 move container to workspace 2
-bindsym Mod1+Shift+3 move container to workspace 3
-bindsym Mod1+Shift+4 move container to workspace 4
-bindsym Mod1+Shift+5 move container to workspace 5
-bindsym Mod1+Shift+6 move container to workspace 6
-bindsym Mod1+Shift+7 move container to workspace 7
-bindsym Mod1+Shift+8 move container to workspace 8
-bindsym Mod1+Shift+9 move container to workspace 9
-bindsym Mod1+Shift+0 move container to workspace 10
+bindsym Mod4+Shift+1 move container to workspace 1
+bindsym Mod4+Shift+2 move container to workspace 2
+bindsym Mod4+Shift+3 move container to workspace 3
+bindsym Mod4+Shift+4 move container to workspace 4
+bindsym Mod4+Shift+5 move container to workspace 5
+bindsym Mod4+Shift+6 move container to workspace 6
+bindsym Mod4+Shift+7 move container to workspace 7
+bindsym Mod4+Shift+8 move container to workspace 8
+bindsym Mod4+Shift+9 move container to workspace 9
+bindsym Mod4+Shift+0 move container to workspace 10
 
 
 # reload the configuration file
@@ -194,9 +195,6 @@ bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -3
 # ibus 
 exec --no-startup-id ibus-daemon --xim -d
 
-# Wallpaper
-exec_always --no-startup-id feh --bg-fill /home/angel/Pictures/WallP/B-009.jpg
-
 # local ss
 exec_always --no-startup-id ss-local -c /etc/shadowsocks/conf.json
 
@@ -231,6 +229,6 @@ exec i3-config-wizard
 exec --no-startup-id i3-msg "workspace 1"
 exec compton &
 # exec_always --no-startup-id mpd
-exec_always xrandr --output eDP1 --right-of HDMI1 --auto && i3 restart
+# exec_always xrandr --output eDP1 --right-of HDMI1 --auto && i3 restart
 
 

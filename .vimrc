@@ -16,7 +16,6 @@ set autoindent
 set encoding=utf-8
 set backspace=indent,eol,start
 
-set colorcolumn=81
 set fillchars=vert:\ ,fold:-
 
 set wildmenu
@@ -332,13 +331,15 @@ augroup filetype_frmats " {{{
   au BufNewFile,BufRead *.py
         \ setlocal autoindent                                      |
         \ setlocal nowrap                                          |
-        \ setlocal sidescroll=5
+        \ setlocal sidescroll=5                                    |
+        \ setlocal colorcolumn=81
   au BufNewFile,BufRead *.js,*.html,*.php
         \ setlocal tabstop=2                                       |
         \ setlocal softtabstop=2                                   |
         \ setlocal shiftwidth=2
   au BufNewFile,BufRead *.c,*.cc,*.cpp
-        \ setlocal foldmarker=#ifdef,#endif
+        \ setlocal foldmarker=#ifdef,#endif                        |
+        \ setlocal colorcolumn=81
   au BufNewFile,BufRead *.html
         \ let b:AutoPairs = {"<": ">", '"': '"', "'": "'", '{': '}', '(': ')', '[': ']'}
   au BufNewFile,BufRead *.py,*.c,*.cc,*.cpp,*.h*,.{vim,vimrc}
