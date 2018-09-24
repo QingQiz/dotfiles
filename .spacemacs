@@ -38,11 +38,6 @@ values."
      javascript
      c-c++
      ycmd
-     ;; ----------------------------------------------------------------
-     ;; Example of useful layers you may want to use right away.
-     ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
-     ;; <M-m f e R> (Emacs style) to install them.
-     ;; ----------------------------------------------------------------
      helm
      auto-completion
      better-defaults
@@ -133,14 +128,13 @@ values."
    ;; List of themes, the first of the list is loaded when spacemacs starts.
    ;; Press <SPC> T n to cycle to the next theme in the list (works great
    ;; with 2 themes variants, one dark and one light)
-   dotspacemacs-themes '(spacemacs-dark
-                         spacemacs-light)
+   dotspacemacs-themes '(spacemacs-dark spacemacs-light)
    ;; If non nil the cursor color matches the state color in GUI Emacs.
    dotspacemacs-colorize-cursor-according-to-state t
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
    dotspacemacs-default-font '("Source Code Pro"
-                               :size 15
+                               :size 16
                                :weight normal
                                :width normal
                                :powerline-scale 1.1)
@@ -301,131 +295,115 @@ values."
    ))
 
 (defun dotspacemacs/user-init ()
-  "Initialization function for user code.
-It is called immediately after `dotspacemacs/init', before layer configuration
-executes.
- This function is mostly useful for variables that need to be set
-before packages are loaded. If you are unsure, you should try in setting them in
-`dotspacemacs/user-config' first."
-)
+  (setq-default dotspacemacs-themes '(manoj-dark))
+  (setq-default dotspacemacs-startup-banner '"~/.dotfile/emacs/banner.png")
+  )
 
 (defun dotspacemacs/user-config ()
-  "Configuration function for user code.
-This function is called at the very end of Spacemacs initialization after
-layers configuration.
-This is the place where most of your configurations should be done. Unless it is
-explicitly specified that a variable should be set before a package is loaded,
-you should place your code here."
+  (setq default-tab-width 4)
+  (setq-default indent-tabs-mode nil)
+  (setq c-default-style "linux")
+  (setq c-basic-offset 4)
+  (setq ycmd-force-semantic-completion t)
+  (setq x-select-enable-clipboard nil)
+  (setq sp-escape-quotes-after-insert nil)
 
 
+  ;; set powerline
+  (setq powerline-default-separator 'slant)
 
-(setq default-tab-width 4)
-(setq-default indent-tabs-mode nil)
-(setq c-default-style "linux")
-(setq c-basic-offset 4)
-(setq ycmd-force-semantic-completion t)
-(setq x-select-enable-clipboard nil)
-(setq sp-escape-quotes-after-insert nil)
+  ;; disable mouse in insert ans normal mode
+  (dolist (k '([mouse-1] [down-mouse-1] [drag-mouse-1] [double-mouse-1] [triple-mouse-1]
+               [mouse-2] [down-mouse-2] [drag-mouse-2] [double-mouse-2] [triple-mouse-2]
+               [mouse-3] [down-mouse-3] [drag-mouse-3] [double-mouse-3] [triple-mouse-3]
+               [mouse-4] [down-mouse-4] [drag-mouse-4] [double-mouse-4] [triple-mouse-4]
+               [mouse-5] [down-mouse-5] [drag-mouse-5] [double-mouse-5] [triple-mouse-5]))
+    (global-unset-key k))
 
-;; set powerline
-(setq powerline-default-separator 'slant)
-
-;; disable mouse in insert ans normal mode
-(dolist (k '([mouse-1] [down-mouse-1] [drag-mouse-1] [double-mouse-1] [triple-mouse-1]
-             [mouse-2] [down-mouse-2] [drag-mouse-2] [double-mouse-2] [triple-mouse-2]
-             [mouse-3] [down-mouse-3] [drag-mouse-3] [double-mouse-3] [triple-mouse-3]
-             [mouse-4] [down-mouse-4] [drag-mouse-4] [double-mouse-4] [triple-mouse-4]
-             [mouse-5] [down-mouse-5] [drag-mouse-5] [double-mouse-5] [triple-mouse-5]))
-  (global-unset-key k))
-
-(define-key evil-motion-state-map [down-mouse-1] nil)
-(define-key evil-motion-state-map [mouse-1] nil)
+  (define-key evil-motion-state-map [down-mouse-1] nil)
+  (define-key evil-motion-state-map [mouse-1] nil)
+  (define-key evil-motion-state-map [double-mouse-1] nil)
+  (define-key evil-motion-state-map [mouse-3] nil)
+  (define-key evil-motion-state-map [double-mouse-3] nil)
 
 
-;; C-c to escape
-(defun my-esc (prompt)
-  (cond
-   ((or (evil-insert-state-p) (evil-normal-state-p) (evil-replace-state-p) (evil-visual-state-p)) [escape])
-   (t (kbd "C-g"))))
-(define-key key-translation-map (kbd "C-c") 'my-esc)
-(define-key evil-operator-state-map (kbd "C-c") 'keyboard-quit)
-(set-quit-char "C-c")
+  ;; C-c to escape
+  (defun my-esc (prompt)
+    (cond
+     ((or (evil-insert-state-p) (evil-normal-state-p) (evil-replace-state-p) (evil-visual-state-p)) [escape])
+     (t (kbd "C-g"))))
+  (define-key key-translation-map (kbd "C-c") 'my-esc)
+  (define-key evil-operator-state-map (kbd "C-c") 'keyboard-quit)
+  (set-quit-char "C-c")
 
-(evil-define-key 'insert global-map (kbd "C-l") 'evil-end-of-visual-line)
-(evil-define-key 'normal global-map (kbd "L") 'evil-end-of-line)
-(evil-define-key 'normal global-map (kbd "H") 'evil-first-non-blank)
+  (evil-define-key 'insert global-map (kbd "C-l") 'evil-end-of-visual-line)
+  (evil-define-key 'normal global-map (kbd "L") 'evil-end-of-line)
+  (evil-define-key 'normal global-map (kbd "H") 'evil-first-non-blank)
 
-;; (global-set-key (kbd "<f5>") 'smart-compile)
-(global-set-key (kbd "<f3>") 'neotree-toggle)
+  ;; (global-set-key (kbd "<f5>") 'smart-compile)
+  (global-set-key (kbd "<f3>") 'neotree-toggle)
 
-;; complier
-(defun smart-compile()
-  (interactive)
-  (let ((candidate-make-file-name '("makefile" "Makefile" "GNUmakefile"))
-        (command nil))
-    (if (not (null
-              (find t candidate-make-file-name :key
-                    '(lambda (f) (file-readable-p f)))))
-        (setq command "make -k ")
-      (if (null (buffer-file-name (current-buffer)))
-          (message "Buffer not attached to a file, won't compile!")
-        (if (eq major-mode 'c-mode)
-            (setq command
-                  (concat "gcc -Wall -o "
-                          (file-name-sans-extension
-                           (file-name-nondirectory buffer-file-name))
-                          " "
-                          (file-name-nondirectory buffer-file-name)
-                          " -g -lm "))
-          (if (eq major-mode 'c++-mode)
+  ;; complier
+  (defun smart-compile()
+    (interactive)
+    (let ((candidate-make-file-name '("makefile" "Makefile" "GNUmakefile"))
+          (command nil))
+      (if (not (null
+                (find t candidate-make-file-name :key
+                      '(lambda (f) (file-readable-p f)))))
+          (setq command "make -k ")
+        (if (null (buffer-file-name (current-buffer)))
+            (message "Buffer not attached to a file, won't compile!")
+          (if (eq major-mode 'c-mode)
               (setq command
-                    (concat "g++ -Wall -o now"
-                            ;; (file-name-sans-extension
-                            ;; (file-name-nondirectory buffer-file-name))
+                    (concat "gcc -Wall -o "
+                            (file-name-sans-extension
+                             (file-name-nondirectory buffer-file-name))
                             " "
                             (file-name-nondirectory buffer-file-name)
                             " -g -lm "))
-            (message "Unknow mode, won't compile!")))))
-    (if (not (null command))
-        (let ((command (read-from-minibuffer "Compile command: " command)))
-          (compile command)))))
+            (if (eq major-mode 'c++-mode)
+                (setq command
+                      (concat "g++ -Wall -o now"
+                              ;; (file-name-sans-extension
+                              ;; (file-name-nondirectory buffer-file-name))
+                              " "
+                              (file-name-nondirectory buffer-file-name)
+                              " -g -lm "))
+              (message "Unknow mode, won't compile!")))))
+      (if (not (null command))
+          (let ((command (read-from-minibuffer "Compile command: " command)))
+            (compile command)))))
 
-(defun addhead()
-  (interactive)
-  (insert
-   (format
-    "\
+
+  (defun addhead()
+    (interactive)
+    (insert
+     (format
+      "\
 // =============================================================================
 // Dsp: 
 // URL: 
 // Author: Sofee <  sofeeys@outlook.com  >
 // =============================================================================\n"
-   )))
+      )))
 
-(defun chead()
-  (interactive)
-  (insert
-   (format
-   "\
+  (defun chead()
+    (interactive)
+    (insert
+     (format
+      "\
 #include <iostream>
 #include <cstring>
 #include <cstdio>
 #include <vector>
 #include <algorithm>\n"
-   )))
+      )))
 
 
-(set-variable 'ycmd-server-command '("/usr/bin/python3.7" "-u" "/home/angel/.dotfile/.vim/vimfiles/YouCompleteMe/third_party/ycmd/ycmd"))
-(set-variable 'ycmd-global-config "/home/angel/.config/ycmd/ycmd_conf.py")
-
-
-(add-hook 'c++-mode-hook 'ycmd-mode)
-
-
-
-
-
-
+  (set-variable 'ycmd-server-command '("/usr/bin/python3.7" "-u" "/home/angel/.dotfile/.vim/vimfiles/YouCompleteMe/third_party/ycmd/ycmd"))
+  (set-variable 'ycmd-global-config "/home/angel/.config/ycmd/ycmd_conf.py")
+  (add-hook 'c++-mode-hook 'ycmd-mode)
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -446,4 +424,4 @@ you should place your code here."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (web-mode tagedit slim-mode scss-mode sass-mode pug-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data phpunit phpcbf php-extras php-auto-yasnippets drupal-mode php-mode org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download htmlize gnuplot flyspell-correct-helm flyspell-correct auto-dictionary unfill mwim emms yapfify xterm-color ws-butler winum which-key web-beautify volatile-highlights vimrc-mode vi-tilde-fringe uuidgen use-package toc-org spaceline shell-pop restart-emacs rainbow-delimiters pyvenv pytest pyenv-mode py-isort popwin pip-requirements persp-mode pcre2el paradox org-plus-contrib org-bullets open-junk-file neotree multi-term move-text mmm-mode markdown-toc macrostep lorem-ipsum livid-mode live-py-mode linum-relative link-hint json-mode js2-refactor js-doc indent-guide hy-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gh-md fuzzy flycheck-ycmd flycheck-pos-tip flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help elisp-slime-nav dumb-jump disaster diminish define-word dactyl-mode cython-mode company-ycmd company-tern company-statistics company-c-headers company-anaconda column-enforce-mode coffee-mode cmake-mode clean-aindent-mode clang-format auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell))))
+    (company iedit smartparens evil flycheck helm multiple-cursors avy markdown-mode projectile hydra yasnippet dash web-mode tagedit slim-mode scss-mode sass-mode pug-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data phpunit phpcbf php-extras php-auto-yasnippets drupal-mode php-mode org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download htmlize gnuplot flyspell-correct-helm flyspell-correct auto-dictionary unfill mwim emms yapfify xterm-color ws-butler winum which-key web-beautify volatile-highlights vimrc-mode vi-tilde-fringe uuidgen use-package toc-org spaceline shell-pop restart-emacs rainbow-delimiters pyvenv pytest pyenv-mode py-isort popwin pip-requirements persp-mode pcre2el paradox org-plus-contrib org-bullets open-junk-file neotree multi-term move-text mmm-mode markdown-toc macrostep lorem-ipsum livid-mode live-py-mode linum-relative link-hint json-mode js2-refactor js-doc indent-guide hy-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gh-md fuzzy flycheck-ycmd flycheck-pos-tip flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help elisp-slime-nav dumb-jump disaster diminish define-word dactyl-mode cython-mode company-ycmd company-tern company-statistics company-c-headers company-anaconda column-enforce-mode coffee-mode cmake-mode clean-aindent-mode clang-format auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell))))

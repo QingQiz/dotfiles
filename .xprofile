@@ -7,3 +7,9 @@ screen -DmS weechat /usr/bin/weechat &
 ### BEGIN DOTFILES ssh-add ###
 ssh-add &
 ### END DOTFILES ssh-add ###
+
+
+export GTK_IM_MODULE=fcitx
+export XMODIFIERS=@im=fcitx
+export QT_IM_MODULE=fcitx
+

@@ -230,20 +230,22 @@ endf
 augroup filetype_frmats " {{{
   au!
   au BufNewFile,BufRead *.{vim,vimrc,vimrc_simple}
-        \ setlocal tabstop=2                                       |
-        \ setlocal softtabstop=2                                   |
-        \ setlocal shiftwidth=2                                    |
-        \ setlocal foldmarker={{{,}}}
+        \ setlocal tabstop=2                |
+        \ setlocal softtabstop=2            |
+        \ setlocal shiftwidth=2             |
+        \ setlocal foldmarker={{{,}}}       |
+        \ setlocal foldcolumn=1
   au BufNewFile,BufRead *.py
-        \ setlocal autoindent                                      |
-        \ setlocal nowrap                                          |
+        \ setlocal autoindent               |
+        \ setlocal nowrap                   |
         \ setlocal sidescroll=5
   au BufNewFile,BufRead *.js,*.html,*.php
-        \ setlocal tabstop=2                                       |
-        \ setlocal softtabstop=2                                   |
+        \ setlocal tabstop=2                |
+        \ setlocal softtabstop=2            |
         \ setlocal shiftwidth=2
   au BufNewFile,BufRead *.cc,*.c,*.cpp
-        \ setlocal foldmarker=#ifdef,#endif
+        \ setlocal foldmarker=#ifdef,#endif |
+        \ setlocal foldcolumn=1
   au BufNewFile,BufRead *.py,*.c,*.cc,*.cpp,*.h*,.{vim,vimrc}
         \ match BadWhiteSpace /\v\s+$/
 

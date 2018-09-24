@@ -53,9 +53,13 @@ bakm() { mv "$1" "$1.bak" }
 
 HISTSIZE=2147483647
 export QT_SELECT=4
-export GTK_IM_MODULE=ibus
-export XMODIFIERS=@im=ibus
-export QT_IM_MODULE=ibus
+# export GTK_IM_MODULE=ibus
+# export XMODIFIERS=@im=ibus
+# export QT_IM_MODULE=ibus
+export GTK_IM_MODULE=fcitx
+export XMODIFIERS=@im=fcitx
+export QT_IM_MODULE=fcitx
+LC_CTYPE=zh_CN.UTF-8
 
 alias ggpush='git push origin master'
 alias gst='git status'

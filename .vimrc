@@ -42,6 +42,7 @@ nnoremap <silent>]<SPACE>   :call append(line('.'), "")<CR>j
 nnoremap <silent>[e         :move -1-1<CR>
 nnoremap <silent>]e         :move +1<CR>
 nnoremap <silent><leader>cl :call Comments()<CR>
+vnoremap <silent><leader>cl :'<,'>call Comments()<CR>
 nnoremap <silent><leader>cc :call ChangeFor()<CR>
 nnoremap <silent><F5>       :w<CR>:call SmartComplier()<CR>
 nnoremap <silent><F6>       :call RunResult()<CR>
@@ -85,7 +86,7 @@ function! InitColors()
   hi Normal        ctermfg=231   ctermbg=NONE cterm=NONE
   hi NonText       ctermfg=234   ctermbg=NONE
   hi Search        ctermfg=red   ctermbg=NONE
-  hi MatchParen    ctermfg=red   ctermbg=NONE guibg=NONE guifg=red
+  hi MatchParen    ctermfg=red   ctermbg=NONE cterm=underline
   hi YcmErrorSign  ctermfg=red   ctermbg=NONE guibg=NONE guifg=red
   hi PMenu         ctermfg=111
   hi ColorColumn   ctermbg=0
@@ -327,7 +328,8 @@ augroup filetype_frmats " {{{
         \ setlocal tabstop=2                                       |
         \ setlocal softtabstop=2                                   |
         \ setlocal shiftwidth=2                                    |
-        \ setlocal foldmarker={{{,}}}
+        \ setlocal foldmarker={{{,}}}                              |
+        \ setlocal foldcolumn=1
   au BufNewFile,BufRead *.py
         \ setlocal autoindent                                      |
         \ setlocal nowrap                                          |
@@ -339,7 +341,8 @@ augroup filetype_frmats " {{{
         \ setlocal shiftwidth=2
   au BufNewFile,BufRead *.c,*.cc,*.cpp
         \ setlocal foldmarker=#ifdef,#endif                        |
-        \ setlocal colorcolumn=81
+        \ setlocal colorcolumn=81                                  |
+        \ setlocal foldcolumn=1
   au BufNewFile,BufRead *.html
         \ let b:AutoPairs = {"<": ">", '"': '"', "'": "'", '{': '}', '(': ')', '[': ']'}
   au BufNewFile,BufRead *.py,*.c,*.cc,*.cpp,*.h*,.{vim,vimrc}

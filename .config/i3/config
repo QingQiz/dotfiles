@@ -1,9 +1,5 @@
-# i3 config file (v4)
-#
-# Please see http://i3wm.org/docs/userguide.html for a complete reference!
-
 # mod key
-set $mod Mod4
+# set $mod Mod4
 
 # fonts
 font pango: hack, Awesome 11
@@ -12,16 +8,17 @@ font pango: hack, Awesome 11
 new_window pixel
 
 # start a terminal
-bindsym Mod4+Return exec termite -e tmux
-bindsym Mod1+Return exec termite -e tmux
+# bindsym Mod4+Return exec termite -e tmux
+# bindsym Mod1+Return exec termite -e tmux
+bindsym Mod1+Return exec termite
+bindsym Mod4+Return exec termite
 
 # start drofi dmenu
-bindsym Mod4+Tab     exec --no-startup-id rofi -show window
-bindsym Mod4+Shift+d exec --no-startup-id rofi -show run
-bindsym Mod4+d       exec --no-startup-id rofi -show drun
+bindsym Mod4+Tab exec --no-startup-id rofi -show window
+bindsym Mod4+d   exec --no-startup-id rofi -show drun
 
 # Use Mouse+$mod to drag floating windows to their wanted position
-floating_modifier Mod4
+floating_modifier Mod1
 
 # kill focused window
 bindsym Mod4+q kill
@@ -31,23 +28,22 @@ bindsym Mod4+j      focus down
 bindsym Mod4+k      focus up
 bindsym Mod4+l      focus right
 bindsym Mod4+h      focus left
-bindsym $mod+Left   focus left
-bindsym $mod+Down   focus down
-bindsym $mod+Up     focus up
-bindsym $mod+Right  focus right
+bindsym Mod1+j      focus down
+bindsym Mod1+k      focus up
+bindsym Mod1+l      focus right
+bindsym Mod1+h      focus left
 
 # move focused window
 bindsym Mod4+Shift+h        move left
 bindsym Mod4+Shift+j        move down
 bindsym Mod4+Shift+k        move up
 bindsym Mod4+Shift+l        move right
-bindsym $mod+Shift+Left     move left
-bindsym $mod+Shift+Down     move down
-bindsym $mod+Shift+Up       move up
-bindsym $mod+Shift+Right    move right
-
+bindsym Mod1+Shift+h        move left
+bindsym Mod1+Shift+j        move down
+bindsym Mod1+Shift+k        move up
+bindsym Mod1+Shift+l        move right
 # split in horizontal orientation
-bindsym Mod4+g split h
+# bindsym Mod4+g split h
 
 # split in vertical orientation
 bindsym Mod4+v split v
@@ -64,7 +60,7 @@ bindsym Mod4+e layout toggle split
 bindsym Mod4+m floating toggle
 
 # change focus between tiling / floating windows
-bindsym Mod4+space focus mode_toggle
+bindsym Mod1+space focus mode_toggle
 
 # focus the parent container
 # bindsym $mod+q focus parent
@@ -73,8 +69,8 @@ bindsym Mod4+space focus mode_toggle
 #bindsym $mod+d focus child
 
 #scratchpad
-bindsym $mod+twosuperior scratchpad show
-bindsym $mod+Shift+twosuperior move scratchpad
+# bindsym $mod+twosuperior scratchpad show
+# bindsym $mod+Shift+twosuperior move scratchpad
 
 #Swith with same key to precedent workspace
 workspace_auto_back_and_forth yes
@@ -99,7 +95,6 @@ bindsym Mod4+Shift+q exec ~/.config/rofi/powermenu.sh
 
 # apps
 bindsym Mod4+Control+t exec thunar
-# bindsym $mod+Control+n exec connman-gtk
 
 # by class
 ## floatings
@@ -107,7 +102,6 @@ for_window [class="CrossOver"]           floating enable, border pixel 1
 for_window [class="XTerm"]               floating enable, border pixel 1
 for_window [class="Wine"]                floating enable, border pixel 1
 for_window [class="feh"]                 floating enable, border pixel 1
-# for_window [class="Cloud Music"]         floating enable, border pixel 1
 for_window [class="netease-cloud-music"] floating enable, border pixel 1
 
 # assigns focus
@@ -115,8 +109,8 @@ for_window [class="netease-cloud-music"] floating enable, border pixel 1
 # for_window [class="Connman-gtk"] focus
 
 # toggle workspace's display screen
-bindsym $mod+- move workspace to output right
-bindsym $mod+Shift+- move workspace to output up
+# bindsym $mod+- move workspace to output right
+# bindsym $mod+Shift+- move workspace to output up
 
 # switch to workspace
 bindsym Mod4+1 workspace 1
@@ -129,6 +123,16 @@ bindsym Mod4+7 workspace 7
 bindsym Mod4+8 workspace 8
 bindsym Mod4+9 workspace 9
 bindsym Mod4+0 workspace 10
+bindsym Mod1+1 workspace 1
+bindsym Mod1+2 workspace 2
+bindsym Mod1+3 workspace 3
+bindsym Mod1+4 workspace 4
+bindsym Mod1+5 workspace 5
+bindsym Mod1+6 workspace 6
+bindsym Mod1+7 workspace 7
+bindsym Mod1+8 workspace 8
+bindsym Mod1+9 workspace 9
+bindsym Mod1+0 workspace 10
 
 # move focused container to workspace
 bindsym Mod4+Shift+1 move container to workspace 1
@@ -141,13 +145,22 @@ bindsym Mod4+Shift+7 move container to workspace 7
 bindsym Mod4+Shift+8 move container to workspace 8
 bindsym Mod4+Shift+9 move container to workspace 9
 bindsym Mod4+Shift+0 move container to workspace 10
+bindsym Mod1+Shift+1 move container to workspace 1
+bindsym Mod1+Shift+2 move container to workspace 2
+bindsym Mod1+Shift+3 move container to workspace 3
+bindsym Mod1+Shift+4 move container to workspace 4
+bindsym Mod1+Shift+5 move container to workspace 5
+bindsym Mod1+Shift+6 move container to workspace 6
+bindsym Mod1+Shift+7 move container to workspace 7
+bindsym Mod1+Shift+8 move container to workspace 8
+bindsym Mod1+Shift+9 move container to workspace 9
+bindsym Mod1+Shift+0 move container to workspace 10
 
 
 # reload the configuration file
 bindsym Mod4+Shift+c reload
 bindsym Mod4+Shift+r restart
 bindsym Mod4+Shift+e exec "i3-nagbar -t warning -m 'This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
-# bindsym Mod4+Shift+e exit
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -169,8 +182,6 @@ bindsym Mod4+r mode "resize"
 # polybar exec
 exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 
-# bindsym $mod+l exec i3lock -i '/home/angel/Pictures/lock_pic.png'
-# bindsym Mod4+Ctrl+l exec i3lock -c 000000 && exec systemctl suspend
 bindsym Mod1+Ctrl+l exec betterlockscreen --lock
 bindsym Mod1+Ctrl+s exec betterlockscreen --lock & exec systemctl suspend
 
@@ -193,7 +204,8 @@ bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -3
 # bindsym XF86AudioStop  exec mpc --port=6699 stop
 
 # ibus 
-exec --no-startup-id ibus-daemon --xim -d
+# exec --no-startup-id ibus-daemon --xim -d
+exec --no-startup-id fcitx-autostart
 
 # local ss
 exec_always --no-startup-id ss-local -c /etc/shadowsocks/conf.json
