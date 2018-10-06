@@ -100,7 +100,7 @@ alias ruijie='ruijie i once'
 alias nip='curl -i https://ip.cn'
 
 alias ColorCoded='cp ~/.config/color_coded/.color_coded .'
-alias YcmExtra='cp ~/.config/ycmd/.ycm_extra_conf.py .'
+alias YcmExtra='cp ~/.config/ycmd/ycmd_conf.py .'
 alias AddCMakeList='cp ~/workspace/Progeaming-Practice/Note/CMakeLists.txt .'
 
 c() {

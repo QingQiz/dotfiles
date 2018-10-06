@@ -134,7 +134,7 @@ values."
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
    dotspacemacs-default-font '("Source Code Pro"
-                               :size 16
+                               :size 20
                                :weight normal
                                :width normal
                                :powerline-scale 1.1)
@@ -300,10 +300,10 @@ values."
   )
 
 (defun dotspacemacs/user-config ()
-  (setq default-tab-width 4)
+  (setq default-tab-width 2)
   (setq-default indent-tabs-mode nil)
   (setq c-default-style "linux")
-  (setq c-basic-offset 4)
+  (setq c-basic-offset 2)
   (setq ycmd-force-semantic-completion t)
   (setq x-select-enable-clipboard nil)
   (setq sp-escape-quotes-after-insert nil)
