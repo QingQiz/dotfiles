@@ -50,7 +50,6 @@ alias ix="curl -s -F 'f:1=<-' ix.io"
 bak() { cp "$1" "$1.bak" }
 bakm() { mv "$1" "$1.bak" }
 
-
 HISTSIZE=2147483647
 export QT_SELECT=4
 # export GTK_IM_MODULE=ibus

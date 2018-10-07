@@ -241,6 +241,7 @@ exec sh ~/.config/i3/wallpaper.sh 0
 exec i3-config-wizard
 exec --no-startup-id i3-msg "workspace 1"
 exec compton &
+exec setterm -bleng 0
 # exec_always --no-startup-id mpd
 # exec_always xrandr --output eDP1 --right-of HDMI1 --auto && i3 restart
 
