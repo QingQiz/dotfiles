@@ -14,6 +14,7 @@ bindsym Mod1+Return exec termite
 bindsym Mod4+Return exec termite
 
 # start drofi dmenu
+bindsym Mod1+Tab exec --no-startup-id rofi -show window
 bindsym Mod4+Tab exec --no-startup-id rofi -show window
 bindsym Mod4+d   exec --no-startup-id rofi -show drun
 
@@ -224,9 +225,9 @@ bindsym Mod4+Shift+b border toggle
 exec_always synclient VertScrollDelta=-66
 exec_always synclient HorizScrollDelta=-66
 # exec_always synclient CircularScrolling=1
-exec_always synclient TapButton1=1
-exec_always synclient TapButton2=3
-exec_always synclient TapButton3=2
+exec_always synclient TapButton1=0
+exec_always synclient TapButton2=1
+exec_always synclient TapButton3=3
 exec_always synclient MaxSpeed=1.5
 focus_follows_mouse no
 

@@ -170,6 +170,7 @@ if [ "$chc" = "y" ]; then
     ln -sf "$script_dir/.zsh/pure/async.zsh" zfunctions/async
 
     ln_ .oh-my-zsh
+    ln_ .bashrc
     ln_ .zsh
     ln_ .zshrc
 fi

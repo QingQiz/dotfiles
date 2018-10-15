@@ -297,6 +297,9 @@ values."
 (defun dotspacemacs/user-init ()
   (setq-default dotspacemacs-themes '(manoj-dark))
   (setq-default dotspacemacs-startup-banner '"~/.dotfile/emacs/banner.png")
+  (setq-default dotspacemacs-configuration-layers
+                '((auto-completion :variables
+                                   auto-completion-enable-snippets-in-popup t)))
   )
 
 (defun dotspacemacs/user-config ()
@@ -307,7 +310,7 @@ values."
   (setq ycmd-force-semantic-completion t)
   (setq x-select-enable-clipboard nil)
   (setq sp-escape-quotes-after-insert nil)
-
+  (setq shell-file-name "bash")
 
   ;; set powerline
   (setq powerline-default-separator 'slant)
@@ -326,6 +329,9 @@ values."
   (define-key evil-motion-state-map [mouse-3] nil)
   (define-key evil-motion-state-map [double-mouse-3] nil)
 
+  (global-set-key (kbd "C-<return>") 'yas-expand)
+  (global-set-key (kbd "C-x C-x") 'shell)
+
 
   ;; C-c to escape
   (defun my-esc (prompt)
@@ -342,6 +348,17 @@ values."
 
   ;; (global-set-key (kbd "<f5>") 'smart-compile)
   (global-set-key (kbd "<f3>") 'neotree-toggle)
+
+  ;; Format code
+  (defun F()
+    (interactive)
+    (let ((format-command "clang-format -i -style=\"{BasedOnStyle: Google, IndentWidth: 2}\""))
+      (save-excursion
+        (shell-command-to-string (format "%s %s" format-command buffer-file-name))
+        (message "format done")
+        )
+      )
+    )
 
   ;; complier
   (defun smart-compile()
@@ -404,6 +421,8 @@ values."
   (set-variable 'ycmd-server-command '("/usr/bin/python3.7" "-u" "/home/angel/.dotfile/.vim/vimfiles/YouCompleteMe/third_party/ycmd/ycmd"))
   (set-variable 'ycmd-global-config "/home/angel/.config/ycmd/ycmd_conf.py")
   (add-hook 'c++-mode-hook 'ycmd-mode)
+
+
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
