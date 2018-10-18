@@ -312,6 +312,10 @@ values."
   (setq sp-escape-quotes-after-insert nil)
   (setq shell-file-name "bash")
 
+  (add-hook 'c-mode-common-hook
+            (lambda()
+                   (c-set-offset 'case-label '+)))
+
   ;; set powerline
   (setq powerline-default-separator 'slant)
 
@@ -345,6 +349,9 @@ values."
   (evil-define-key 'insert global-map (kbd "C-l") 'evil-end-of-visual-line)
   (evil-define-key 'normal global-map (kbd "L") 'evil-end-of-line)
   (evil-define-key 'normal global-map (kbd "H") 'evil-first-non-blank)
+  (evil-define-key 'visual global-map (kbd "H") 'evil-first-non-blank)
+  (evil-define-key 'visual global-map (kbd "L") 'evil-end-of-line)
+  ;; (evil-set-initial-state 'shell-mode 'emacs)
 
   ;; (global-set-key (kbd "<f5>") 'smart-compile)
   (global-set-key (kbd "<f3>") 'neotree-toggle)

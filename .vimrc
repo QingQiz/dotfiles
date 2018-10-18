@@ -358,7 +358,7 @@ augroup AddFileHeaders
         \ call append(line('.'), '')                               |
         \ normal! Go
   au BufNewFile *.py
-        \ call setline(1, '#!/usr/bin/env bash')                   |
+        \ call setline(1, '#!/usr/bin/env python3')                |
         \ call append(line('.'), '# -*- coding: utf-8 -*-')        |
         \ call append(line('.')+1, '')                             |
         \ normal! Go
