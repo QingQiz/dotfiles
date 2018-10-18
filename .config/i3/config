@@ -180,11 +180,8 @@ mode "resize" {
 
 bindsym Mod4+r mode "resize"
 
-# polybar exec
-exec_always --no-startup-id $HOME/.config/polybar/launch.sh
-
-bindsym Mod1+Ctrl+l exec betterlockscreen --lock
-bindsym Mod1+Ctrl+s exec betterlockscreen --lock & exec systemctl suspend
+bindsym Mod1+Ctrl+l exec betterlockscreen -l
+bindsym Mod1+Ctrl+Shift+L exec betterlockscreen -s
 
 # screenshot
 bindsym Mod1+Ctrl+k exec sh ~/.scr/screenshot.sh
@@ -204,12 +201,17 @@ bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -3
 # bindsym XF86AudioPlay  exec mpc --port=6699 play
 # bindsym XF86AudioStop  exec mpc --port=6699 stop
 
+# polybar exec
+exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+
 # ibus 
-# exec --no-startup-id ibus-daemon --xim -d
 exec --no-startup-id fcitx-autostart
 
 # local ss
 exec_always --no-startup-id ss-local -c /etc/shadowsocks/conf.json
+
+# lock when sleep
+exec --no-startup-id xss-lock -- betterlockscreen -l &
 
 # no sleep
 exec_always xset s 0
@@ -238,6 +240,7 @@ bindsym XF86Mail exec --no-startup-id thunderbird
 bindsym Mod4+n exec sh ~/.config/i3/wallpaper.sh
 bindsym Mod4+p exec sh ~/.config/i3/wallpaper.sh -1
 bindsym Mod4+Shift+n exec sh ~/.config/i3/wallpaper_random.sh
+
 exec sh ~/.config/i3/wallpaper.sh 0
 exec i3-config-wizard
 exec --no-startup-id i3-msg "workspace 1"

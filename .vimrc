@@ -140,7 +140,7 @@ command! Compile call SmartComplier();
 command! Run call RunResult();
 command! W w
 command! Format !clang-format -i
-      \ -style="{BasedOnStyle: Google, IndentWidth: 4}" %
+      \ -style="{BasedOnStyle: Google, IndentWidth: 2}" %
 command! Cls %s/\s*$//
 command! Vimrc e $HOME/.vimrc
 command! AddHead call AddHead()

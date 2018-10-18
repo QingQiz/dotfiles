@@ -295,6 +295,7 @@ values."
    ))
 
 (defun dotspacemacs/user-init ()
+  (setq-default tab-width 2)
   (setq-default dotspacemacs-themes '(manoj-dark))
   (setq-default dotspacemacs-startup-banner '"~/.dotfile/emacs/banner.png")
   (setq-default dotspacemacs-configuration-layers
@@ -303,14 +304,15 @@ values."
   )
 
 (defun dotspacemacs/user-config ()
-  (setq default-tab-width 2)
   (setq-default indent-tabs-mode nil)
-  (setq c-default-style "linux")
-  (setq c-basic-offset 2)
   (setq ycmd-force-semantic-completion t)
   (setq x-select-enable-clipboard nil)
   (setq sp-escape-quotes-after-insert nil)
   (setq shell-file-name "bash")
+
+  (setq c-default-style "linux")
+  (setq c-basic-offset 2)
+  (setq default-tab-width 2)
 
   (add-hook 'c-mode-common-hook
             (lambda()
