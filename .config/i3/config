@@ -180,9 +180,8 @@ mode "resize" {
 
 bindsym Mod4+r mode "resize"
 
-bindsym Mod1+Ctrl+l exec betterlockscreen -l
-bindsym Mod1+Ctrl+Shift+L exec betterlockscreen -s
-
+bindsym Mod1+Ctrl+l exec betterlockscreen -l dim
+bindsym Mod1+Ctrl+Shift+L exec betterlockscreen -s dim
 # screenshot
 bindsym Mod1+Ctrl+k exec sh ~/.scr/screenshot.sh
 
@@ -211,14 +210,15 @@ exec --no-startup-id fcitx-autostart
 exec_always --no-startup-id ss-local -c /etc/shadowsocks/conf.json
 
 # lock when sleep
-exec --no-startup-id xss-lock -- betterlockscreen -l &
+exec --no-startup-id xss-lock -- betterlockscreen -l dim -t "    Welcome,  Sir  ... " &
 
 # no sleep
+exec_always xset b 0
 exec_always xset s 0
-exec_always xset dpms 0 0 0
+exec_always xset dpms 600 3600
 
 # network
-exec ~/.scr/ruijie_login &
+# exec ~/.scr/ruijie_login &
 
 # 更改边框样式
 bindsym Mod4+Shift+b border toggle

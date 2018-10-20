@@ -63,7 +63,7 @@ font-2 = "Wuncon Siji:pixelsize=10;3"
 font-3 = FontAwesome:pixelsize=14;2
 
 modules-left = i3 xwindow
-modules-center = mpd
+; modules-center = mpd
 modules-right = pmenu backlight alsa wlan battery date 
 
 ; tray-position = right
