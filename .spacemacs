@@ -170,26 +170,6 @@ values."
    ;; (default nil)
    dotspacemacs-visual-line-move-text nil
    ;; If non nil, inverse the meaning of `g' in `:substitute' Evil ex-command.
-   ;; (default nil)
-   dotspacemacs-ex-substitute-global nil
-   ;; Name of the default layout (default "Default")
-   dotspacemacs-default-layout-name "Default"
-   ;; If non nil the default layout name is displayed in the mode-line.
-   ;; (default nil)
-   dotspacemacs-display-default-layout nil
-   ;; If non nil then the last auto saved layouts are resume automatically upon
-   ;; start. (default nil)
-   dotspacemacs-auto-resume-layouts nil
-   ;; Size (in MB) above which spacemacs will prompt to open the large file
-   ;; literally to avoid performance issues. Opening a file literally means that
-   ;; no major mode or minor modes are active. (default is 1)
-   dotspacemacs-large-file-size 1
-   ;; Location where to auto-save files. Possible values are `original' to
-   ;; auto-save the file in-place, `cache' to auto-save the file to another
-   ;; file stored in the cache directory and `nil' to disable auto-saving.
-   ;; (default 'cache)
-   dotspacemacs-auto-save-file-location 'cache
-   ;; Maximum number of rollback slots to keep in the cache. (default 5)
    dotspacemacs-max-rollback-slots 5
    ;; If non nil, `helm' will try to minimize the space it uses. (default nil)
    dotspacemacs-helm-resize nil
@@ -337,7 +317,7 @@ values."
 
   (global-set-key (kbd "C-<return>") 'yas-expand)
   (global-set-key (kbd "C-x C-x") 'shell)
-
+  (global-set-key (kbd "C-x p") (kbd "\" + p"))
 
   ;; C-c to escape
   (defun my-esc (prompt)

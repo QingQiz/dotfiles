@@ -210,7 +210,7 @@ exec --no-startup-id fcitx-autostart
 exec_always --no-startup-id ss-local -c /etc/shadowsocks/conf.json
 
 # lock when sleep
-exec --no-startup-id xss-lock -- betterlockscreen -l dim -t "    Welcome,  Sir  ... " &
+exec --no-startup-id xss-lock -- betterlockscreen -l dim &
 
 # no sleep
 exec_always xset b 0
@@ -223,14 +223,14 @@ exec_always xset dpms 600 3600
 # 更改边框样式
 bindsym Mod4+Shift+b border toggle
 
-# 触控板
-exec_always synclient VertScrollDelta=-66
-exec_always synclient HorizScrollDelta=-66
+# touchpad
 # exec_always synclient CircularScrolling=1
 exec_always synclient TapButton1=0
 exec_always synclient TapButton2=1
 exec_always synclient TapButton3=3
 exec_always synclient MaxSpeed=1.5
+exec_always synclient VertScrollDelta=-66
+exec_always synclient HorizScrollDelta=-66
 focus_follows_mouse no
 
 bindsym Mod4+Shift+z exec sh ~/.scr/touchpad.sh
@@ -246,6 +246,7 @@ exec i3-config-wizard
 exec --no-startup-id i3-msg "workspace 1"
 exec compton &
 exec setterm -bleng 0
+exec_always numlockx &
 # exec_always --no-startup-id mpd
 # exec_always xrandr --output eDP1 --right-of HDMI1 --auto && i3 restart
 

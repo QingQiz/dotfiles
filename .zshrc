@@ -46,18 +46,9 @@ else
 fi
 
 
-### ARCHLINUX INCLUDE
-dupkg() { expac '%m\t%n' | sort -h | awk '{cmd = "numfmt --to=si "$1; cmd | getline n; close(cmd); print n, $2}' }
-dupkg_ex() { expac -H M "%011m\t%-20n\t%10d" $(comm -23 <(pacman -Qqen | sort) <(pacman -Qqg base base-devel | sort)) | sort -n }
 
-lhs() { for list in $(ls -a | sed 's/\ /\\ /g'); do du -hs $list; done | sort -hr }
-
-wanip() { curl icanhazip.com }
-lanip() { ip a | grep $(ip r | grep default | head | cut -d\  -f5) | grep inet | awk '{print $2}' | cut -d"/" -f1 }
-
-bak() { cp "$1" "$1.bak" }
-bakm() { mv "$1" "$1.bak" }
-
+##=======================================================================
+# alias
 
 alias ggpush='git push origin master'
 alias gst='git status'
@@ -74,8 +65,7 @@ alias sls='ls'
 alias lh="du -ahd1 | sort -h"
 alias t='tmux'
 alias tks='tmux kill-session -t'
-alias f='feh'
-alias v='vim'
+alias f='feh' alias v='vim'
 alias vu='vim'
 alias vo='vim'
 alias vi='vim'
@@ -97,16 +87,27 @@ alias aria2='aria2c --conf-path=/home/angel/.config/aria2/aria2.conf'
 alias ruijie='ruijie i once'
 
 alias nip='curl -i https://ip.cn'
+alias sofee='sudo netctl start wlo1-Sofeeys'
 
 alias ColorCoded='cp ~/.config/color_coded/.color_coded .'
 alias YcmExtra='cp ~/.config/ycmd/ycmd_conf.py .'
 alias AddCMakeList='cp ~/workspace/Progeaming-Practice/Note/CMakeLists.txt .'
 
+##-----------------------------------------------------------------------
+
+
+
+
+##=======================================================================
+# commonly used functions
+
 c() {
     if [[ $# == 0 ]]; then
         g++ -Wall -o now _.cc -g -lm && ./now
-    else
+    elif [[ $# == 1 ]]; then
         g++ -Wall -o now $1 -g -lm && ./now
+    elif [[ $# == 2 ]]; then
+        g++ -Wall -o now $1 -g -lm $2 && ./now
     fi
 }
 pushmod() {
@@ -123,3 +124,27 @@ pushcode() {
         cp ./$1 ~/workspace/Progeaming-Practice/ACM-ICPC/CodeHub/$2
     fi
 }
+dupkg() { expac '%m\t%n' | sort -h | awk '{cmd = "numfmt --to=si "$1; cmd | getline n; close(cmd); print n, $2}' }
+dupkg_ex() { expac -H M "%011m\t%-20n\t%10d" $(comm -23 <(pacman -Qqen | sort) <(pacman -Qqg base base-devel | sort)) | sort -n }
+
+lhs() { for list in $(ls -a | sed 's/\ /\\ /g'); do du -hs $list; done | sort -hr }
+
+wanip() { curl icanhazip.com }
+lanip() { ip a | grep $(ip r | grep default | head | cut -d\  -f5) | grep inet | awk '{print $2}' | cut -d"/" -f1 }
+
+bak() { cp "$1" "$1.bak" }
+bakm() { mv "$1" "$1.bak" }
+
+##-----------------------------------------------------------------------
+
+
+
+
+##=======================================================================
+# code complete
+
+compdef '_files -g "*.cc"' c
+compdef '_files -g "*.cc"' pushmod
+compdef '_files -g "*.cc"' pushcode
+
+##-----------------------------------------------------------------------
