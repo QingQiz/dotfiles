@@ -39,13 +39,12 @@ if [[ $istty == "" ]]; then
     export GTK_IM_MODULE=fcitx
     export XMODIFIERS=@im=fcitx
     export QT_IM_MODULE=fcitx
-    LC_CTYPE=zh_CN.UTF-8
     HISTSIZE=2147483647
 else
     export PS1="[%n@ %d]$ "
 fi
 
-
+export LC_CTYPE=zh_CN.UTF-8
 
 ##=======================================================================
 # alias
@@ -107,10 +106,10 @@ c() {
     res="./now"
     case $# in
         0)
-            cmd=$cmd"now _.cc"
+            cmd=$cmd" now _.cc"
             ;;
         1)
-            cmd=$cmd"now $1"
+            cmd=$cmd" now $1"
             ;;
         *)
             if [[ ${2:0:1} ==  "-" ]]; then
@@ -134,6 +133,27 @@ c() {
     else
         echo -e "\n\e[41mCompile Failed...\e[0m\n"
     fi
+}
+
+wa() {
+    case $# in
+        3)
+            res1="res1"
+            res2="res2"
+            python $3 > "data"
+            [[ $? != 0 ]] && return
+            cat data | c $1 > $res1".out"
+            [[ $? != 0 ]] && return
+            cat data | c $2 > $res2".out"
+            [[ $? != 0 ]] && return
+            vimdiff $res1".out" $res2".out"
+            ;;
+        *)
+            echo "\n\e[41mWrong option\e[0m\n"
+            return
+            ;;
+    esac
+
 }
 
 pushmod() {

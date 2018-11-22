@@ -6,7 +6,7 @@ path=~/Pictures/WallP
 cd $path
 
 files=()
-for i in *.jpg; do
+for i in ./*.{jpg,png}; do
     [[ -f $i ]] && files+=("$i")
 done
 range=${#files[@]}

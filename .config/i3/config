@@ -10,11 +10,11 @@ new_window pixel
 # start a terminal
 # bindsym Mod4+Return exec termite -e tmux
 # bindsym Mod1+Return exec termite -e tmux
-bindsym Mod1+Return exec termite
+# bindsym Mod1+Return exec termite
 bindsym Mod4+Return exec termite
 
 # start drofi dmenu
-bindsym Mod1+Tab exec --no-startup-id rofi -show window
+# bindsym Mod1+Tab exec --no-startup-id rofi -show window
 bindsym Mod4+Tab exec --no-startup-id rofi -show window
 bindsym Mod4+d   exec --no-startup-id rofi -show drun
 
@@ -29,20 +29,21 @@ bindsym Mod4+j      focus down
 bindsym Mod4+k      focus up
 bindsym Mod4+l      focus right
 bindsym Mod4+h      focus left
-bindsym Mod1+j      focus down
-bindsym Mod1+k      focus up
-bindsym Mod1+l      focus right
-bindsym Mod1+h      focus left
+# bindsym Mod1+j      focus down
+# bindsym Mod1+k      focus up
+# bindsym Mod1+l      focus right
+# bindsym Mod1+h      focus left
 
 # move focused window
 bindsym Mod4+Shift+h        move left
 bindsym Mod4+Shift+j        move down
 bindsym Mod4+Shift+k        move up
 bindsym Mod4+Shift+l        move right
-bindsym Mod1+Shift+h        move left
-bindsym Mod1+Shift+j        move down
-bindsym Mod1+Shift+k        move up
-bindsym Mod1+Shift+l        move right
+# bindsym Mod1+Shift+h        move left
+# bindsym Mod1+Shift+j        move down
+# bindsym Mod1+Shift+k        move up
+# bindsym Mod1+Shift+l        move right
+
 # split in horizontal orientation
 # bindsym Mod4+g split h
 
@@ -61,7 +62,7 @@ bindsym Mod4+e layout toggle split
 bindsym Mod4+m floating toggle
 
 # change focus between tiling / floating windows
-bindsym Mod1+space focus mode_toggle
+# bindsym Mod1+space focus mode_toggle
 
 # focus the parent container
 # bindsym $mod+q focus parent
@@ -146,16 +147,16 @@ bindsym Mod4+Shift+7 move container to workspace 7
 bindsym Mod4+Shift+8 move container to workspace 8
 bindsym Mod4+Shift+9 move container to workspace 9
 bindsym Mod4+Shift+0 move container to workspace 10
-bindsym Mod1+Shift+1 move container to workspace 1
-bindsym Mod1+Shift+2 move container to workspace 2
-bindsym Mod1+Shift+3 move container to workspace 3
-bindsym Mod1+Shift+4 move container to workspace 4
-bindsym Mod1+Shift+5 move container to workspace 5
-bindsym Mod1+Shift+6 move container to workspace 6
-bindsym Mod1+Shift+7 move container to workspace 7
-bindsym Mod1+Shift+8 move container to workspace 8
-bindsym Mod1+Shift+9 move container to workspace 9
-bindsym Mod1+Shift+0 move container to workspace 10
+# bindsym Mod1+Shift+1 move container to workspace 1
+# bindsym Mod1+Shift+2 move container to workspace 2
+# bindsym Mod1+Shift+3 move container to workspace 3
+# bindsym Mod1+Shift+4 move container to workspace 4
+# bindsym Mod1+Shift+5 move container to workspace 5
+# bindsym Mod1+Shift+6 move container to workspace 6
+# bindsym Mod1+Shift+7 move container to workspace 7
+# bindsym Mod1+Shift+8 move container to workspace 8
+# bindsym Mod1+Shift+9 move container to workspace 9
+# bindsym Mod1+Shift+0 move container to workspace 10
 
 
 # reload the configuration file
@@ -180,10 +181,10 @@ mode "resize" {
 
 bindsym Mod4+r mode "resize"
 
-bindsym Mod1+Ctrl+l exec betterlockscreen -l dim
-bindsym Mod1+Ctrl+Shift+L exec betterlockscreen -s dim
+bindsym Mod4+Ctrl+l exec betterlockscreen -l dim
+bindsym Mod4+Ctrl+Shift+L exec betterlockscreen -s dim
 # screenshot
-bindsym Mod1+Ctrl+k exec sh ~/.scr/screenshot.sh
+bindsym Mod4+Ctrl+k exec sh ~/.scr/screenshot.sh
 
 # sound & brightness
 bindsym XF86AudioRaiseVolume  exec --no-startup-id amixer -q sset Master 3%+
@@ -229,8 +230,8 @@ exec_always synclient TapButton1=0
 exec_always synclient TapButton2=1
 exec_always synclient TapButton3=3
 exec_always synclient MaxSpeed=1.5
-exec_always synclient VertScrollDelta=-66
-exec_always synclient HorizScrollDelta=-66
+exec_always sleep 2 && synclient VertScrollDelta=-66
+exec_always sleep 2 && synclient HorizScrollDelta=-66
 focus_follows_mouse no
 
 bindsym Mod4+Shift+z exec sh ~/.scr/touchpad.sh
