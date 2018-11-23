@@ -297,6 +297,7 @@ values."
   (add-hook 'c-mode-common-hook
             (lambda()
                    (c-set-offset 'case-label '+)))
+  (add-hook 'before-save-hook (lambda () (whitespace-cleanup)))
 
   ;; set powerline
   (setq powerline-default-separator 'slant)
