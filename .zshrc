@@ -69,6 +69,7 @@ alias v='vim'
 alias vu='vim'
 alias vo='vim'
 alias vi='vim'
+alias ec='emacsclient -c -n'
 alias vs='vim -u ~/.vimrc_simple --noplugin'
 alias sv='vim -u ~/.vimrc_simple --noplugin'
 alias cls='clear'
@@ -156,6 +157,17 @@ wa() {
 
 }
 
+ver() { 
+    iverilog -o now $1 $2
+    if [[ $? == 0 ]]; then
+        echo -e "\e[32mRuning Result...\e[0m\n"
+        echo "finish" | ./now
+    else
+        echo -e "\n\e[41mCompile Failed...\e[0m\n"
+    fi
+
+}
+
 pushmod() {
     if [[ $# == 1 ]]; then
         cp ./_.cc ~/workspace/Progeaming-Practice/ACM-ICPC/Mod/$1
@@ -202,6 +214,8 @@ bakm() { mv "$1" "$1.bak" }
 compdef '_files -g "*.cc"' c
 compdef '_files -g "*.cc"' pushmod
 compdef '_files -g "*.cc"' pushcode
+compdef '_files -g "*.vcd"' gtkwave
+compdef '_files -g "*.v"' ver
 compdef _nothing lh
 compdef _nothing lhs
 compdef _nothing dupkg

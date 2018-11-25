@@ -105,6 +105,7 @@ for_window [class="XTerm"]               floating enable, border pixel 1
 for_window [class="Wine"]                floating enable, border pixel 1
 for_window [class="feh"]                 floating enable, border pixel 1
 for_window [class="netease-cloud-music"] floating enable, border pixel 1
+for_window [class="Gtkwave" instance="gtkwave"]   floating enable, border pixel 1
 
 # assigns focus
 # assign [class="Connman-gtk"] $tag10
@@ -242,6 +243,7 @@ bindsym Mod4+n exec sh ~/.config/i3/wallpaper.sh
 bindsym Mod4+p exec sh ~/.config/i3/wallpaper.sh -1
 bindsym Mod4+Shift+n exec sh ~/.config/i3/wallpaper_random.sh
 
+exec emacs --bg-daemon
 exec sh ~/.config/i3/wallpaper.sh 0
 exec i3-config-wizard
 exec --no-startup-id i3-msg "workspace 1"
