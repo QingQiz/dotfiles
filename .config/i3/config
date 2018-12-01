@@ -191,9 +191,9 @@ bindsym Mod4+Ctrl+k exec sh ~/.scr/screenshot.sh
 bindsym XF86AudioRaiseVolume  exec --no-startup-id amixer -q sset Master 3%+
 bindsym XF86AudioLowerVolume  exec --no-startup-id amixer -q sset Master 3%-
 # bindsym XF86MonBrightnessUp   exec --no-startup-id xbacklight +3
-bindsym XF86MonBrightnessUp   exec xrandr --output eDP-1 --brightness $((`cat ~/.cache/brightness`-0.05)) && echo $((`cat ~/.cache/brightness`-0.05)) > ~/.cache/brightness
+bindsym XF86MonBrightnessUp   exec ~/.config/i3/brightness.sh +0.05
 # bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -3
-bindsym XF86MonBrightnessDown exec xrandr --output eDP-1 --brightness $((`cat ~/.cache/brightness`+0.05)) && echo $((`cat ~/.cache/brightness`+0.05)) > ~/.cache/brightness
+bindsym XF86MonBrightnessDown exec ~/.config/i3/brightness.sh -0.05
 
 # Audio
 # bindsym Ctrl+Left  exec mpc --port=6699 prev
