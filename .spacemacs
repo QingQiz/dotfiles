@@ -277,7 +277,7 @@ values."
 (defun dotspacemacs/user-init ()
   (setq-default tab-width 2)
   (setq-default dotspacemacs-themes '(manoj-dark))
-  (setq-default dotspacemacs-startup-banner '"~/.dotfile/emacs/banner.png")
+  (setq-default dotspacemacs-startup-banner '"~/.dotfiles/emacs/banner.png")
   (setq-default dotspacemacs-configuration-layers
                 '((auto-completion :variables
                                    auto-completion-enable-snippets-in-popup t)))
@@ -389,8 +389,8 @@ values."
      (format
       "\
 // =============================================================================
-// Dsp: 
-// URL: 
+// Dsp:
+// URL:
 // Author: Sofee <  sofeeys@outlook.com  >
 // =============================================================================\n"
       )))
@@ -408,7 +408,7 @@ values."
       )))
 
 
-  (set-variable 'ycmd-server-command '("/usr/bin/python3.7" "-u" "/home/angel/.dotfile/.vim/vimfiles/YouCompleteMe/third_party/ycmd/ycmd"))
+  (set-variable 'ycmd-server-command '("/usr/bin/python3.7" "-u" "/home/angel/.dotfiles/.vim/vimfiles/YouCompleteMe/third_party/ycmd/ycmd"))
   (set-variable 'ycmd-global-config "/home/angel/.config/ycmd/ycmd_conf.py")
   (add-hook 'c++-mode-hook 'ycmd-mode)
 
@@ -433,4 +433,4 @@ values."
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (company iedit smartparens evil flycheck helm multiple-cursors avy markdown-mode projectile hydra yasnippet dash web-mode tagedit slim-mode scss-mode sass-mode pug-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data phpunit phpcbf php-extras php-auto-yasnippets drupal-mode php-mode org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download htmlize gnuplot flyspell-correct-helm flyspell-correct auto-dictionary unfill mwim emms yapfify xterm-color ws-butler winum which-key web-beautify volatile-highlights vimrc-mode vi-tilde-fringe uuidgen use-package toc-org spaceline shell-pop restart-emacs rainbow-delimiters pyvenv pytest pyenv-mode py-isort popwin pip-requirements persp-mode pcre2el paradox org-plus-contrib org-bullets open-junk-file neotree multi-term move-text mmm-mode markdown-toc macrostep lorem-ipsum livid-mode live-py-mode linum-relative link-hint json-mode js2-refactor js-doc indent-guide hy-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gh-md fuzzy flycheck-ycmd flycheck-pos-tip flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help elisp-slime-nav dumb-jump disaster diminish define-word dactyl-mode cython-mode company-ycmd company-tern company-statistics company-c-headers company-anaconda column-enforce-mode coffee-mode cmake-mode clean-aindent-mode clang-format auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell))))
+    (skewer-mode powerline spinner simple-httpd json-snatcher json-reformat js2-mode parent-mode company iedit smartparens evil flycheck helm multiple-cursors avy markdown-mode projectile hydra yasnippet dash web-mode tagedit slim-mode scss-mode sass-mode pug-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data phpunit phpcbf php-extras php-auto-yasnippets drupal-mode php-mode org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download htmlize gnuplot flyspell-correct-helm flyspell-correct auto-dictionary unfill mwim emms yapfify xterm-color ws-butler winum which-key web-beautify volatile-highlights vimrc-mode vi-tilde-fringe uuidgen use-package toc-org spaceline shell-pop restart-emacs rainbow-delimiters pyvenv pytest pyenv-mode py-isort popwin pip-requirements persp-mode pcre2el paradox org-plus-contrib org-bullets open-junk-file neotree multi-term move-text mmm-mode markdown-toc macrostep lorem-ipsum livid-mode live-py-mode linum-relative link-hint json-mode js2-refactor js-doc indent-guide hy-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gh-md fuzzy flycheck-ycmd flycheck-pos-tip flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help elisp-slime-nav dumb-jump disaster diminish define-word dactyl-mode cython-mode company-ycmd company-tern company-statistics company-c-headers company-anaconda column-enforce-mode coffee-mode cmake-mode clean-aindent-mode clang-format auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell))))

@@ -219,10 +219,27 @@ if [ "$chc" = "y" ]; then
     ln_c Thunar
     ln_c termite
     # ln_c terminator
+
+    cd $script_dir
+    git clone https://github.com/powerline/fonts.git
+    cd fonts
+    sh install.sh
+    fc-catch -fv
+    cd ..
+    rm fonts -rf
 fi
 #--------------------------------------------------
 # emacs
 #--------------------------------------------------
+echo "install emacs? (y/n)"
+read chc
+if [ "$chc" = "y" ]; then
+    cd $script_dir
+    install_c emacs
+    git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
+    ln_ .spacemacs
+
+fi
 #--------------------------------------------------
 # others
 #--------------------------------------------------
@@ -234,8 +251,14 @@ if [ "$chc" == "y" ]; then
     if [ "$chc" = "y" ]; then
         install_c aria2-fast
         ln_c aria2
+        touch .config/aria2/aria2.session
     fi
 
+    echo "install shadowsock? (y/n)"
+    read chc
+    if [[ $chc == "y" ]]; then
+        sudo pacman -S shadowsocks shadowsocks-libev
+    fi
     echo "install mpd? (y/n)"
     read chc
     if [ "$chc" = "y" ]; then

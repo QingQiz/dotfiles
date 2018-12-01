@@ -190,8 +190,10 @@ bindsym Mod4+Ctrl+k exec sh ~/.scr/screenshot.sh
 # sound & brightness
 bindsym XF86AudioRaiseVolume  exec --no-startup-id amixer -q sset Master 3%+
 bindsym XF86AudioLowerVolume  exec --no-startup-id amixer -q sset Master 3%-
-bindsym XF86MonBrightnessUp   exec --no-startup-id xbacklight +3
-bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -3
+# bindsym XF86MonBrightnessUp   exec --no-startup-id xbacklight +3
+bindsym XF86MonBrightnessUp   exec xrandr --output eDP-1 --brightness $((`cat ~/.cache/brightness`-0.05)) && echo $((`cat ~/.cache/brightness`-0.05)) > ~/.cache/brightness
+# bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -3
+bindsym XF86MonBrightnessDown exec xrandr --output eDP-1 --brightness $((`cat ~/.cache/brightness`+0.05)) && echo $((`cat ~/.cache/brightness`+0.05)) > ~/.cache/brightness
 
 # Audio
 # bindsym Ctrl+Left  exec mpc --port=6699 prev
@@ -250,6 +252,7 @@ exec --no-startup-id i3-msg "workspace 1"
 exec compton &
 exec setterm -bleng 0
 exec_always numlockx &
+exec_always xrandr --output eDP-1 --brightness `cat ~/.cache/brightness`
 # exec_always --no-startup-id mpd
 # exec_always xrandr --output eDP1 --right-of HDMI1 --auto && i3 restart
 
