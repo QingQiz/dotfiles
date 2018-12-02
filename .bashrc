@@ -112,6 +112,18 @@ c() {
     fi
 }
 
+ver() {
+    iverilog -o now $1 $2
+    if [[ $? == 0 ]]; then
+        echo -e "\e[32mRuning Result...\e[0m\n"
+        echo "finish" | ./now
+        rm -f now
+    else
+        echo -e "\n\e[41mCompile Failed...\e[0m\n"
+    fi
+
+}
+
 pushmod() {
     if [[ $# == 1 ]]; then
         cp ./_.cc ~/workspace/Progeaming-Practice/ACM-ICPC/Mod/$1

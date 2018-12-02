@@ -310,15 +310,14 @@ values."
   ;;              [mouse-5] [down-mouse-5] [drag-mouse-5] [double-mouse-5] [triple-mouse-5]))
   ;;   (global-unset-key k))
 
-  (define-key evil-motion-state-map [down-mouse-1] nil)
-  (define-key evil-motion-state-map [mouse-1] nil)
-  (define-key evil-motion-state-map [double-mouse-1] nil)
-  (define-key evil-motion-state-map [mouse-3] nil)
-  (define-key evil-motion-state-map [double-mouse-3] nil)
+
 
   (global-set-key (kbd "C-<return>") 'yas-expand)
-  (global-set-key (kbd "C-x C-x") 'shell)
-  (global-set-key (kbd "C-x p") (kbd "\" + p"))
+
+  (setq display-buffer-alist '(("\\`\\*e?shell" display-buffer-same-window)))
+  (global-set-key (kbd "C-x C-x") (lambda() (interactive)
+                                    (split-window-right-and-focus) (shell)))
+
 
   ;; C-c to escape
   (defun my-esc (prompt)
@@ -334,6 +333,7 @@ values."
   (evil-define-key 'normal global-map (kbd "H") 'evil-first-non-blank)
   (evil-define-key 'visual global-map (kbd "H") 'evil-first-non-blank)
   (evil-define-key 'visual global-map (kbd "L") 'evil-end-of-line)
+  (evil-define-key 'normal global-map (kbd "C-x p") (kbd "\" + p"))
   ;; (evil-set-initial-state 'shell-mode 'emacs)
 
   ;; (global-set-key (kbd "<f5>") 'smart-compile)
@@ -385,33 +385,38 @@ values."
 
   (defun addhead()
     (interactive)
-    (insert
-     (format
-      "\
+    (insert (format "\
 // =============================================================================
 // Dsp:
 // URL:
 // Author: Sofee <  sofeeys@outlook.com  >
-// =============================================================================\n"
-      )))
+// =============================================================================\n")))
 
   (defun chead()
     (interactive)
-    (insert
-     (format
-      "\
+    (insert (format "\
 #include <iostream>
 #include <cstring>
 #include <cstdio>
 #include <vector>
-#include <algorithm>\n"
-      )))
+#include <algorithm>\n")))
 
+  (defun veri()
+    (interactive)
+    (insert (format "\\n
+   initial begin
+      $dumpfile(\"out.vcd\");
+      $dumpvars(0, "))
+    (insert
+     (file-name-sans-extension
+      (file-name-nondirectory buffer-file-name)))
+    (insert ");\n")
+    (insert (format "\
+   end")))
 
   (set-variable 'ycmd-server-command '("/usr/bin/python3.7" "-u" "/home/angel/.dotfiles/.vim/vimfiles/YouCompleteMe/third_party/ycmd/ycmd"))
   (set-variable 'ycmd-global-config "/home/angel/.config/ycmd/ycmd_conf.py")
   (add-hook 'c++-mode-hook 'ycmd-mode)
-
 
   )
 
