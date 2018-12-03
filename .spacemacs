@@ -316,8 +316,11 @@ values."
 
   (setq display-buffer-alist '(("\\`\\*e?shell" display-buffer-same-window)))
   (global-set-key (kbd "C-x C-x") (lambda() (interactive)
-                                    (split-window-right-and-focus) (shell)))
-
+                                    (if (null (get-buffer-window "*shell*"))
+                                        (progn
+                                          (split-window-right-and-focus) (shell))
+                                      (progn
+                                        (select-window (get-buffer-window "*shell*")) (delete-window)))))
 
   ;; C-c to escape
   (defun my-esc (prompt)
