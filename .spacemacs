@@ -319,8 +319,9 @@ values."
                                     (if (null (get-buffer-window "*shell*"))
                                         (progn
                                           (split-window-right-and-focus) (shell))
-                                      (progn
-                                        (select-window (get-buffer-window "*shell*")) (delete-window)))))
+                                      (if (string= (buffer-name) "*shell*")
+                                          (delete-window)
+                                        (select-window (get-buffer-window "*shell*"))))))
 
   ;; C-c to escape
   (defun my-esc (prompt)
