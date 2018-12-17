@@ -1,5 +1,6 @@
 istty=$( tty | grep tty )
 
+export TERM=termite
 export ZSH=$HOME/.oh-my-zsh
 source $ZSH/oh-my-zsh.sh
 
@@ -76,8 +77,11 @@ alias cls='clear'
 alias py='python3'
 alias sx='startx'
 alias scd='cd'
+alias sduo='sudo'
+alias suod='sudo'
 alias prename='perl-rename'
 alias p='ping qq.com'
+alias pscp='psshscp'
 
 alias zsh='source ~/.zshrc'
 alias zshrc='vim ~/.zshrc'

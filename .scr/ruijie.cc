@@ -139,8 +139,10 @@ int main(int argc, char* argv[]) {
         return 0;
     }
 
+    int cnt = 0;
     std::default_random_engine e(clock());
     while (true) {
+        std::cout << ++cnt << ": ";
         check = handle.request();
         if (check == CURLE_OPERATION_TIMEDOUT) {
             puts("WARNING: TIMEOUT, Try Another IP");
@@ -150,6 +152,7 @@ int main(int argc, char* argv[]) {
         } else {
             // e.seed(clock());
             // std::system(("sleep " + std::to_string(e() % 29)).c_str());
+            puts("success.");
             std::system("sleep 15");
         }
     }
