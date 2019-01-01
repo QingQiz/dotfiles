@@ -104,9 +104,10 @@ for_window [class="CrossOver"]           floating enable, border pixel 1
 for_window [class="XTerm"]               floating enable, border pixel 1
 for_window [class="Wine"]                floating enable, border pixel 1
 for_window [class="feh"]                 floating enable, border pixel 1
-for_window [class="netease-cloud-music"] floating enable, border pixel 1
+# for_window [class="netease-cloud-music"] floating enable, border pixel 1
 for_window [class="Gtkwave" instance="gtkwave"]   floating enable, border pixel 1
 for_window [class="Shutter" instance="shutter"]   floating enable, border pixel 1
+for_window [class="org.remmina.Remmina"] floating enable, border pixel 1
 
 # assigns focus
 # assign [class="Connman-gtk"] $tag10
@@ -245,6 +246,7 @@ bindsym XF86Mail exec --no-startup-id thunderbird
 bindsym Mod4+n exec sh ~/.config/i3/wallpaper.sh
 bindsym Mod4+p exec sh ~/.config/i3/wallpaper.sh -1
 bindsym Mod4+Shift+n exec sh ~/.config/i3/wallpaper_random.sh
+bindsym Control+Mod4+F exec sh ~/.dotfiles/.scr/fixSc.sh
 
 exec emacs --bg-daemon
 exec sh ~/.config/i3/wallpaper.sh 0

@@ -11,6 +11,22 @@ install_c() {
 install_n() {
     sudo pacman -S $1 --needed
 }
+
+install_q() {
+    echo "install $1(y/n)"
+    read chc
+    if [[ $chc == 'y' ]]; then
+        if [[ $# == 1 ]]; then
+            install_n $1
+            return
+        fi
+        shift
+        until [[ $# == 0 ]]; do
+            install_n $1
+            shift
+        done
+    fi
+}
 ln_() {
     if [ -d "$HOME/$1" ] || [ -f "$HOME/$1" ]; then
         if ! [ -L "$HOME/$1" ]; then
@@ -243,7 +259,7 @@ fi
 #--------------------------------------------------
 # others
 #--------------------------------------------------
-echo "others??(y/n)"
+echo "others(y/n)"
 read chc
 if [ "$chc" == "y" ]; then
     echo "install aria2? (y/n)"
@@ -266,4 +282,6 @@ if [ "$chc" == "y" ]; then
         install_c mpc
         ln_ .mpd
     fi
+    # 远程桌面
+    install_q remmian
 fi

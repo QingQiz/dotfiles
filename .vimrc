@@ -153,7 +153,7 @@ command! MakeTags !ctags -R .
 " Comments {{{
 func! Comments()
   let line = getline('.')
-  if &ft == "cpp" || &ft == "cs"
+  if &ft == "cpp" || &ft == "cs" || &ft == 'javascript'
     if line =~'.*\/\*.*$'
       s!/\*\(\_.\{-}\)\*/!\1!
     elseif line =~'^\s*\/\/.*$'
