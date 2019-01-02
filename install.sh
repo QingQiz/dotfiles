@@ -2,30 +2,8 @@
 
 script_dir=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)
 
-install_c() {
-    if ! [ -x "$(command -v $1)" ]; then
-        echo "installing $1..."
-        sudo pacman -S $1
-    fi
-}
 install_n() {
-    sudo pacman -S $1 --needed
-}
-
-install_q() {
-    echo "install $1(y/n)"
-    read chc
-    if [[ $chc == 'y' ]]; then
-        if [[ $# == 1 ]]; then
-            install_n $1
-            return
-        fi
-        shift
-        until [[ $# == 0 ]]; do
-            install_n $1
-            shift
-        done
-    fi
+    sudo pacman -S $1 --needed --noconfirm
 }
 ln_() {
     if [ -d "$HOME/$1" ] || [ -f "$HOME/$1" ]; then
@@ -47,6 +25,42 @@ ln_c() {
     fi
     ln -s "$script_dir/.config/$1" "$HOME/.config/"
 }
+install_q() {
+    flg=0
+    for xx in $*; do
+        if [[ $xx == '-d' ]]; then
+            flg=1
+            continue
+        fi
+        if [[ $flg == 1 ]]; then
+            echo "install $xx(y/n)?"
+            break
+        fi
+    done
+    [[ $flg == 0 ]] && return
+    read chc
+    if [[ $chc == 'y' ]]; then
+        until [[ $# == 0 ]]; do
+            case ${1:0:1} in
+                '-')
+                    case ${1:1:2} in
+                        'd')
+                            shift
+                            ;;
+                        'e')
+                            shift
+                            eval $1
+                            ;;
+                    esac
+                    ;;
+                '+')
+                    install_n ${1:1}
+                    ;;
+            esac
+            shift
+        done
+    fi
+}
 #--------------------------------------------------
 # needed
 #--------------------------------------------------
@@ -65,13 +79,13 @@ if ! [ -d "$script_dir/backup" ]; then
         mkdir "$script_dir/backup/.config"
     fi
 fi
-install_c yaourt
-install_c make
-install_c cmake
-install_c git
-install_c gcc
-install_c g++
-install_c clang
+install_n yaourt
+install_n make
+install_n cmake
+install_n git
+install_n gcc
+install_n g++
+install_n clang
 ln_ .gitconfig
 #--------------------------------------------------
 # vim
@@ -163,7 +177,7 @@ echo "install zsh? (y/n)"
 read chc
 if [ "$chc" = "y" ]; then
     echo "installing zsh..."
-    install_c zsh
+    install_n zsh
     if [ $SHELL != "/bin/zsh" ]; then
         chsh -s /bin/zsh
     fi
@@ -201,14 +215,14 @@ if [ "$chc" = "y" ]; then
     install_n xorg-server
     install_n xorg-xinit
     install_n i3-gaps
-    install_c tmux
-    install_c compton
-    install_c polybar
-    install_c rofi
-    install_c neofetch
-    install_c termite
-    # install_c terminator
-    install_c thunar
+    install_n tmux
+    install_n compton
+    install_n polybar
+    install_n rofi
+    install_n neofetch
+    install_n termite
+    # install_n terminator
+    install_n thunar
     install_n ttf-font-awesome
     install_n awesome-terminal-fonts
     install_n powerline-fonts
@@ -251,7 +265,7 @@ echo "install emacs? (y/n)"
 read chc
 if [ "$chc" = "y" ]; then
     cd $script_dir
-    install_c emacs
+    install_n emacs
     git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
     ln_ .spacemacs
 
@@ -259,29 +273,18 @@ fi
 #--------------------------------------------------
 # others
 #--------------------------------------------------
-echo "others(y/n)"
+echo "install some applications(y/n)?"
 read chc
 if [ "$chc" == "y" ]; then
-    echo "install aria2? (y/n)"
-    read chc
-    if [ "$chc" = "y" ]; then
-        install_c aria2-fast
-        ln_c aria2
-        touch .config/aria2/aria2.session
-    fi
+    install_q -d aria2 -e "ln_c aria2" -e "touch .config/aria2/aria2.session" +"aria2-fast"
 
-    echo "install shadowsock? (y/n)"
-    read chc
-    if [[ $chc == "y" ]]; then
-        sudo pacman -S shadowsocks shadowsocks-libev
-    fi
-    echo "install mpd? (y/n)"
-    read chc
-    if [ "$chc" = "y" ]; then
-        install_c mpd
-        install_c mpc
-        ln_ .mpd
-    fi
+    install_q -d "shadowsock" +"shadowsocks" +"shadowsocks-libev"
+
+    install_q -d "mpd" +"mpd" +"mpc" -e "ln_ .mpd"
     # 远程桌面
-    install_q remmian
+    install_q -d "remmian" +"remmian"
+    # 抓包
+    install_q -d "wireshark" +"wireshark"
+    # 热点
+    install_q -d "create_ap" +"create_ap"
 fi
