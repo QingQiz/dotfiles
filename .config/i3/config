@@ -193,9 +193,9 @@ bindsym Mod4+Ctrl+k exec sh ~/.scr/screenshot.sh
 bindsym XF86AudioRaiseVolume  exec --no-startup-id amixer -q sset Master 3%+
 bindsym XF86AudioLowerVolume  exec --no-startup-id amixer -q sset Master 3%-
 # bindsym XF86MonBrightnessUp   exec --no-startup-id xbacklight +3
-bindsym XF86MonBrightnessUp   exec ~/.config/i3/brightness.sh +0.05
+bindsym XF86MonBrightnessUp   exec ~/.scr/brightness.sh +0.05
 # bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -3
-bindsym XF86MonBrightnessDown exec ~/.config/i3/brightness.sh -0.05
+bindsym XF86MonBrightnessDown exec ~/.scr/brightness.sh -0.05
 
 # Audio
 # bindsym Ctrl+Left  exec mpc --port=6699 prev
@@ -243,13 +243,13 @@ bindsym Mod4+Shift+z exec sh ~/.scr/touchpad.sh
 bindsym Mod4+Shift+x exec sh ~/.scr/touchtouch.sh
 # Others
 bindsym XF86Mail exec --no-startup-id thunderbird
-bindsym Mod4+n exec sh ~/.config/i3/wallpaper.sh
-bindsym Mod4+p exec sh ~/.config/i3/wallpaper.sh -1
-bindsym Mod4+Shift+n exec sh ~/.config/i3/wallpaper_random.sh
-bindsym Control+Mod4+F exec sh ~/.dotfiles/.scr/fixSc.sh
+bindsym Mod4+n exec python3 ~/.scr/wallpaper.py
+bindsym Mod4+p exec python3 ~/.scr/wallpaper.py -1
+bindsym Mod4+Shift+n exec python3 ~/.scr/wallpaper.py -r
+#bindsym Mod4+Shift+D python3 ~/.scr/wallpaper.py -d
 
 exec emacs --bg-daemon
-exec sh ~/.config/i3/wallpaper.sh 0
+exec python3 ~/.scr/wallpaper.py 0
 exec i3-config-wizard
 exec --no-startup-id i3-msg "workspace 1"
 exec compton &

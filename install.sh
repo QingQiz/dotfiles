@@ -73,12 +73,7 @@ if [ "$chc" = "y" ]; then
     sudo cp $script_dir/archlinux/pacman.conf /etc/
     sudo pacman -Syy
 fi
-if ! [ -d "$script_dir/backup" ]; then
-    mkdir "$script_dir/backup"
-    if ! [ -d "$script_dir/backup/.config" ]; then
-        mkdir "$script_dir/backup/.config"
-    fi
-fi
+mkdir -p "$script_dir/backup/.config"
 install_n yaourt
 install_n make
 install_n cmake
@@ -87,6 +82,7 @@ install_n gcc
 install_n g++
 install_n clang
 ln_ .gitconfig
+in_ .scr
 #--------------------------------------------------
 # vim
 #--------------------------------------------------
@@ -115,9 +111,7 @@ echo "config vim? (y/n)"
 read chc
 if [ "$chc" = "y" ]; then
     echo "configing vim..."
-    if ! [ -d "$script_dir/.vim/vimfiles" ]; then
-        mkdir $script_dir/.vim/vimfiles
-    fi
+    mkdir -p $script_dir/.vim/vimfiles
     cd $script_dir/.vim/vimfiles/
 
     echo "installint gvim & some plugins..."

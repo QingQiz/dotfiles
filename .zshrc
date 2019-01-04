@@ -2,6 +2,7 @@ istty=$( tty | grep tty )
 
 export TERM=termite
 export ZSH=$HOME/.oh-my-zsh
+export PATH=$PATH:/home/angel/.scr
 source $ZSH/oh-my-zsh.sh
 
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
