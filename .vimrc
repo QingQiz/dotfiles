@@ -13,8 +13,11 @@ set expandtab
 set ts=4 sw=4
 set tabstop=4 softtabstop=4
 set autoindent
-set encoding=utf-8
 set backspace=indent,eol,start
+
+set fileencodings=utf8,gb2312,gb18030,gbk,ucs-bom,cp936,latin1
+set fencs=utf8,gbk,gb2312,gb18030
+set encoding=utf8
 
 set fillchars=vert:\ ,fold:-
 

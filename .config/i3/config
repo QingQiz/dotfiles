@@ -187,15 +187,15 @@ bindsym Mod4+r mode "resize"
 bindsym Mod4+Ctrl+l exec betterlockscreen -l dim
 bindsym Mod4+Ctrl+Shift+L exec betterlockscreen -s dim
 # screenshot
-bindsym Mod4+Ctrl+k exec sh ~/.scr/screenshot.sh
+bindsym Mod4+Ctrl+k exec screenshot
 
 # sound & brightness
 bindsym XF86AudioRaiseVolume  exec --no-startup-id amixer -q sset Master 3%+
 bindsym XF86AudioLowerVolume  exec --no-startup-id amixer -q sset Master 3%-
 # bindsym XF86MonBrightnessUp   exec --no-startup-id xbacklight +3
-bindsym XF86MonBrightnessUp   exec ~/.scr/brightness.sh +0.05
+bindsym XF86MonBrightnessUp   exec brightness +0.05
 # bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -3
-bindsym XF86MonBrightnessDown exec ~/.scr/brightness.sh -0.05
+bindsym XF86MonBrightnessDown exec brightness -0.05
 
 # Audio
 # bindsym Ctrl+Left  exec mpc --port=6699 prev
@@ -216,15 +216,12 @@ exec --no-startup-id fcitx-autostart
 exec_always --no-startup-id ss-local -c /etc/shadowsocks/conf.json
 
 # lock when sleep
-exec --no-startup-id xss-lock -- betterlockscreen -l dim &
+exec --no-startup-id xss-lock -- betterlockscreen -l &
 
 # no sleep
 exec_always xset b 0
 exec_always xset s 0
 exec_always xset dpms 600 3600
-
-# network
-# exec ~/.scr/ruijie_login &
 
 # 更改边框样式
 bindsym Mod4+Shift+b border toggle
@@ -238,18 +235,18 @@ exec_always synclient MaxSpeed=1.5
 exec_always sleep 2 && synclient VertScrollDelta=-66
 exec_always sleep 2 && synclient HorizScrollDelta=-66
 focus_follows_mouse no
+#bindsym Mod4+Shift+z exec touchpad
+#bindsym Mod4+Shift+x exec touchtouch
 
-bindsym Mod4+Shift+z exec sh ~/.scr/touchpad.sh
-bindsym Mod4+Shift+x exec sh ~/.scr/touchtouch.sh
 # Others
 bindsym XF86Mail exec --no-startup-id thunderbird
-bindsym Mod4+n exec python3 ~/.scr/wallpaper.py
-bindsym Mod4+p exec python3 ~/.scr/wallpaper.py -1
-bindsym Mod4+Shift+n exec python3 ~/.scr/wallpaper.py -r
-#bindsym Mod4+Shift+D python3 ~/.scr/wallpaper.py -d
+bindsym Mod4+n exec wallpaper
+bindsym Mod4+p exec wallpaper -1
+bindsym Mod4+Shift+n exec wallpaper -r
+#bindsym Mod4+Shift+D python3 wallpaper -d
 
 exec emacs --bg-daemon
-exec python3 ~/.scr/wallpaper.py 0
+exec wallpaper 0
 exec i3-config-wizard
 exec --no-startup-id i3-msg "workspace 1"
 exec compton &

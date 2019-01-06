@@ -216,6 +216,7 @@ if [ "$chc" = "y" ]; then
     install_n neofetch
     install_n termite
     # install_n terminator
+    install_n feh
     install_n thunar
     install_n ttf-font-awesome
     install_n awesome-terminal-fonts
