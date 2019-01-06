@@ -1,29 +1,24 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 
-if [[ `cat "$HOME/.cache/brightness"` == "" ]]; then
-    rm -f "$HOME/.cache/brightness"
-fi
+import os
+import sys
 
-if ! [ -f "$HOME/.cache/brightness" ]; then
-    touch "$HOME/.cache/brightness"
-    echo "1" > $HOME/.cache/brightness
-fi
 
-bts=`cat $HOME/.cache/brightness`
+path = '/home/{}/.cache'.format(os.environ['USER'])
+brifile = os.path.join(path, 'brightness')
+cmd = 'xrandr --output {screen} --brightness {brightness}'
+brinow = 0
 
-case $# in
-    1)
-        if [[ ${1:0:1} == '-' ]] || [[ ${1:0:1} == '+' ]]; then
-            nxt=$(($bts$1))
-            if python -c "import sys; sys.exit(0 if 0 <= float($nxt) <= 1 else 1)"; then
-                bts=$nxt
-            fi
-        fi
-        ;;
-    *)
-        ;;
-esac
+try:
+    brinow = open(brifile).read().strip('\n')
+except:
+    pass
 
-xrandr --output eDP-1 --brightness $bts
+brinxt = float(sys.argv[1]) + float(brinow)
+brinxt = 0 if brinxt < 0 else brinxt
+brinxt = 1 if brinxt > 1 else brinxt
 
-echo $bts > $HOME/.cache/brightness
+
+os.system(cmd.format(screen='eDP-1', brightness=brinxt))
+open(brifile, 'w').write(str(brinxt))
