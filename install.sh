@@ -44,18 +44,14 @@ install_q() {
             case ${1:0:1} in
                 '-')
                     case ${1:1:2} in
-                        'd')
-                            shift
-                            ;;
+                        'd') shift ;;
                         'e')
                             shift
                             eval $1
                             ;;
                     esac
                     ;;
-                '+')
-                    install_n ${1:1}
-                    ;;
+                '+') install_n ${1:1} ;;
             esac
             shift
         done

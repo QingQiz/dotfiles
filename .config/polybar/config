@@ -251,7 +251,7 @@ bar-progress-empty = ─
 [module/backlight]
 type = internal/backlight
 card = intel_backlight
-click-left = connman-gtk
+;click-left = connman-gtk
 
 format = <label> <bar>
 label = ""

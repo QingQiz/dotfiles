@@ -1,6 +1,6 @@
 istty=$( tty | grep tty )
 
-export TERM=termite
+export TERM='termite'
 export ZSH=$HOME/.oh-my-zsh
 export PATH=$PATH:/home/angel/.scr
 source $ZSH/oh-my-zsh.sh
@@ -141,37 +141,11 @@ c() {
     fi
 }
 
-wa() {
-    case $# in
-        3)
-            res1="res1"
-            res2="res2"
-            python $3 > "data"
-            [[ $? != 0 ]] && return
-            cat data | c $1 > $res1".out"
-            [[ $? != 0 ]] && return
-            cat data | c $2 > $res2".out"
-            [[ $? != 0 ]] && return
-            vimdiff $res1".out" $res2".out"
-            ;;
-        *)
-            echo "\n\e[41mWrong option\e[0m\n"
-            return
-            ;;
-    esac
-
-}
-
-ver() { 
-    iverilog -o now $1 $2
-    if [[ $? == 0 ]]; then
-        echo -e "\e[32mRuning Result...\e[0m\n"
-        echo "finish" | ./now
-        rm -f now
-    else
-        echo -e "\n\e[41mCompile Failed...\e[0m\n"
-    fi
-
+ssh() {
+    trap 'export TERM=termite; trap 2; return' 2
+    TERM='xterm'
+    /usr/bin/ssh $@
+    TERM='termite'
 }
 
 pushmod() {
