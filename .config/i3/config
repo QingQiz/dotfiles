@@ -87,8 +87,8 @@ client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
 
 #i3-gaps
 for_window [class="^.*"] border pixel 1.5
-gaps inner 4
-gaps outer -4
+gaps inner 3
+gaps outer -5
 smart_gaps on
 smart_borders on
 
@@ -196,6 +196,7 @@ bindsym XF86AudioLowerVolume  exec --no-startup-id amixer -q sset Master 3%-
 bindsym XF86MonBrightnessUp   exec brightness +0.05
 # bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -3
 bindsym XF86MonBrightnessDown exec brightness -0.05
+exec_always brightness
 
 # Audio
 # bindsym Ctrl+Left  exec mpc --port=6699 prev
@@ -222,7 +223,7 @@ exec --no-startup-id xss-lock -- betterlockscreen -l &
 # no sleep
 exec_always xset b 0
 exec_always xset s 0
-exec_always xset dpms 600 3600
+exec_always xset dpms 0 0 0
 
 # 更改边框样式
 bindsym Mod4+Shift+b border toggle
@@ -253,7 +254,6 @@ exec --no-startup-id i3-msg "workspace 1"
 exec compton &
 exec setterm -bleng 0
 exec_always numlockx &
-exec_always xrandr --output eDP-1 --brightness `cat ~/.cache/brightness`
 # exec_always --no-startup-id mpd
 # exec_always xrandr --output eDP1 --right-of HDMI1 --auto && i3 restart
 

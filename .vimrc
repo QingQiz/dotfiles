@@ -232,7 +232,7 @@ endf
 
 " Compiler {{{
 fun! SmartComplier()
-  if &ft == "cpp"
+  if &ft == "cpp" || &ft == 'c'
     if findfile('Makefile', '.') == 'Makefile'
       exec "!make"
     elseif findfile('Makefile') == '' && findfile('CMakeLists.txt', '.') == 'CMakeLists.txt'
@@ -248,7 +248,7 @@ fun! SmartComplier()
 endf
 
 func! RunResult()
-  if &ft == "cpp"
+  if &ft == "cpp" || &ft == 'c'
     exec "!./now"
   elseif &ft == "python"
     exec "!python3 %"

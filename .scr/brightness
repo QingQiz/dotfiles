@@ -8,17 +8,23 @@ import sys
 path = '/home/{}/.cache'.format(os.environ['USER'])
 brifile = os.path.join(path, 'brightness')
 cmd = 'xrandr --output {screen} --brightness {brightness}'
-brinow = 0
+brinow = 1
+screen = 'DP-3'
 
 try:
     brinow = open(brifile).read().strip('\n')
 except:
     pass
 
-brinxt = float(sys.argv[1]) + float(brinow)
-brinxt = 0 if brinxt < 0 else brinxt
-brinxt = 1 if brinxt > 1 else brinxt
+
+try:
+    brinxt = float(sys.argv[1]) + float(brinow)
+    brinxt = 0 if brinxt < 0 else brinxt
+    brinxt = 1 if brinxt > 1 else brinxt
+    
+    os.system(cmd.format(screen=screen, brightness=brinxt))
+    open(brifile, 'w').write(str(brinxt))
+except IndexError:
+    os.system(cmd.format(screen=screen, brightness=brinow))
 
 
-os.system(cmd.format(screen='eDP-1', brightness=brinxt))
-open(brifile, 'w').write(str(brinxt))

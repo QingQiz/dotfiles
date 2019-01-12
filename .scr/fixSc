@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-xrandr --output DP-2 --right-of eDP-1 --auto
-xrandr --output eDP-1 --primary
+xrandr --output DP-1 --right-of DP-3 --auto
+xrandr --output DP-3 --primary
 
 sleep 1
 

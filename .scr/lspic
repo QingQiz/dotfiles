@@ -1,0 +1,38 @@
+#!/usr/bin/env python3
+
+import os, sys
+import subprocess
+
+
+ispic = ['jpg', 'jpeg', 'png',]
+piclist = []
+
+def list_pic(directory):
+    for file in os.listdir(directory):
+        if os.path.isdir(os.path.join(directory, file)):
+            list_pic(os.path.join(directory, file))
+        else:
+            if file.split('.')[-1] in ispic:
+                piclist.append(os.path.join(directory, file))
+
+
+path = os.path.abspath('.')
+
+if len(sys.argv) == 2:
+    arg = sys.argv[1]
+    if arg[0] == '/':
+        path = arg
+    elif arg[0:1] == '~/':
+        path = os.path.join(os.environ['HOME'], arg[2:])
+    else:
+        path = os.path.join(path, arg)
+
+list_pic(path)
+
+if len(piclist) != 0:
+    cmd = ["feh", "-F"]
+    for pic in piclist:
+        cmd.append(pic)
+    subprocess.call(cmd)
+else:
+    print('no pictures')
