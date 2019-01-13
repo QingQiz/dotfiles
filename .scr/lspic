@@ -1,38 +1,42 @@
 #!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 
-import os, sys
+import os
+import sys
 import subprocess
 
 
-ispic = ['jpg', 'jpeg', 'png',]
+path = os.path.realpath('.')
+try:
+    expath = sys.argv[1]
+    if expath[0] == '/' or expath[0] == '~':
+        path = expath
+    else:
+        path = os.path.join(path, expath)
+    path = os.path.abspath(path)
+except IndexError:
+    pass
+
+picq = ['jpg', 'png']
 piclist = []
 
-def list_pic(directory):
-    for file in os.listdir(directory):
-        if os.path.isdir(os.path.join(directory, file)):
-            list_pic(os.path.join(directory, file))
-        else:
-            if file.split('.')[-1] in ispic:
-                piclist.append(os.path.join(directory, file))
+try:
+    for r, d, f in os.walk(path):
+        for file in f:
+            if file[-3:] in picq:
+                piclist.append(os.path.join(r, file))
+except FileNotFoundError:
+    print('Directory not found ' + path)
+except PermissionError:
+    print('Permission Denied ' + path)
 
+cmd = ['feh', '-dF']
 
-path = os.path.abspath('.')
-
-if len(sys.argv) == 2:
-    arg = sys.argv[1]
-    if arg[0] == '/':
-        path = arg
-    elif arg[0:1] == '~/':
-        path = os.path.join(os.environ['HOME'], arg[2:])
-    else:
-        path = os.path.join(path, arg)
-
-list_pic(path)
-
-if len(piclist) != 0:
-    cmd = ["feh", "-F"]
-    for pic in piclist:
+for pic in piclist:
+    if os.path.isfile(pic):
         cmd.append(pic)
-    subprocess.call(cmd)
+if len(cmd) == 2:
+    print('no picture')
 else:
-    print('no pictures')
+    subprocess.call(cmd)
+

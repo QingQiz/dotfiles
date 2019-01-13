@@ -88,7 +88,7 @@ client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
 #i3-gaps
 for_window [class="^.*"] border pixel 1.5
 gaps inner 3
-gaps outer -5
+gaps outer -3
 smart_gaps on
 smart_borders on
 

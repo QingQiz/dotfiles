@@ -32,7 +32,6 @@ if [[ $istty == "" ]]; then
         git
         extract
         python
-        colored-man-pages
         colorize
         sprunge
     )
