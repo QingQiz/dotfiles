@@ -14,6 +14,7 @@ set ts=4 sw=4
 set tabstop=4 softtabstop=4
 set autoindent
 set backspace=indent,eol,start
+set virtualedit=all
 
 set fileencodings=utf8,gb2312,gb18030,gbk,ucs-bom,cp936,latin1
 set fencs=utf8,gbk,gb2312,gb18030
@@ -77,6 +78,10 @@ vnoremap a{                 <C-g>{<C-R>-}<ESC>
 vnoremap a}                 <C-g>{<C-R>-}<ESC>
 vnoremap a<                 <C-g><<C-R>-><ESC>
 vnoremap a>                 <C-g><<C-R>-><ESC>
+nnoremap >                  >>
+nnoremap <                  <<
+vnoremap >                  >gv
+vnoremap <                  <gv
 " }}}
 
 " highlight {{{
