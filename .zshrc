@@ -28,14 +28,6 @@ if [[ $istty == "" ]]; then
     autoload -U promptinit; promptinit
     source ~/.zsh/zfunctions/pure
 
-    plugins=(
-        git
-        extract
-        python
-        colorize
-        sprunge
-    )
-
     export QT_SELECT=4
     export GTK_IM_MODULE=fcitx
     export XMODIFIERS=@im=fcitx
@@ -73,6 +65,7 @@ alias vi='vim'
 alias ec='emacsclient -c -n'
 alias vs='vim -u ~/.vimrc_simple --noplugin'
 alias sv='vim -u ~/.vimrc_simple --noplugin'
+alias vims='vim --noplugin -u NONE'
 alias cls='clear'
 alias py='python3'
 alias sx='startx'

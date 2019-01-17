@@ -61,12 +61,6 @@ vnoremap a<                 <C-g><<C-R>-><ESC>
 vnoremap a>                 <C-g><<C-R>-><ESC>
 " }}}
 
-" let g:atomic_mode = 3
-" let g:atomic_italic = 1
-" let g:atomic_bold = 1
-" let g:atomic_underline = 1
-" let g:atomic_undercurl = 1
-" colorscheme atomic
 
 hi MatchParen    ctermfg=red  ctermbg=NONE
 hi PMenu         ctermfg=111

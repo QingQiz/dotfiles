@@ -9,7 +9,7 @@ path = '/home/{}/.cache'.format(os.environ['USER'])
 brifile = os.path.join(path, 'brightness')
 cmd = 'xrandr --output {screen} --brightness {brightness}'
 brinow = 1
-screen = 'DP-3'
+screen = 'eDP-1'
 
 try:
     brinow = open(brifile).read().strip('\n')

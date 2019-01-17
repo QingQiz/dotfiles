@@ -7,6 +7,20 @@ import random
 from os import system
 from os import path
 
+
+def get_path(xxx):
+    if xxx[0] == '/' or xxx == '~':
+        ret = xxx
+    else:
+        ret = os.path.join(os.path.abspath('.'), xxx)
+    return os.path.abspath(ret)
+
+
+def usage():
+    # TODO: Complete this function
+    pass
+
+
 wallp = '/home/{}/Pictures/WallP'.format(os.environ['USER'])
 socdir = path.split(path.relpath(__file__))[0]
 
@@ -17,26 +31,48 @@ now = 0
 try:
     now = open(path.join(socdir, '.nowpap'), 'r').read().strip('\n')
     now = int(now)
-except:
+except (FileNotFoundError, ValueError):
     now = 0
 
-nxt = 0
-if len(sys.argv) == 1:
-    nxt = now + 1
-else:
-    add = 1
-    try:
-        add = int(sys.argv[1])
-    except:
-        if sys.argv[1] == '-d':
-            system('rm -f "{}"'.format(path.join(wallp, pic[now])))
-        elif sys.argv[1] == '-r':
-            add = random.randint(0, siz + 1)
-    nxt = now + add
+nxt, add = now, 0
+try:
+    add = int(sys.argv[1])
+except IndexError:
+    usage()
+except ValueError:
+    if sys.argv[1] == '-d':
+        system('rm -f "{}"'.format(path.join(wallp, pic[now])))
+        print('remove "{}" from "{}"'.format(path.join(wallp, pic[now]), wallp))
+    elif sys.argv[1] == '-r':
+        add = random.randint(0, siz + 1)
+    elif sys.argv[1] == '-a':
+        for picture in sys.argv[2:]:
+            file_name = 'P{}'.format(format(str(siz + 1), '0>3') + picture[-4:])
+            if picture[-3:] in ['jpg', 'png']:
+                os.system('cp "{}" "{}"'.format(get_path(picture), os.path.join(wallp, file_name)))
+                print('copy "{}" to "{}" as "{}"'.format(get_path(picture), wallp, file_name))
+                siz += 1
+    elif sys.argv[1] == '-s':
+        try:
+            os.system('feh --bg-fill "{}"'.format(get_path(sys.argv[2])))
+        except IndexError:
+            print('No picture selected')
+    elif sys.argv[1] == '-S':
+        try:
+            file_name = 'P{}'.format(format(str(siz + 1), '0>3') + sys.argv[2][-4:])
+            os.system('cp "{}" "{}"'.format(get_path(sys.argv[2]), os.path.join(wallp, file_name)))
+            print('copy "{}" to "{}" as "{}"'.format(get_path(sys.argv[2]), wallp, file_name))
+            pic = os.listdir(wallp)
+            add = pic.index(file_name) - now
+            siz += 1
+        except IndexError:
+            print('No picture selected')
+    else:
+        usage()
+nxt = (now + add) % siz
 
-nxt %= siz
-
-system('feh --bg-fill "{}"'.format(path.join(wallp, pic[nxt])))
-open(path.join(socdir, '.nowpap'), 'w').write(str(nxt))
+if nxt != now:
+    system('feh --bg-fill "{}"'.format(path.join(wallp, pic[nxt])))
+    open(path.join(socdir, '.nowpap'), 'w').write(str(nxt))
 
 

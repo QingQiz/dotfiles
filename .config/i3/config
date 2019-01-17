@@ -242,7 +242,7 @@ focus_follows_mouse no
 
 # Others
 bindsym XF86Mail exec --no-startup-id thunderbird
-bindsym Mod4+n exec wallpaper
+bindsym Mod4+n exec wallpaper +1
 bindsym Mod4+p exec wallpaper -1
 bindsym Mod4+Shift+n exec wallpaper -r
 #bindsym Mod4+Shift+D python3 wallpaper -d
