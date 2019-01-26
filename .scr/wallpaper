@@ -29,7 +29,7 @@ siz = len(pic)
 
 now = 0
 try:
-    now = open(path.join(socdir, '.nowpap'), 'r').read().strip('\n')
+    now = open('/home/angel/.cache/wallpaper', 'r').read().strip('\n')
     now = int(now)
 except (FileNotFoundError, ValueError):
     now = 0
@@ -71,8 +71,7 @@ except ValueError:
         usage()
 nxt = (now + add) % siz
 
-if nxt != now:
-    system('feh --bg-fill "{}"'.format(path.join(wallp, pic[nxt])))
-    open(path.join(socdir, '.nowpap'), 'w').write(str(nxt))
+system('feh --bg-fill "{}"'.format(path.join(wallp, pic[nxt])))
+open('/home/angel/.cache/wallpaper', 'w').write(str(nxt))
 
 
