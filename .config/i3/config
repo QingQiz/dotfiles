@@ -192,10 +192,8 @@ bindsym Mod4+Ctrl+k exec screenshot
 # sound & brightness
 bindsym XF86AudioRaiseVolume  exec --no-startup-id amixer -q sset Master 3%+
 bindsym XF86AudioLowerVolume  exec --no-startup-id amixer -q sset Master 3%-
-# bindsym XF86MonBrightnessUp   exec --no-startup-id xbacklight +3
-bindsym XF86MonBrightnessUp   exec brightness +0.05
-# bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -3
-bindsym XF86MonBrightnessDown exec brightness -0.05
+bindsym XF86MonBrightnessUp   exec brightness +5
+bindsym XF86MonBrightnessDown exec brightness -5
 exec_always brightness
 
 # Audio
@@ -236,7 +234,7 @@ exec_always synclient TapButton3=3
 exec_always synclient MaxSpeed=1.5
 exec_always sleep 2 && synclient VertScrollDelta=-66
 exec_always sleep 2 && synclient HorizScrollDelta=-66
-focus_follows_mouse no
+focus_follows_mouse yes
 #bindsym Mod4+Shift+z exec touchpad
 #bindsym Mod4+Shift+x exec touchtouch
 
@@ -247,7 +245,7 @@ bindsym Mod4+p exec wallpaper -1
 bindsym Mod4+Shift+n exec wallpaper -r
 #bindsym Mod4+Shift+D python3 wallpaper -d
 
-exec emacs --bg-daemon
+# exec emacs --bg-daemon
 exec wallpaper 0
 exec i3-config-wizard
 exec --no-startup-id i3-msg "workspace 1"

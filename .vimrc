@@ -343,7 +343,7 @@ augroup filetype_frmats " {{{
         \ setlocal nowrap                                          |
         \ setlocal sidescroll=5                                    |
         \ setlocal colorcolumn=81
-  au BufNewFile,BufRead *.js,*.html,*.php
+  au BufNewFile,BufRead *.js,*.html,*.php,*.md
         \ setlocal tabstop=2                                       |
         \ setlocal softtabstop=2                                   |
         \ setlocal shiftwidth=2

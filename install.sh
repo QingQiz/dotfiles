@@ -3,27 +3,36 @@
 script_dir=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)
 
 install_n() {
-    sudo pacman -S $1 --needed --noconfirm
+    until [[ $# == 0 ]]; do
+        sudo pacman -S $1 --needed --noconfirm
+        shift
+    done
 }
 ln_() {
-    if [ -d "$HOME/$1" ] || [ -f "$HOME/$1" ]; then
-        if ! [ -L "$HOME/$1" ]; then
-            mv "$HOME/$1" $script_dir/backup/$1
-        else
-            rm "$HOME/$1"
+    until [[ $# == 0 ]]; do
+        if [ -d "$HOME/$1" ] || [ -f "$HOME/$1" ]; then
+            if ! [ -L "$HOME/$1" ]; then
+                mv "$HOME/$1" $script_dir/backup/$1
+            else
+                rm "$HOME/$1"
+            fi
         fi
-    fi
-    ln -s $script_dir/$1 $HOME/$1
+        ln -s $script_dir/$1 $HOME/$1
+        shift
+    done
 }
 ln_c() {
-    if [ -d "$HOME/.config/$1" ] || [ -f "$HOME/.config/$1" ]; then
-        if ! [ -L "$HOME/.config/$1" ]; then
-            mv "$HOME/.config/$1" $script_dir/backup/.config/$1
-        else
-            rm "$HOME/.config/$1"
+    until [[ $# == 0 ]]; do
+        if [ -d "$HOME/.config/$1" ] || [ -f "$HOME/.config/$1" ]; then
+            if ! [ -L "$HOME/.config/$1" ]; then
+                mv "$HOME/.config/$1" $script_dir/backup/.config/$1
+            else
+                rm "$HOME/.config/$1"
+            fi
         fi
-    fi
-    ln -s "$script_dir/.config/$1" "$HOME/.config/"
+        ln -s "$script_dir/.config/$1" "$HOME/.config/"
+        shift
+    done
 }
 install_q() {
     flg=0
@@ -70,15 +79,8 @@ if [ "$chc" = "y" ]; then
     sudo pacman -Syy
 fi
 mkdir -p "$script_dir/backup/.config"
-install_n yaourt
-install_n make
-install_n cmake
-install_n git
-install_n gcc
-install_n g++
-install_n clang
-ln_ .gitconfig
-in_ .scr
+install_n yaourt make cmake git gcc g++ clang
+ln_ .gitconfig .scr
 #--------------------------------------------------
 # vim
 #--------------------------------------------------
@@ -111,13 +113,11 @@ if [ "$chc" = "y" ]; then
     cd $script_dir/.vim/vimfiles/
 
     echo "installint gvim & some plugins..."
-    for gg in ${plugin_list1[@]}
-    do
+    for gg in ${plugin_list1[@]}; do
         install_n $gg
     done
     echo "installing plugins..."
-    for gg in ${plugin_list2[@]}
-    do
+    for gg in ${plugin_list2[@]}; do
         echo "cloning "$gg"..."
         git clone "https://github.com/"$gg".git"
     done
@@ -131,9 +131,7 @@ if [ "$chc" = "y" ]; then
             cd $script_dir/.vim/vimfiles/color_coded
             rm -f CMakeCache.txt
             if ! [ -f "color_coded.so" ]; then
-                if ! [ -d "$PWD/build" ]; then
-                    mkdir build
-                fi
+                mkdir -p build
                 cd build
                 cmake .. -DDOWNLOAD_CLANG=0
                 make -j && make install
@@ -157,8 +155,7 @@ if [ "$chc" = "y" ]; then
         fi
     fi
 
-    ln_ .vim
-    ln_ .vimrc
+    ln_ .vim .vimrc
 fi
 #--------------------------------------------------
 # zsh
@@ -176,12 +173,7 @@ if [ "$chc" = "y" ]; then
     install_n zsh-syntax-highlighting
     cd $script_dir/
     git clone https://github.com/robbyrussell/oh-my-zsh.git .oh-my-zsh
-    if ! [ -d "$script_dir/.zsh" ]; then
-        mkdir $script_dir/.zsh
-        mkdir $script_dir/.zsh/zfunctions
-    elif ! [ -d "$script_dir/.zsh/zfunctions" ]; then
-        mkdir $script_dir/.zsh/zfunctions
-    fi
+    mkdir -p $script_dir/.zsh/zfunctions
     cd $script_dir/.zsh
     git clone https://github.com/zsh-users/zsh-autosuggestions.git
     git clone https://github.com/sindresorhus/pure.git
@@ -189,10 +181,7 @@ if [ "$chc" = "y" ]; then
     ln -sf "$script_dir/.zsh/pure/pure.zsh" zfunctions/pure
     ln -sf "$script_dir/.zsh/pure/async.zsh" zfunctions/async
 
-    ln_ .oh-my-zsh
-    ln_ .bashrc
-    ln_ .zsh
-    ln_ .zshrc
+    ln_ .oh-my-zsh .bashrc .zsh .zshrc
 fi
 #--------------------------------------------------
 # i3-gap
@@ -202,44 +191,9 @@ read chc
 if [ "$chc" = "y" ]; then
     echo 'installing...'
     ln -sf $script_dir/.Xresources $script_dir/.Xdefaults
-    install_n xorg-server
-    install_n xorg-xinit
-    install_n i3-gaps
-    install_n tmux
-    install_n compton
-    install_n polybar
-    install_n rofi
-    install_n neofetch
-    install_n termite
-    # install_n terminator
-    install_n feh
-    install_n thunar
-    install_n ttf-font-awesome
-    install_n awesome-terminal-fonts
-    install_n powerline-fonts
-    install_n noto-fonts
-    install_n noto-fonts-cjk
-    install_n noto-fonts-emoji
-
-
-    ln_ .asoundrc
-    ln_ .compton
-    ln_ .Xauthority
-    ln_ .Xdefaults
-    ln_ .xinitrc
-    ln_ .Xmodmap
-    ln_ .xprofile
-    ln_ .Xresources
-    ln_ .Xresources.d
-    ln_ .tmux.conf
-
-    ln_c i3
-    ln_c neofetch
-    ln_c polybar
-    ln_c rofi
-    ln_c Thunar
-    ln_c termite
-    # ln_c terminator
+    install_n xorg-server xorg-xinit i3-gaps tmux compton polybar rofi neofetch termite feh thunar ttf-font-awesome awesome-terminal-fonts powerline-fonts noto-fonts noto-fonts-cjk noto-fonts-emoji
+    ln_ .asoundrc .compton .Xauthority .Xdefaults .xinitrc .Xmodmap .xprofile .Xresources .Xresources.d .tmux.conf
+    ln_c i3 neofetch polybar rofi Thunar termite
 
     cd $script_dir
     git clone https://github.com/powerline/fonts.git
@@ -248,6 +202,18 @@ if [ "$chc" = "y" ]; then
     fc-catch -fv
     cd ..
     rm fonts -rf
+
+    cd $script_dir
+    card=`ls /sys/class/backlight/`
+    for xx in $card; do
+        card=$xx
+        break
+    done
+    cd archlinux
+    sed -i "s/XXX/$card/g" backlight.service
+    sudo ln -s `pwd`/backlight.service /usr/lib/systemd/system/
+    sudo systemctl start backlight.service
+    sudo systemctl enable backlight.service
 fi
 #--------------------------------------------------
 # emacs

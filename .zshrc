@@ -3,8 +3,8 @@ istty=$( tty | grep tty )
 export TERM='termite'
 export ZSH=$HOME/.oh-my-zsh
 export PATH=$PATH:/home/angel/.scr
-source $ZSH/oh-my-zsh.sh
 
+source $ZSH/oh-my-zsh.sh
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 source ~/.oh-my-zsh/plugins/z/z.plugin.zsh
@@ -132,6 +132,7 @@ c() {
         echo -e "\n\e[41mCompile Failed...\e[0m\n"
     fi
 }
+
 
 ssh() {
     trap 'export TERM=termite; trap 2; return' 2

@@ -5,10 +5,11 @@ import os
 import sys
 
 
-path = '/home/{}/.cache'.format(os.environ['USER'])
-brifile = os.path.join(path, 'brightness')
-cmd = 'xrandr --output {screen} --brightness {brightness}'
-brinow = 1
+#path = '/home/{}/.cache'.format(os.environ['USER'])
+brifile = '/sys/class/backlight/nv_backlight/brightness'
+#cmd = 'xrandr --output {screen} --brightness {brightness}'
+cmd = 'echo {brightness} > ' + brifile
+brinow = 100
 screen = 'eDP-1'
 
 try:
@@ -18,13 +19,16 @@ except:
 
 
 try:
-    brinxt = float(sys.argv[1]) + float(brinow)
+    #brinxt = float(sys.argv[1]) + float(brinow)
+    brinxt = int(sys.argv[1]) + int(brinow)
     brinxt = 0 if brinxt < 0 else brinxt
-    brinxt = 1 if brinxt > 1 else brinxt
+    brinxt = 100 if brinxt > 100 else brinxt
     
-    os.system(cmd.format(screen=screen, brightness=brinxt))
+    #os.system(cmd.format(screen=screen, brightness=brinxt))
+    os.system(cmd.format(brightness=brinow))
     open(brifile, 'w').write(str(brinxt))
 except IndexError:
-    os.system(cmd.format(screen=screen, brightness=brinow))
+    #os.system(cmd.format(screen=screen, brightness=brinow))
+    os.system(cmd.format(brightness=brinow))
 
 

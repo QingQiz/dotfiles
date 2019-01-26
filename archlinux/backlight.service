@@ -1,0 +1,11 @@
+[Unit]
+Description = change permission for /sys/class/backlight/nv_backlight/brightness
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/sleep 5
+ExecStartPost=/usr/bin/chmod 666 /sys/class/backlight/XXX/brightness 
+
+[Install]
+WantedBy=multi-user.target
+
