@@ -250,7 +250,7 @@ bar-progress-empty = ─
 
 [module/backlight]
 type = internal/backlight
-card = intel_backlight
+card = nv_backlight
 ;click-left = connman-gtk
 
 format = <label> <bar>

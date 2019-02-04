@@ -212,8 +212,8 @@ exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 exec --no-startup-id fcitx-autostart
 
 # local ss
-exec_always --no-startup-id ss-local -c /etc/shadowsocks/vps.json
-exec_always --no-startup-id ss-local -c /etc/shadowsocks/pi.json
+exec_always --no-startup-id sslocal -c /etc/shadowsocks/vps.json
+#exec_always --no-startup-id ss-local -c /etc/shadowsocks/pi.json
 
 # lock when sleep
 exec --no-startup-id xss-lock -- betterlockscreen -l &

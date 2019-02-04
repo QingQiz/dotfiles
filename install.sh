@@ -104,6 +104,7 @@ plugin_list2=(\
     "mbbill/undotree" \
     "easymotion/vim-easymotion" \
     "junegunn/vim-easy-align" \
+    "lilydjwg/fcitx.vim.git"\
     )
 echo "config vim? (y/n)"
 read chc

@@ -26,6 +26,8 @@ set wildmenu
 set foldmethod=marker
 set gcr=a:block-blinkon0
 
+set ttimeoutlen=100
+
 set path+=**
 set rtp+=/home/angel/.vim/vimfiles/*
 set rtp+=/home/angel/.vim/vimfiles/indentLine/after
@@ -265,8 +267,10 @@ func! RunResult()
     exec "!php %"
   elseif &ft == "html"
     exec "!chromium %"
-  elseif &ft == "sh"
+  elseif &ft == "sh" || &ft == "bash"
     exec "!sh %"
+  elseif &ft == "zsh"
+    exec "!zsh %"
   endif
 endf
 " }}}
