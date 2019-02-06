@@ -1,7 +1,11 @@
 #!/usr/bin/env bash
 
-xrandr --output DP-1 --right-of DP-3 --auto
-xrandr --output DP-3 --primary
+xx=$( xrandr | grep ' conn' | awk '{print $1}' )
+scr1=$( echo $xx | head -n 1 | tail -n 1 )
+scr2=$( echo $xx | head -n 2 | tail -n 1 )
+
+xrandr --output $scr1 --right-of $scr2 --auto
+xrandr --output $scr1 --primary
 
 sleep 1
 

@@ -34,7 +34,7 @@ set rtp+=/home/angel/.vim/vimfiles/indentLine/after
 " }}}
 
 " map {{{
-let mapleader = " "
+let mapleader = '\'
 nnoremap <c-h>              <c-w>h
 nnoremap <c-j>              <c-w>j
 nnoremap <c-k>              <c-w>k
@@ -47,16 +47,17 @@ nnoremap <silent>[<SPACE>   :call append(line('.') - 1, "")<CR>k
 nnoremap <silent>]<SPACE>   :call append(line('.'), "")<CR>j
 nnoremap <silent>[e         :move -1-1<CR>
 nnoremap <silent>]e         :move +1<CR>
-nnoremap <silent><leader>cl :call Comments()<CR>
-vnoremap <silent><leader>cl :'<,'>call Comments()<CR>
-nnoremap <silent><leader>cc :call ChangeFor()<CR>
+nnoremap <silent><space>cl  :call Comments()<CR>
+vnoremap <silent><space>cl  :'<,'>call Comments()<CR>
+nnoremap <silent><space>cf  :call ChangeFor()<CR>
 nnoremap <silent><F5>       :w<CR>:call SmartComplier()<CR>
 nnoremap <silent><F6>       :call RunResult()<CR>
 nnoremap <expr>A            GoIndent()
 nnoremap <silent>gy         :let @+ = join(getline("^", "$"), "\n")<CR>
-vnoremap \y                 "+y
-nnoremap \p                 "+p
-nnoremap \n                 :noh<CR>
+vnoremap <leader>y          "+y
+nnoremap <leader>p          "+p
+nnoremap <leader>P          "+P
+nnoremap <leader>n          :noh<CR>
 nnoremap H                  ^
 vnoremap H                  ^
 nnoremap L                  $
@@ -69,17 +70,10 @@ inoremap <c-b>              <left>
 nnoremap <down>             <nop>
 nnoremap <up>               <nop>
 inoremap <c-@>              <nop>
-vnoremap a'                 <C-g>'<C-R>-'<ESC>
-vnoremap a`                 <C-g>`<C-R>-`<ESC>
-vnoremap a"                 <C-g>"<C-R>-"<ESC>
-vnoremap a(                 <C-g>(<C-R>-)<ESC>
-vnoremap a)                 <C-g>(<C-R>-)<ESC>
-vnoremap a[                 <C-g>[<C-R>-]<ESC>
-vnoremap a]                 <C-g>[<C-R>-]<ESC>
-vnoremap a{                 <C-g>{<C-R>-}<ESC>
-vnoremap a}                 <C-g>{<C-R>-}<ESC>
-vnoremap a<                 <C-g><<C-R>-><ESC>
-vnoremap a>                 <C-g><<C-R>-><ESC>
+vnoremap <silent>a          :<c-u>call VAddSurround(0)<CR>
+nnoremap <silent><leader>a  :<c-u>call NAddSurround(0)<CR>
+vnoremap <silent>A          :<c-u>call VAddSurround(1)<CR>
+nnoremap <silent><leader>A  :<c-u>call NAddSurround(1)<CR>
 nnoremap >                  >>
 nnoremap <                  <<
 vnoremap >                  >gv
@@ -271,6 +265,8 @@ func! RunResult()
     exec "!sh %"
   elseif &ft == "zsh"
     exec "!zsh %"
+  elseif &ft == "vim"
+    exec "source %"
   endif
 endf
 " }}}
@@ -316,6 +312,58 @@ fun! GoIndent()
   else
     return 'A'
   endif
+endf
+" }}}
+
+" add surround {{{
+fun! GenMatched(char)
+  let matched = {
+        \ '(' : ')',
+        \ ')' : '(',
+        \ '[' : ']',
+        \ ']' : '[',
+        \ '{' : '}',
+        \ '}' : '{',
+        \ '<' : '>',
+        \ '>' : '<'
+        \ }
+  if len(a:char) == 1
+    if has_key(matched, a:char) != 0
+      return matched[a:char]
+    endif
+    return a:char
+  else
+    let i = 0
+    let s = ''
+    while i < len(a:char)
+      let s = GenMatched(a:char[i]).s
+      let i = i + 1
+    endwhile
+    return s
+  endif
+endf
+
+fun! VAddSurround(select)
+  if a:select == 0
+    let c = getchar()
+    if c =~ '^\d\+$'
+      let c = nr2char(c)
+    endif
+  else
+    let c = input('your surround: ')
+  endif
+  exec 'norm! gv"zx'
+  if c == ')' || c == '}' || c == ']' || c == '>'
+    let @z = GenMatched(c).@z.c
+  else
+    let @z = c.@z.GenMatched(c)
+  endif
+  exec 'norm! "zP'
+endf
+
+fun! NAddSurround(select)
+  norm "viW"
+  VAddSurround(a:select)
 endf
 " }}}
 
@@ -401,23 +449,23 @@ au BufReadPost *
 " Plugin {{{
 " plugin list {{{
 " PluginList = [ \
-    \ ['Yggdroot/indentLine'],
-    \ ['scrooloose/nerdtree'],
-    \ ['vim-airline/vim-airline'],
-    \ ['vim-airline/vim-airline-themes'],
-    \ ['tpope/vim-surround'],
-    \ ['Valloric/YouCompleteMe'],
-    \ ['majutsushi/tagbar'],
-    \ ['jiangmiao/auto-pairs'],
-    \ ['kshenoy/vim-signature'],
-    \ ['jeaye/color_coded'],
-    \ ['guns/xterm-color-table.vim'],
-    \ ['luochen1990/rainbow'],
-    \ ['mbbill/undotree'],
-    \ ['easymotion/vim-easymotion'],
-    \ ['junegunn/vim-easy-align'],
-    \ ['mhinz/vim-startify']
-    \ ]
+      \ ['Yggdroot/indentLine'],
+      \ ['scrooloose/nerdtree'],
+      \ ['vim-airline/vim-airline'],
+      \ ['vim-airline/vim-airline-themes'],
+      \ ['tpope/vim-surround'],
+      \ ['Valloric/YouCompleteMe'],
+      \ ['majutsushi/tagbar'],
+      \ ['jiangmiao/auto-pairs'],
+      \ ['kshenoy/vim-signature'],
+      \ ['jeaye/color_coded'],
+      \ ['guns/xterm-color-table.vim'],
+      \ ['luochen1990/rainbow'],
+      \ ['mbbill/undotree'],
+      \ ['easymotion/vim-easymotion'],
+      \ ['junegunn/vim-easy-align'],
+      \ ['mhinz/vim-startify']
+      \ ]
 " }}}
 
 " startify {{{
@@ -468,16 +516,16 @@ let g:AutoPairsMultilineClose=0
 
 let g:rainbow_active = 1
 let g:rainbow_conf = {
-	\	'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
-	\	'ctermfgs': ['69', '36', '75', '133', '94'],
-	\	'operators': '_,\|+\|-\|\*\|\/\(\/\|\*\)\@!\|=\|==\|<\|>\|!\|%\|\^\|&\||\|>>\|<<\|\.\|->_',
-	\	'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
-	\	'separately': {
-	\	  'lisp': {
-	\	    'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3'],
-	\		},
-	\	}
-	\}
+      \	'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
+      \	'ctermfgs': ['69', '36', '75', '133', '94'],
+      \	'operators': '_,\|+\|-\|\*\|\/\(\/\|\*\)\@!\|=\|==\|<\|>\|!\|%\|\^\|&\||\|>>\|<<\|\.\|->_',
+      \	'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
+      \	'separately': {
+      \	  'lisp': {
+      \	    'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3'],
+      \		},
+      \	}
+      \}
 " }}}
 
 " NERDTree & tagbar & undotree {{{
@@ -488,8 +536,8 @@ let g:tagbar_width=25
 let g:tagbar_autoclose=1
 
 if has("persistent_undo")
-    set undodir=~/.cache/vim/undotree/
-    set undofile
+  set undodir=~/.cache/vim/undotree/
+  set undofile
 endif
 nn <F7> :UndotreeToggle<CR>
 " }}}
@@ -511,29 +559,29 @@ nmap <leader>9 <Plug>AirlineSelectTab9
 " nmap <leader>- <Plug>AirlineSelectPrevTab
 " nmap <leader>+ <Plug>AirlineSelectNextTab
 let g:airline#extensions#tabline#buffer_idx_format = {
-    \ '1': '¹',
-    \ '2': '²',
-    \ '3': '³',
-    \ '4': '⁴',
-    \ '5': '⁵',
-    \ '6': '⁶',
-    \ '7': '⁷',
-    \ '8': '⁸',
-    \ '9': '⁹'
-    \ }
+      \ '1': '¹',
+      \ '2': '²',
+      \ '3': '³',
+      \ '4': '⁴',
+      \ '5': '⁵',
+      \ '6': '⁶',
+      \ '7': '⁷',
+      \ '8': '⁸',
+      \ '9': '⁹'
+      \ }
 let g:airline_mode_map = {
-    \ '__' : '-',
-    \ 'n'  : 'N',
-    \ 'i'  : 'I',
-    \ 'R'  : 'R',
-    \ 'c'  : 'C',
-    \ 'v'  : 'V',
-    \ 'V'  : 'VL',
-    \ '' : 'VB',
-    \ 's'  : 'S',
-    \ 'S'  : 'S',
-    \ '' : 'S',
-    \ }
+      \ '__' : '-',
+      \ 'n'  : 'N',
+      \ 'i'  : 'I',
+      \ 'R'  : 'R',
+      \ 'c'  : 'C',
+      \ 'v'  : 'V',
+      \ 'V'  : 'VL',
+      \ '' : 'VB',
+      \ 's'  : 'S',
+      \ 'S'  : 'S',
+      \ '' : 'S',
+      \ }
 let g:airline_left_sep = ''
 let g:airline_right_sep = ''
 let g:airline_left_alt_sep = '|'
@@ -564,9 +612,9 @@ let g:ycm_enable_diagnostic_signs = 0
 set completeopt=longest,menuone
 
 let g:ycm_semantic_triggers =  {
-    \   'c' : ['->', '.', '-> '],
-    \   'cpp,objcpp' : ['->', '.', '::', '-> '],
-    \ }
+      \   'c' : ['->', '.', '-> '],
+      \   'cpp,objcpp' : ['->', '.', '::', '-> '],
+      \ }
 nn <silent>gd :YcmCompleter GoTo<CR>
 nn <silent><F12> :YcmDiags<CR>
 " }}}
