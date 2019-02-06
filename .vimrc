@@ -71,9 +71,9 @@ nnoremap <down>             <nop>
 nnoremap <up>               <nop>
 inoremap <c-@>              <nop>
 vnoremap <silent>a          :<c-u>call VAddSurround(0)<CR>
-nnoremap <silent><leader>a  :<c-u>call NAddSurround(0)<CR>
 vnoremap <silent>A          :<c-u>call VAddSurround(1)<CR>
-nnoremap <silent><leader>A  :<c-u>call NAddSurround(1)<CR>
+nnoremap <silent><leader>a  viW:<c-u>call VAddSurround(0)<CR>
+nnoremap <silent><leader>A  viW:<c-u>call VAddSurround(1)<CR>
 nnoremap >                  >>
 nnoremap <                  <<
 vnoremap >                  >gv
@@ -359,11 +359,6 @@ fun! VAddSurround(select)
     let @z = c.@z.GenMatched(c)
   endif
   exec 'norm! "zP'
-endf
-
-fun! NAddSurround(select)
-  norm "viW"
-  VAddSurround(a:select)
 endf
 " }}}
 
