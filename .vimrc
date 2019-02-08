@@ -386,13 +386,13 @@ class Py4Js:
         a = b.charAt(c) == Yb ? a + d & 4294967295 : a ^ d } return a } """)
 
     def getTk(self, text):
-        return self.ctx.call("TL", text)
+        return str(self.ctx.call("TL", text))
 
 def translate(text):
     js = Py4Js()
     url = 'https://translate.google.cn/translate_a/single'
     r = requests.get(url, params=[
-        ('client', 't'), ('s1', 'auto'), ('t1', 'zh-CN'), ('h1', 'zh-CN'), ('dt', 'at'), ('dt', 'bd'), ('dt', 'ex'), ('dt', 'ld'), ('dt', 'md'), ('dt', 'qca'), ('dt', 'rw'), ('dt', 'rm'), ('dt', 'ss'), ('dt', 't'), ('ie', 'UTF-8'), ('oe', 'UTF-8'), ('otf', '1'), ('pc', '1'), ('ssel', '0'), ('tsel', '0'), ('kc', '2'), ('tk', str(js.getTk(text))), ('q', text),
+        ('client', 't'), ('s1', 'auto'), ('t1', 'zh-CN'), ('dt', 'rm'), ('dt', 't'), ('tk', js.getTk(text)), ('q', text),
     ])
     result = ''
     j = json.loads(r.text)[0]
@@ -415,6 +415,7 @@ EOF
   setl nobuflisted nomodifiable noswapfile
   setl norelativenumber nonumber
   nnoremap <buffer><silent>q :hide<CR>
+  wincmd w
 endf
 au bufenter * if (winnr("$") == 1 && bufexists('TranslationResult')) | q | endif
 " }}}
