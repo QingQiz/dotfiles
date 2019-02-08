@@ -5,9 +5,7 @@ import os
 import sys
 
 
-#path = '/home/{}/.cache'.format(os.environ['USER'])
 brifile = '/sys/class/backlight/nv_backlight/brightness'
-#cmd = 'xrandr --output {screen} --brightness {brightness}'
 cmd = 'echo {brightness} > ' + brifile
 brinow = 100
 screen = 'eDP-1'
@@ -19,16 +17,20 @@ except:
 
 
 try:
-    #brinxt = float(sys.argv[1]) + float(brinow)
     brinxt = int(sys.argv[1]) + int(brinow)
     brinxt = 0 if brinxt < 0 else brinxt
     brinxt = 100 if brinxt > 100 else brinxt
     
-    #os.system(cmd.format(screen=screen, brightness=brinxt))
     os.system(cmd.format(brightness=brinow))
     open(brifile, 'w').write(str(brinxt))
 except IndexError:
-    #os.system(cmd.format(screen=screen, brightness=brinow))
     os.system(cmd.format(brightness=brinow))
-
+except ValueError:
+    if sys.argv[1] == '-s':
+        try:
+            os.system(cmd.format(brightness=int(sys.argv[2])))
+        except IndexError:
+            pass
+    else:
+        print('invalid option:\t', sys.argv[1])
 
