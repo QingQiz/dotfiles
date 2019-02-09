@@ -34,4 +34,5 @@ fi
 # source .xprofile
 [ -f ~/.xprofile ] && source ~/.xprofile
 
+numlockx &
 exec i3

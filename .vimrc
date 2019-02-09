@@ -399,10 +399,15 @@ def translate(text):
     for x in j:
         if x[0] is not None:
             result += x[0]
-    return result
+    ans = ""
+    for c in result:
+        if c in ['"', "'"]:
+            ans += '\\'
+        ans += c
+    return ans
 
 res = translate(vim.eval('@z'))
-vim.command("let @z = '%s'" % res)
+vim.command('let @z = "%s"' % res)
 EOF
   if bufexists('TranslationResult')
     sil! bwipeout TranslationResult
