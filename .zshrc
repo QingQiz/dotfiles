@@ -37,6 +37,8 @@ else
     export PS1="[%n@ %d]$ "
 fi
 
+# ls color
+eval "$( dircolors ~/.colorrc )"
 export LC_CTYPE=zh_CN.UTF-8
 
 ##=======================================================================

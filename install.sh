@@ -193,7 +193,7 @@ if [ "$chc" = "y" ]; then
     echo 'installing...'
     ln -sf $script_dir/.Xresources $script_dir/.Xdefaults
     install_n xorg-server xorg-xinit i3-gaps tmux compton polybar rofi neofetch termite feh thunar ttf-font-awesome awesome-terminal-fonts powerline-fonts noto-fonts noto-fonts-cjk noto-fonts-emoji numlockx
-    ln_ .asoundrc .compton .Xauthority .Xdefaults .xinitrc .Xmodmap .xprofile .Xresources .Xresources.d .tmux.conf
+    ln_ .asoundrc .compton .Xauthority .Xdefaults .xinitrc .Xmodmap .xprofile .Xresources .Xresources.d .tmux.conf .colorrc
     ln_c i3 neofetch polybar rofi Thunar termite
 
     cd $script_dir
@@ -211,38 +211,31 @@ if [ "$chc" = "y" ]; then
         break
     done
     cd archlinux
-    sed -i "s/XXX/$card/g" backlight.service
-    sudo ln -s `pwd`/backlight.service /usr/lib/systemd/system/
+    sudo sed -e "s/XXX/$card/g" backlight.service > /usr/lib/systemd/system/backlight.service
     sudo systemctl start backlight.service
     sudo systemctl enable backlight.service
 fi
 #--------------------------------------------------
 # emacs
 #--------------------------------------------------
-echo "install emacs? (y/n)"
-read chc
-if [ "$chc" = "y" ]; then
-    cd $script_dir
-    install_n emacs
-    git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d
-    ln_ .spacemacs
-
-fi
+install_q \
+    -d "emacs(baced on spacemacs)" +"emacs" \
+    -e "cd $script_dir && git clone https://github.com/syl20bnr/spacemacs ~/.emacs.d" \
+    -e "ln_ .spacemacs"
 #--------------------------------------------------
 # others
 #--------------------------------------------------
 echo "install some applications(y/n)?"
 read chc
 if [ "$chc" == "y" ]; then
-    install_q -d aria2 -e "ln_c aria2" -e "touch .config/aria2/aria2.session" +"aria2-fast"
+    install_q -d aria2 +"aria2-fast"\
+        -e "ln_c aria2" \
+        -e "touch .config/aria2/aria2.session" 
 
     install_q -d "shadowsock" +"shadowsocks" +"shadowsocks-libev"
-
-    install_q -d "mpd" +"mpd" +"mpc" -e "ln_ .mpd"
-    # 远程桌面
+    install_q -d "mpd" +"mpd" +"mpc" \
+        -e "ln_ .mpd"
     install_q -d "remmian" +"remmian"
-    # 抓包
     install_q -d "wireshark" +"wireshark"
-    # 热点
     install_q -d "create_ap" +"create_ap"
 fi

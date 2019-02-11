@@ -70,13 +70,13 @@ inoremap <c-b>              <left>
 nnoremap <down>             <nop>
 nnoremap <up>               <nop>
 inoremap <c-@>              <nop>
-vnoremap <silent>a          :<c-u>call VAddSurround(0)<CR>
-vnoremap <silent>A          :<c-u>call VAddSurround(1)<CR>
+vnoremap <silent><leader>a  :<c-u>call VAddSurround(0)<CR>
+vnoremap <silent><leader>A  :<c-u>call VAddSurround(1)<CR>
 nnoremap <silent><leader>s  viw:<c-u>call VAddSurround(0)<CR>
 nnoremap <silent><leader>S  viw:<c-u>call VAddSurround(1)<CR>
 nnoremap <silent><leader>a  viW:<c-u>call VAddSurround(0)<CR>
 nnoremap <silent><leader>A  viW:<c-u>call VAddSurround(1)<CR>
-vnoremap <silent>t          :<c-u>call GoogleTranslate()<cr>
+vnoremap <silent><leader>t  :<c-u>call GoogleTranslate()<cr>
 nnoremap <silent><leader>t  viw:<c-u>call GoogleTranslate()<cr>
 nnoremap >                  >>
 nnoremap <                  <<
@@ -373,39 +373,46 @@ python3 << EOF
 import vim, requests, json, execjs
 class Py4Js:
     def __init__(self):
-        self.ctx=execjs.compile("""
-        function TL(a) { var k = ""; var b = 406644; var b1 = 3293161072; var jd = ".";
-        var $b = "+-a^+6"; var Zb = "+-3^+b+-f"; for (var e = [], f = 0, g = 0; g < a.length; g++) { var m =
-        a.charCodeAt(g); 128 > m ? e[f++] = m : (2048 > m ? e[f++] = m >> 6 | 192 : (55296 == (m & 64512) && g + 1 <
-        a.length && 56320 == (a.charCodeAt(g + 1) & 64512) ? (m = 65536 + ((m & 1023) << 10) + (a.charCodeAt(++g) &
-        1023), e[f++] = m >> 18 | 240, e[f++] = m >> 12 & 63 | 128) : e[f++] = m >> 12 | 224, e[f++] = m >> 6 & 63 |
-        128), e[f++] = m & 63 | 128) } a = b; for (f = 0; f < e.length; f++) a += e[f], a = RL(a, $b); a = RL(a,
-        Zb); a ^= b1 || 0; 0 > a && (a = (a & 2147483647) + 2147483648); a %= 1E6; return a.toString() + jd + (a ^ b)
-        }; function RL(a, b) { var t = "a"; var Yb = "+"; for (var c = 0; c < b.length - 2; c += 3) { var d =
-        b.charAt(c + 2), d = d >= t ? d.charCodeAt(0) - 87 : Number(d), d = b.charAt(c + 1) == Yb ? a >>> d: a << d;
-        a = b.charAt(c) == Yb ? a + d & 4294967295 : a ^ d } return a } """)
+        self.ctx = execjs.compile("""function TL(a){var k="";var b=406644;
+        var b1=3293161072;var jd=".";var $b="+-a^+6";var Zb="+-3^+b+-f";
+        for(var e=[],f=0,g=0;g<a.length;g++){var m=a.charCodeAt(g);128>m?
+        e[f++]=m:(2048>m?e[f++]=m>>6|192:(55296==(m&64512)&&g+1<a.length&&
+        56320==(a.charCodeAt(g+1)&64512)?(m=65536+((m&1023)<<10)+(a.
+        charCodeAt(++g)&1023),e[f++]=m>>18|240,e[f++]=m>>12&63|128):e[f++]
+        =m>>12|224,e[f++]=m>>6&63|128),e[f++]=m&63|128)}a=b;for(f=0;f<e.
+        length; f++)a+=e[f],a=RL(a,$b);a=RL(a,Zb);a^=b1||0;0>a&&(a=(a&
+        2147483647)+2147483648);a%=1E6;return a.toString()+jd+(a^b)};
+        function RL(a,b){var t="a";var Yb="+";for(var c=0;c<b.length-2;c+=
+        3){var d=b.charAt(c+2),d=d>=t?d.charCodeAt(0)-87:Number(d),d=b.
+        charAt(c+1)==Yb?a>>>d:a<<d;a=b.charAt(c)==Yb?a+d&4294967295:a^d}
+        return a}""")
 
     def getTk(self, text):
-        return str(self.ctx.call("TL", text))
+        return self.ctx.call("TL", text)
 
 def translate(text):
-    js = Py4Js()
     url = 'https://translate.google.cn/translate_a/single'
     r = requests.get(url, params=[
-        ('client', 't'), ('s1', 'auto'), ('t1', 'zh-CN'), ('dt', 'rm'), ('dt', 't'), ('tk', js.getTk(text)), ('q', text),
+        ('client', 't'), ('sl', 'en'), ('tl', 'zh-CN'), ('dt', 'bd'),
+        ('dt', 'rm'),  ('dt', 't'), ('dt', 'qca'),
+        ('tk', str(js.getTk(text))), ('q', text),
     ])
-    result = ''
-    j = json.loads(r.text)[0]
-    for x in j:
-        if x[0] is not None:
-            result += x[0]
-    ans = ""
+    result, ans = '', ''
+    j = json.loads(r.text)
+    for x in j[0]:
+        result += '' if x[0] is None else x[0]
+    result += '\n-------------------------------------------------------------------------------'
+    try:
+        for x in j[1]:
+            result += '\n' + x[0] + ':  ' + str(x[1])
+    except (IndexError, TypeError):
+        pass
     for c in result:
-        if c in ['"', "'"]:
-            ans += '\\'
-        ans += c
+        ans += '\\' + c if c in ['"', "'"] else c
     return ans
 
+js = Py4Js()
+print(vim.eval('@z'))
 res = translate(vim.eval('@z'))
 vim.command('let @z = "%s"' % res)
 EOF
