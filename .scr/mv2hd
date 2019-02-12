@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+mv "$1" /media/sdb1/document/files/

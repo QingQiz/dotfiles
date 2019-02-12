@@ -78,6 +78,7 @@ nnoremap <silent><leader>a  viW:<c-u>call VAddSurround(0)<CR>
 nnoremap <silent><leader>A  viW:<c-u>call VAddSurround(1)<CR>
 vnoremap <silent><leader>t  :<c-u>call GoogleTranslate()<cr>
 nnoremap <silent><leader>t  viw:<c-u>call GoogleTranslate()<cr>
+nnoremap <silent><leader>T  V:<c-u>call GoogleTranslate()<cr>
 nnoremap >                  >>
 nnoremap <                  <<
 vnoremap >                  >gv
@@ -394,7 +395,7 @@ def translate(text):
     url = 'https://translate.google.cn/translate_a/single'
     r = requests.get(url, params=[
         ('client', 't'), ('sl', 'en'), ('tl', 'zh-CN'), ('dt', 'bd'),
-        ('dt', 'rm'),  ('dt', 't'), ('dt', 'qca'),
+        ('dt', 'rm'),  ('dt', 't'), ('dt', 'qca'), ('ie', 'UTF-8'),
         ('tk', str(js.getTk(text))), ('q', text),
     ])
     result, ans = '', ''
@@ -412,7 +413,6 @@ def translate(text):
     return ans
 
 js = Py4Js()
-print(vim.eval('@z'))
 res = translate(vim.eval('@z'))
 vim.command('let @z = "%s"' % res)
 EOF
