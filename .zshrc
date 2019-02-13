@@ -86,11 +86,8 @@ alias pipi='sudo pip install -i https://pypi.tuna.tsinghua.edu.cn/simple'
 alias aria2='aria2c --conf-path=/home/angel/.config/aria2/aria2.conf'
 alias ruijie='ruijie i once'
 
-alias nip='curl -i https://ip.cn'
-
 alias ColorCoded='cp ~/.config/color_coded/.color_coded .'
-alias YcmExtra='cp ~/.config/ycmd/ycmd_conf.py .'
-alias AddCMakeList='cp ~/workspace/Progeaming-Practice/Note/CMakeLists.txt .'
+#alias AddCMakeList='cp ~/workspace/Progeaming-Practice/Note/CMakeLists.txt .'
 
 
 ##-----------------------------------------------------------------------
@@ -100,41 +97,6 @@ alias AddCMakeList='cp ~/workspace/Progeaming-Practice/Note/CMakeLists.txt .'
 
 ##=======================================================================
 # commonly used functions
-
-c() {
-    cmd="g++ -Wall -g -lm -o"
-    res="./now"
-    case $# in
-        0)
-            cmd=$cmd" now _.cc"
-            ;;
-        1)
-            cmd=$cmd" now $1"
-            ;;
-        *)
-            if [[ ${2:0:1} ==  "-" ]]; then
-                cmd=$cmd" now $1"
-            else
-                cmd=$cmd" $2 $1"
-                res="./$2"
-                shift
-            fi
-            shift
-            until [[ $# == 0 ]]; do
-                cmd=$cmd" $1"
-                shift
-            done
-            ;;
-    esac
-    eval $cmd
-    if [[ $? == 0 ]]; then
-        echo -e "\e[32mRuning Result...\e[0m\n"
-        eval $res
-    else
-        echo -e "\n\e[41mCompile Failed...\e[0m\n"
-    fi
-}
-
 
 ssh() {
     trap 'export TERM=termite; trap 2; return' 2
@@ -174,9 +136,32 @@ lanip() {
     ip a | grep $(ip r | grep default | head | cut -d\  -f5) | grep inet | awk '{print $2}' | cut -d"/" -f1
 }
 
-bak() { cp "$1" "$1.bak" }
-bakm() { mv "$1" "$1.bak" }
+queryIP() {
+    curl -is "https://ip.cn/index.php?ip=$1" | tail -n 1
+}
 
+ycm() {
+    if ! [ -f '.ycm_extra_conf.py' ]; then
+        cp ~/.config/ycmd/ycmd_conf.py .ycm_extra_conf.py
+    fi
+}
+
+mv2hd() {
+    mv "$1" '/media/sdb1/document/files/'
+}
+
+save2hd() {
+    mv $1 "/media/sdb1/Arch/"
+    ln -s "/media/sdb1/Arch/$1" "`pwd`/$1"
+}
+
+saveback() {
+    if [ -f '/media/sdb1/Arch/'"$1" ] || [ -d '/media/sdb1/Arch/'"$1" ]
+    then
+        rm -f "$1"
+        mv '/media/sdb1/Arch/'"$1" "$1"
+    fi
+}
 
 ##-----------------------------------------------------------------------
 

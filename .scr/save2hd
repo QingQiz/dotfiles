@@ -1,4 +1,0 @@
-#!/usr/bin/env bash
-
-mv $1 "/media/sdb1/Arch/"
-ln -s "/media/sdb1/Arch/$1" "`pwd`/$1"

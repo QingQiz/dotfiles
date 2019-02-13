@@ -25,6 +25,8 @@ flags = [
 'c++',
 '-isystem',
 '/usr/include/c++/8.2.1',
+'-isystem',
+'/usr/include',
 ]
 
 

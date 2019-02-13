@@ -1,8 +1,0 @@
-#!/usr/bin/env python3
-
-import os
-import sys
-
-if os.path.exists(os.path.join('/media/sdb1/Arch/', sys.argv[1])):
-    os.system("rm -f " + sys.argv[1])
-    os.system('mv /media/sdb1/Arch/"{n}" "{n}"'.format(n=sys.argv[1]))
