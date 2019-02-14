@@ -136,10 +136,6 @@ lanip() {
     ip a | grep $(ip r | grep default | head | cut -d\  -f5) | grep inet | awk '{print $2}' | cut -d"/" -f1
 }
 
-queryIP() {
-    curl -is "https://ip.cn/index.php?ip=$1" | tail -n 1
-}
-
 ycm() {
     if ! [ -f '.ycm_extra_conf.py' ]; then
         cp ~/.config/ycmd/ycmd_conf.py .ycm_extra_conf.py
