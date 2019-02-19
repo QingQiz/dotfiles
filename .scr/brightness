@@ -5,7 +5,8 @@ import os
 import sys
 
 
-brifile = '/sys/class/backlight/nv_backlight/brightness'
+brifile = '/sys/class/backlight/{}/brightness'
+brifile = brifile.format(os.listdir('/sys/class/backlight')[0])
 cmd = 'echo {brightness} > ' + brifile
 brinow = 100
 screen = 'eDP-1'

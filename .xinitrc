@@ -34,5 +34,5 @@ fi
 # source .xprofile
 [ -f ~/.xprofile ] && source ~/.xprofile
 
-numlockx &
-exec i3
+exec i3 --shmlog-size=26214400
+# exec gnome-session

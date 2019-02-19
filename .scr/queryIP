@@ -59,3 +59,5 @@ except ValueError:
 
 for i in ip:
     genResult(str(i))
+
+print('-' * 79)

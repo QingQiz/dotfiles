@@ -101,11 +101,9 @@ bindsym Mod4+Control+t exec thunar
 # by class
 ## floatings
 for_window [class="CrossOver"]           floating enable, border pixel 1
-for_window [class="XTerm"]               floating enable, border pixel 1
 for_window [class="Wine"]                floating enable, border pixel 1
 for_window [class="feh"]                 floating enable, border pixel 1
 # for_window [class="netease-cloud-music"] floating enable, border pixel 1
-for_window [class="Gtkwave" instance="gtkwave"]   floating enable, border pixel 1
 for_window [class="Shutter" instance="shutter"]   floating enable, border pixel 1
 for_window [class="org.remmina.Remmina"] floating enable, border pixel 1
 
@@ -239,11 +237,9 @@ focus_follows_mouse yes
 #bindsym Mod4+Shift+x exec touchtouch
 
 # Others
-bindsym XF86Mail exec --no-startup-id thunderbird
 bindsym Mod4+n exec wallpaper +1
 bindsym Mod4+p exec wallpaper -1
 bindsym Mod4+Shift+n exec wallpaper -r
-#bindsym Mod4+Shift+D python3 wallpaper -d
 
 # exec emacs --bg-daemon
 exec wallpaper 0

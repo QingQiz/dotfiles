@@ -1,8 +1,7 @@
-istty=$( tty | grep tty )
-
 export TERM='termite'
 export ZSH=$HOME/.oh-my-zsh
 export PATH=$PATH:/home/angel/.scr
+export MANPAGER=cat
 
 source $ZSH/oh-my-zsh.sh
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
@@ -21,7 +20,7 @@ export EDITOR='vim'
 export VISUAL='vim'
 export PAGER='most'
 
-if [[ $istty == "" ]]; then
+if [[ $DISPLAY ]]; then
     export POWERLINE_CONFIG_COMMAND='powerline-config'
 
     autoload -U zmv
@@ -35,6 +34,7 @@ if [[ $istty == "" ]]; then
     HISTSIZE=2147483647
 else
     export PS1="[%n@ %d]$ "
+    [[ $XDG_VTNR == 1 ]] && exec startx
 fi
 
 # ls color
@@ -70,6 +70,7 @@ alias sv='vim -u ~/.vimrc_simple --noplugin'
 alias vims='vim --noplugin -u NONE'
 alias cls='clear'
 alias py='python3'
+alias ipy='ipython'
 alias sx='startx'
 alias scd='cd'
 alias sduo='sudo'

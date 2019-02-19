@@ -192,7 +192,7 @@ read chc
 if [ "$chc" = "y" ]; then
     echo 'installing...'
     ln -sf $script_dir/.Xresources $script_dir/.Xdefaults
-    install_n xorg-server xorg-xinit i3-gaps tmux compton polybar rofi neofetch termite feh thunar ttf-font-awesome awesome-terminal-fonts powerline-fonts noto-fonts noto-fonts-cjk noto-fonts-emoji numlockx
+    install_n xorg-server xorg-xinit i3-gaps tmux compton polybar rofi neofetch w3m termite feh thunar ttf-font-awesome awesome-terminal-fonts powerline-fonts noto-fonts noto-fonts-cjk noto-fonts-emoji numlockx
     ln_ .asoundrc .compton .Xauthority .Xdefaults .xinitrc .Xmodmap .xprofile .Xresources .Xresources.d .tmux.conf .colorrc
     ln_c i3 neofetch polybar rofi Thunar termite
 

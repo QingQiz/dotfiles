@@ -117,7 +117,7 @@ font-3 = FontAwesome:pixelsize=14;2
 
 modules-left = i3
 modules-center = networkspeedup networkspeeddown
-modules-right = filesystem-slash temperature cpu memory
+modules-right = filesystem-slash filesystem-hd temperature cpu memory
 
 ; tray-position = right
 ; tray-padding = 2
@@ -153,10 +153,19 @@ interval = 25
 
 mount-0 = /
 
-label-mounted = "%{F#5b5b5b}%{F-} %percentage_used%%"
+; label-mounted = "%{F#5b5b5b}%{F-} %percentage_used%%"
+label-mounted = "%{F#5b5b5b}/%{F-} %percentage_used%%"
 
 ;label-unmounted = %mountpoint%: not mounted
 ;label-unmounted-foreground = ${colors.foreground-alt}
+
+[module/filesystem-hd]
+type = internal/fs
+interval = 25
+
+mount-0 = /media/sdb1
+
+label-mounted = "%{F#5b5b5b}hd%{F-} %percentage_used%%"
 
 [module/bspwm]
 type = internal/bspwm
@@ -250,7 +259,7 @@ bar-progress-empty = ─
 
 [module/backlight]
 type = internal/backlight
-card = nv_backlight
+card = nvidia_0
 ;click-left = connman-gtk
 
 format = <label> <bar>
@@ -468,13 +477,14 @@ ramp-foreground = ${colors.foreground-alt}
 
 [module/pkg]
 type = custom/script
-;tail = true
+tail = true
 interval = 1200
 format = <label>
 format-underline = #ff5c57
 label = "%output:0:50%"
 exec = ~/.config/polybar/pkg.sh
-exec-if = "ping -q -w 2 -c 1 176.34.135.167 > /dev/null"
+; exec = /usr/bin/checkupdates | /usr/bin/wc -l
+exec-if = "ping -q -w 2 -c 1 111.161.64.4 > /dev/null"
 
 [module/vpncheck]
 type = custom/script
