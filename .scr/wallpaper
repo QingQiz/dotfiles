@@ -29,15 +29,25 @@ def cp2wallp(_f):
     cnt = 1
     while True:
         file_name = 'P{}'.format(format(str(cnt), '0>3') + _f[-4:])
-        if os.path.exists(file_name):
+        full_name = os.path.join(wallp, file_name)
+        if os.path.exists(full_name):
             cnt += 1
             continue
-        os.system('cp "{}" "{}"'.format(_f, os.path.join(wallp, file_name)))
+        os.system('cp "{}" "{}"'.format(_f, full_name))
         print('copy "{}" to "{}" as "{}"'.format(_f, wallp, file_name))
         return True, file_name
 
 
 def usage():
+    print("""
+Usage: wallpaper [OPTION]... [FILE]
+
+    num                 set the numth image after current as wallpaper
+    -d                  remove current from hub.
+    -r                  randomly select an image from hub as wallpaper
+    -a file1 file2 ...  add file1, file2... to hub
+    -s file             add file to hub and set it as wallpaper
+    """)
     # TODO: Complete this function
     pass
 
@@ -77,7 +87,7 @@ except ValueError:
         except IndexError:
             print('No picture selected')
     else:
-        print('Invalid options\n\n')
+        print('Invalid options\n')
         usage()
         exit(0)
 nxt = (now + add) % siz

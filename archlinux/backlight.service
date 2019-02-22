@@ -3,11 +3,12 @@ Description = change permission for /sys/class/backlight/XXX/brightness
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/sleep 5
-ExecStartPost=/usr/bin/chmod 666 /sys/class/backlight/XXX/brightness 
+ExecStart=/usr/bin/sleep 3
+ExecStartPost=/usr/bin/chmod 666 /sys/class/backlight/nvidia_0/brightness
 Restart=on-failure
-RestartSec=5
+RestartSec=3
 
 [Install]
 WantedBy=multi-user.target
 
+# vim: ft=systemd

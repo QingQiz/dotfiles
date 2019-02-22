@@ -232,7 +232,7 @@ exec_always synclient TapButton3=3
 exec_always synclient MaxSpeed=1.5
 exec_always sleep 2 && synclient VertScrollDelta=-66
 exec_always sleep 2 && synclient HorizScrollDelta=-66
-focus_follows_mouse yes
+focus_follows_mouse on
 #bindsym Mod4+Shift+z exec touchpad
 #bindsym Mod4+Shift+x exec touchtouch
 

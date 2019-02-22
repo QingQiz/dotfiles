@@ -7,12 +7,17 @@ import sys
 
 brifile = '/sys/class/backlight/{}/brightness'
 brifile = brifile.format(os.listdir('/sys/class/backlight')[0])
+infofile = os.environ['HOME'] + '/.cache/brightness'
 cmd = 'echo {brightness} > ' + brifile
 brinow = 100
 screen = 'eDP-1'
 
+permission = int(oct(os.stat(brifile).st_mode)[-2])
+if permission not in [2, 6, 7]:
+    os.system('sleep 5')
+
 try:
-    brinow = open(brifile).read().strip('\n')
+    brinow = open(infofile).read().strip('\n')
 except:
     pass
 
@@ -23,13 +28,14 @@ try:
     brinxt = 100 if brinxt > 100 else brinxt
     
     os.system(cmd.format(brightness=brinow))
-    open(brifile, 'w').write(str(brinxt))
+    open(infofile, 'w').write(str(brinxt))
 except IndexError:
     os.system(cmd.format(brightness=brinow))
 except ValueError:
     if sys.argv[1] == '-s':
         try:
             os.system(cmd.format(brightness=int(sys.argv[2])))
+            open(infofile, 'w').write(str(sys.argv[2]))
         except IndexError:
             pass
     else:

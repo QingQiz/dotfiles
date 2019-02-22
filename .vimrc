@@ -144,7 +144,6 @@ cabbrev c call SmartComplier()
 cabbrev r call RunResult()
 cabbrev w!! w !sudo tee %
 cabbrev vimrc e $HOME/.vimrc
-cabbrev cls %s/\s*$//
 command! Compile call SmartComplier();
 command! Run call RunResult();
 command! W w
@@ -475,8 +474,7 @@ augroup filetype_frmats " {{{
 
 augroup END " }}}
 
-" Add FileHeaders {{{
-augroup AddFileHeaders
+augroup AddFileHeaders " {{{
   au!
   au BufNewFile *.sh
         \ call setline(1, '#!/usr/bin/env bash')                   |
@@ -500,7 +498,7 @@ augroup AddFileHeaders
         \ call setline(2, '#define _'.toupper(expand('%:r')).'_H') |
         \ call setline(3, '#endif')                                |
         \ normal! Go
-augroup END
+augroup END "}}}
 " }}}
 
 " jump to the last known position {{{
