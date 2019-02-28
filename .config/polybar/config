@@ -66,8 +66,8 @@ modules-left = i3 xwindow
 ; modules-center = mpd
 modules-right = pmenu backlight alsa wlan eth battery date
 
- tray-position = center
- tray-padding = 4
+tray-position = center
+tray-padding = 4
 tray-transparent = false
 ; tray-background = #0063ff
 

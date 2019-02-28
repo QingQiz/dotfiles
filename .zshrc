@@ -7,7 +7,6 @@ source $ZSH/oh-my-zsh.sh
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 source ~/.oh-my-zsh/plugins/z/z.plugin.zsh
-source ~/.oh-my-zsh/plugins/extract/extract.plugin.zsh
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
 fpath=( "$HOME/.zsh/zfunctions" $fpath )
 
@@ -85,7 +84,8 @@ alias i3rc='vim ~/.config/i3/config'
 alias vimrc='vim ~/.vimrc'
 alias pipi='sudo pip install -i https://pypi.tuna.tsinghua.edu.cn/simple'
 alias aria2='aria2c --conf-path=/home/angel/.config/aria2/aria2.conf'
-alias ruijie='ruijie i once'
+
+alias sqlserver='sudo /opt/mssql/bin/sqlservr'
 
 alias ColorCoded='cp ~/.config/color_coded/.color_coded .'
 #alias AddCMakeList='cp ~/workspace/Progeaming-Practice/Note/CMakeLists.txt .'

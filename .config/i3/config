@@ -106,6 +106,7 @@ for_window [class="feh"]                 floating enable, border pixel 1
 # for_window [class="netease-cloud-music"] floating enable, border pixel 1
 for_window [class="Shutter" instance="shutter"]   floating enable, border pixel 1
 for_window [class="org.remmina.Remmina"] floating enable, border pixel 1
+for_window [class="Conky"]               floating enable, border pixel 0
 
 # assigns focus
 # assign [class="Connman-gtk"] $tag10
@@ -248,6 +249,7 @@ exec --no-startup-id i3-msg "workspace 1"
 exec compton &
 exec setterm -bleng 0
 exec_always numlockx &
+exec_always $HOME/.scr/startConky
 # exec_always --no-startup-id mpd
 # exec_always xrandr --output eDP1 --right-of HDMI1 --auto && i3 restart
 
