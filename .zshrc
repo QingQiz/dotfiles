@@ -1,6 +1,7 @@
 export TERM='termite'
 export ZSH=$HOME/.oh-my-zsh
 export PATH=$PATH:/home/angel/.scr
+export PATH=$PATH:$HOME/.dotnet/tools
 export MANPAGER=cat
 
 source $ZSH/oh-my-zsh.sh
@@ -63,7 +64,8 @@ alias v='vim'
 alias vu='vim'
 alias vo='vim'
 alias vi='vim'
-alias ec='emacsclient -c -n'
+alias ec='emacsclient -nw'
+alias emacs='emacsclient -c -n'
 alias vs='vim -u ~/.vimrc_simple --noplugin'
 alias sv='vim -u ~/.vimrc_simple --noplugin'
 alias vims='vim --noplugin -u NONE'
@@ -134,7 +136,7 @@ lhs() {
 }
 
 lanip() {
-    ip a | grep $(ip r | grep default | head | cut -d\  -f5) | grep inet | awk '{print $2}' | cut -d"/" -f1
+    ip a | grep `ip r | head -n 1 | awk '{print $3}'` | grep inet | awk '{print $2}'
 }
 
 ycm() {

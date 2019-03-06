@@ -7,7 +7,7 @@ import i3ipc
 i3 = i3ipc.Connection()
 mouse = PyMouse()
 
-div = 5
+div = 2
 
 
 os.system('killall conky')
@@ -17,8 +17,8 @@ os.system('/usr/bin/conky -c $HOME/.conky/conkyright')
 tree = i3.get_tree()
 
 focused = tree.find_focused()
-conkyl = tree.find_named('conkyl')[0]
-conkyr = tree.find_named('conkyr')[0]
+conkyl = tree.find_named('leftconky')[0]
+conkyr = tree.find_named('rightconky')[0]
 
 os.system('sleep 0.2')
 conkyl.command('move left 540')
@@ -34,7 +34,6 @@ flagr = False
 while True:
     size = mouse.screen_size()[0]
     x, y = mouse.position()
-    focused = i3.get_tree().find_focused()
 
     if x < div:
         if not flagl:
@@ -48,18 +47,17 @@ while True:
                 conkyr.command('move left 54')
                 os.system('sleep 0.01')
             flagr = True
-    if x > 543:
-        if flagl:
+    if flagl:
+        if x > 543:
             for i in range(10):
                 conkyl.command('move left 54')
                 os.system('sleep 0.01')
             flagl = False
-    if x < size - 543:
-        if flagr:
+    if flagr:
+        if x < size - 543:
             for i in range(10):
                 conkyr.command('move right 54')
                 os.system('sleep 0.01')
             flagr = False
-        focused.command('focus')
 
     os.system('sleep 0.2')

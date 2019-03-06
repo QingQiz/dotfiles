@@ -105,8 +105,9 @@ for_window [class="Wine"]                floating enable, border pixel 1
 for_window [class="feh"]                 floating enable, border pixel 1
 # for_window [class="netease-cloud-music"] floating enable, border pixel 1
 for_window [class="Shutter" instance="shutter"]   floating enable, border pixel 1
-for_window [class="org.remmina.Remmina"] floating enable, border pixel 1
+# for_window [class="org.remmina.Remmina"] floating enable, border pixel 1
 for_window [class="Conky"]               floating enable, border pixel 0
+for_window [class="zbar"]                floating enable, border pixel 1
 
 # assigns focus
 # assign [class="Connman-gtk"] $tag10
@@ -212,7 +213,7 @@ exec --no-startup-id fcitx-autostart
 
 # local ss
 exec_always --no-startup-id sslocal -c /etc/shadowsocks/vps.json
-#exec_always --no-startup-id ss-local -c /etc/shadowsocks/pi.json
+exec_always --no-startup-id sslocal -c /etc/shadowsocks/pi.json
 
 # lock when sleep
 exec --no-startup-id xss-lock -- betterlockscreen -l &
@@ -242,7 +243,7 @@ bindsym Mod4+n exec wallpaper +1
 bindsym Mod4+p exec wallpaper -1
 bindsym Mod4+Shift+n exec wallpaper -r
 
-# exec emacs --bg-daemon
+exec_always emacs --bg-daemon
 exec wallpaper 0
 exec i3-config-wizard
 exec --no-startup-id i3-msg "workspace 1"

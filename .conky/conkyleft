@@ -30,7 +30,7 @@ stippled_borders 2
 # wn_window yes
 own_window yes
 # wm_class_name Conky
-own_window_title conkyleft
+own_window_title leftconky
 own_window_class Conky
 # own_window_type override
 own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
@@ -61,10 +61,10 @@ ${color}CPU 3 : ${color1}${cpu cpu3}% ${goto 130}${cpubar cpu3 12,125}  	${goto 
 ${color}CPU 4 : ${color1}${cpu cpu4}% ${goto 130}${cpubar cpu4 12,125}  	${goto 270}${color}CPU 8 : ${color1}${cpu cpu8}% ${alignr}${cpubar cpu8 12,125}
 ${color}SWAP : ${color1}$swapperc% ${goto 130}${color1}${swapbar 4 color1 color3}
 ${color 88cc00}$hr
-${if_up wlo1}${color1}WiFi Net Down:${color} ${downspeed wlo1}${goto 270}${color1}WiFi Net Up:${color} ${upspeed wlo1}
-${color1}${downspeedgraph wlo1 60,240 07CC0D FF0000 -t}${color1}${goto 270}${upspeedgraph wlo1 60,250 07CC0D FF0000 -t}
-${else}${if_up enp0s25}${color1}Net Down:${color} ${downspeed enp0s25 }${goto 270}${color1}Net Up:${color} ${upspeed enp0s25}
-${color1}${downspeedgraph enp0s25 60,240 07CC0D FF0000 -t}${color1}${goto 270}${upspeedgraph enp0s25 60,250 07CC0D FF0000 -t}${endif}${endif}
+${if_up wlo1}${color1}WiFi Net Up:${color} ${upspeed wlo1}${goto 270}${color1}WiFi Net Down:${color} ${downspeed wlo1}
+${color1}${upspeedgraph wlo1 60,240 07CC0D FF0000 -t}${color1}${goto 270}${downspeedgraph wlo1 60,250 07CC0D FF0000 -t}
+${else}${if_up enp0s25}${color1}Net Up:${color} ${upspeed enp0s25 }${goto 270}${color1}Net Down:${color} ${downspeed enp0s25}
+${color1}${upspeedgraph enp0s25 60,240 07CC0D FF0000 -t}${color1}${goto 270}${downspeedgraph enp0s25 60,250 07CC0D FF0000 -t}${endif}${endif}
 ${color 88cc00}$hr
 # ${color1}Temperatures in Celsius:
 # ${color1}HDDs			${alignr}	${color} ${hddtemp /dev/sda}    ${hddtemp /dev/sdb}    ${hddtemp /dev/sdc}    ${hddtemp /dev/sdd}    ${hddtemp /dev/sde}
