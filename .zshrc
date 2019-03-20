@@ -41,6 +41,9 @@ fi
 eval "$( dircolors ~/.colorrc )"
 export LC_CTYPE=zh_CN.UTF-8
 
+# command correct
+eval $( thefuck --alias )
+
 ##=======================================================================
 # alias
 
@@ -51,34 +54,25 @@ alias gdf='git diff'
 alias gcam='git commit -am'
 
 alias l='ls'
-alias s='ls'
 alias ll='ls -al'
 alias la='ls -a'
-alias sl='ls'
-alias sls='ls'
 alias lh="du -ahd1 | sort -h"
 alias t='tmux'
 alias tks='tmux kill-session -t'
 alias f='feh'
-alias v='vim'
-alias vu='vim'
-alias vo='vim'
 alias vi='vim'
-alias ec='emacsclient -nw'
-alias emacs='emacsclient -c -n'
+# alias ec='emacsclient -nw'
+alias ec='emacsclient -c -n'
 alias vs='vim -u ~/.vimrc_simple --noplugin'
-alias sv='vim -u ~/.vimrc_simple --noplugin'
 alias vims='vim --noplugin -u NONE'
 alias cls='clear'
 alias py='python3'
 alias ipy='ipython'
 alias sx='startx'
-alias scd='cd'
-alias sduo='sudo'
-alias suod='sudo'
 alias prename='perl-rename'
-alias p='ping qq.com'
+alias p='ping baidu.com'
 alias pscp='psshscp'
+alias ch='chromium'
 
 alias zsh='source ~/.zshrc'
 alias zshrc='vim ~/.zshrc'

@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+
+# color config
+insidecolor=00000000
+ringcolor=ffffffff
+keyhlcolor=d23c3dff
+bshlcolor=d23c3dff
+separatorcolor=00000000
+insidevercolor=00000000
+insidewrongcolor=d23c3dff
+ringvercolor=ffffffff
+ringwrongcolor=ffffffff
+verifcolor=ffffffff
+timecolor=ffffffff
+datecolor=ffffffff
+loginbox=00000066
+
+# temp picture
+pic='/tmp/screenlock.png'
+
+# screenshot
+import -window root $pic
+
+# lock screen
+i3lock \
+    -i $pic \
+    --insidecolor=$insidecolor \
+    --ringcolor=$ringcolor \
+    --line-uses-inside \
+    --keyhlcolor=$keyhlcolor \
+    --separatorcolor=$separatorcolor \
+    --keyhlcolor=$keyhlcolor \
+    --bshlcolor=$bshlcolor \
+    --separatorcolor=$separatorcolor \
+    --insidevercolor=$insidevercolor \
+    --insidewrongcolor=$insidewrongcolor \
+    --ringvercolor=$ringvercolor \
+    --ringwrongcolor=$ringwrongcolor \
+    --radius=20 \
+    --veriftext='' \
+    --wrongtext='' \
+    --verifcolor="$verifcolor" \
+    --noinputtext=''

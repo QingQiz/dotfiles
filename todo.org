@@ -1,0 +1,127 @@
+#+TITLE: TODOLIST
+
+* 课程
+** 思政 (=9'=)
+*** 马原 (=3'=)
+*** 毛概 (=6'=)
+** 综合素养(=12'=)
+*** 航天概论 (=0.5'=)
+*** 航空概论 (=0.5'=)
+*** 艺术素养 & 其余的 (=1' + 9'=)
+**** 网课 & 正常的
+** 通修 (=5'=)
+*** 概率论 (=3'=)
+*** 英语 (=2'=)
+** 专业必修 (=14.5'=)
+*** 学科基础
+**** 操作系统 (=3.5'=)
+**** 网络原理 (=3'=)
+**** 数据库 (=2.5'=)
+*** 学科核心
+**** 编译原理 (=3'=)
+**** 软件工程 (=实验) (2'+0.5'=)
+** 限选 (=16.5'=)
+*** 学科前沿课程 (=1'=)
+**** I, II (=0.5'+0.5'=)
+**** 专业选修 (=15.5'=)
+**** 选修课
+** 毕设 (=10'=)
+* NPUOJ
+** FIXME
+*** TODO CE
+** Test
+*** Problem
+**** TODO ProblemData
+***** *
+*** Language
+***** *
+*** Submission
+**** DONE Create ( ForeignKey Error )
+     CLOSED: [2019-03-14 Thu 13:15]
+***** DONE ContestId = 20009 & problemId = "A"
+      CLOSED: [2019-03-14 Thu 13:16]
+**** DONE Delete
+     CLOSED: [2019-03-14 Thu 15:04]
+**** DONE Get
+     CLOSED: [2019-03-14 Thu 13:15]
+**** DONE GetAll
+     CLOSED: [2019-03-14 Thu 15:00]
+**** DONE GetByUser
+     CLOSED: [2019-03-14 Thu 15:02]
+**** DONE GetByContest
+     CLOSED: [2019-03-14 Thu 15:02]
+**** DONE Rejudge
+     CLOSED: [2019-03-14 Thu 15:04]
+**** TODO GetCode
+
+**** DONE Verify
+     CLOSED: [2019-03-14 Thu 15:03]
+*** Score
+**** DONE Get
+     CLOSED: [2019-03-14 Thu 15:54]
+**** DONE GetAll
+     CLOSED: [2019-03-14 Thu 15:54]
+**** DONE Update
+     CLOSED: [2019-03-14 Thu 17:14]
+**** DONE ReCalculateAll
+     CLOSED: [2019-03-14 Thu 16:45]
+*** Judgement
+**** DONE Create
+     CLOSED: [2019-03-14 Thu 17:58]
+
+**** DONE Get
+     CLOSED: [2019-03-14 Thu 16:32]
+**** DONE GetAll
+     CLOSED: [2019-03-14 Thu 16:32]
+**** DONE GetBySubmission
+     CLOSED: [2019-03-14 Thu 16:32]
+**** DONE Delete
+     CLOSED: [2019-03-14 Thu 16:32]
+**** DONE Update
+     CLOSED: [2019-03-14 Thu 16:54]
+
+* WORK
+** TODO 代理池
+** TODO 端口转发
+
+* HOMEWORK
+** TODO 计算机组成原理
+*** DONE 1.2
+    CLOSED: [2019-03-17 Sun 17:08]
+*** DONE 1.3
+    CLOSED: [2019-03-17 Sun 17:13]
+*** DONE 1.5
+    CLOSED: [2019-03-17 Sun 22:53]
+*** DONE 1.7
+    CLOSED: [2019-03-19 Tue 22:27]
+*** DONE 1.9
+    CLOSED: [2019-03-19 Tue 23:00]
+*** TODO 1.12
+*** TODO 1.15
+** DONE Java
+   CLOSED: [2019-03-17 Sun 21:49]
+** TODO 信号系统
+*** TODO This week
+**** TODO 2.13
+**** TODO 2.16
+***** TODO 1
+***** TODO 3
+**** TODO 2.17
+**** TODO 2.19
+**** TODO 2.20
+***** TODO 2
+***** TODO 4
+*** TODO Next week
+**** TODO 2.21
+***** TODO d
+**** TODO 2.22
+**** TODO 2.26
+**** TODO 2.27
+**** TODO 2.28
+** TODO Englis
+*** TODO 批改网
+*** TODO 听力
+*** TODO 长篇阅读
+
+** TODO 计算方法
+*** TODO 第三章

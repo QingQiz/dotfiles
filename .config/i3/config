@@ -62,7 +62,7 @@ bindsym Mod4+e layout toggle split
 bindsym Mod4+m floating toggle
 
 # change focus between tiling / floating windows
-# bindsym Mod1+space focus mode_toggle
+bindsym Mod4+space focus mode_toggle
 
 # focus the parent container
 # bindsym $mod+q focus parent
@@ -184,8 +184,9 @@ mode "resize" {
 
 bindsym Mod4+r mode "resize"
 
-bindsym Mod4+Ctrl+l exec betterlockscreen -l dim
-bindsym Mod4+Ctrl+Shift+L exec betterlockscreen -s dim
+# bindsym Mod4+Ctrl+l exec betterlockscreen -l dim
+bindsym Mod4+Ctrl+l exec lockscreen
+# bindsym Mod4+Ctrl+Shift+L exec betterlockscreen -s dim
 # screenshot
 bindsym Mod4+Ctrl+k exec screenshot
 
@@ -212,16 +213,17 @@ exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 exec --no-startup-id fcitx-autostart
 
 # local ss
-exec_always --no-startup-id sslocal -c /etc/shadowsocks/vps.json
+exec_always --no-startup-id sslocal -c /etc/shadowsocks/vps6.json
 exec_always --no-startup-id sslocal -c /etc/shadowsocks/pi.json
 
 # lock when sleep
-exec --no-startup-id xss-lock -- betterlockscreen -l &
+# exec --no-startup-id xss-lock -- betterlockscreen -l &
+exec --no-startup-id xss-lock -- lockscreen &
 
 # no sleep
 exec_always xset b 0
 exec_always xset s 0
-exec_always xset dpms 0 0 0
+exec_always xset dpms 300 0 0
 
 # 更改边框样式
 bindsym Mod4+Shift+b border toggle
@@ -234,7 +236,7 @@ exec_always synclient TapButton3=3
 exec_always synclient MaxSpeed=1.5
 exec_always sleep 2 && synclient VertScrollDelta=-66
 exec_always sleep 2 && synclient HorizScrollDelta=-66
-focus_follows_mouse on
+focus_follows_mouse true
 #bindsym Mod4+Shift+z exec touchpad
 #bindsym Mod4+Shift+x exec touchtouch
 
@@ -250,7 +252,8 @@ exec --no-startup-id i3-msg "workspace 1"
 exec compton &
 exec setterm -bleng 0
 exec_always numlockx &
-exec_always $HOME/.scr/startConky
+# exec_always $HOME/.scr/startConky
+exec_always conky -c $HOME/.conky/conkyleft
 # exec_always --no-startup-id mpd
 # exec_always xrandr --output eDP1 --right-of HDMI1 --auto && i3 restart
 

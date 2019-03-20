@@ -183,6 +183,7 @@ if [ "$chc" = "y" ]; then
     ln -sf "$script_dir/.zsh/pure/async.zsh" zfunctions/async
 
     ln_ .oh-my-zsh .bashrc .zsh .zshrc
+    
 fi
 #--------------------------------------------------
 # i3-gap

@@ -276,7 +276,7 @@ values."
    ))
 
 (defun dotspacemacs/user-init ()
-  (setq-default tab-width 2)
+  (setq-default tab-width 4)
   (setq-default dotspacemacs-themes '(manoj-dark))
   (setq-default dotspacemacs-startup-banner '"~/.dotfiles/emacs/banner.png")
   (setq-default dotspacemacs-configuration-layers
@@ -292,8 +292,8 @@ values."
   (setq shell-file-name "bash")
 
   (setq c-default-style "linux")
-  (setq c-basic-offset 2)
-  (setq default-tab-width 2)
+  (setq c-basic-offset 4)
+  (setq default-tab-width 4)
 
   (add-hook 'c-mode-common-hook
             (lambda()
@@ -316,14 +316,6 @@ values."
   (global-set-key (kbd "C-<return>") 'yas-expand)
 
   (setq display-buffer-alist '(("\\`\\*e?shell" display-buffer-same-window)))
-  (global-set-key (kbd "C-x C-x") (lambda() (interactive)
-                                    (if (null (get-buffer-window "*shell*"))
-                                        (progn
-                                          (split-window-right-and-focus) (shell))
-                                      (if (string= (buffer-name) "*shell*")
-                                          (delete-window)
-                                        (select-window (get-buffer-window "*shell*"))))))
-
   ;; C-c to escape
   (defun my-esc (prompt)
     (cond
@@ -347,13 +339,56 @@ values."
   ;; Format code
   (defun F()
     (interactive)
-    (let ((format-command "clang-format -i -style=\"{BasedOnStyle: Google, IndentWidth: 2}\""))
+    (let ((format-command "clang-format -i -style=\"{BasedOnStyle: Google, IndentWidth: 4}\""))
       (save-excursion
         (shell-command-to-string (format "%s %s" format-command buffer-file-name))
-        (message "format done")
-        )
-      )
-    )
+        (message "format done"))))
+
+  ;; RunResult
+  (defun Run()
+    (interactive)
+    (let (($outputb "*program output*")
+          (resize-mini-windows nil)
+          ($suffix-map
+           `(("php" . "php")
+             ("pl" . "perl")
+             ("py" . "python")
+             ("py3" . "python3")
+             ("rb" . "ruby")
+             ("js" . "node")
+             ("tsx" . "tsc")
+             ("sh" . "bash")
+             ("latex" . "pdflatex")
+             ("java" . "javac")
+             ))
+          $fname $fSuffix $prog-name $cmd-str)
+      (when (not (buffer-file-name)) (save-buffer))
+      (when (buffer-modified-p) (save-buffer))
+      (setq $fname (buffer-file-name))
+      (setq $fSuffix (file-name-extension $fname))
+      (setq $prog-name (cdr (assoc $fSuffix $suffix-map)))
+      (setq $cmd-str (concat $prog-name " \""   $fname "\" &"))
+      (cond
+       ((string-equal $fSuffix "el")
+        (load $fname))
+       ((string-equal $fSuffix "go")
+        (xah-run-current-go-file))
+       ((string-equal $fSuffix "java")
+        (progn
+          (shell-command (format "java %s" (file-name-sans-extension (file-name-nondirectory $fname))) $outputb )))
+       (t (if $prog-name
+              (progn
+                (message "Running")
+                (shell-command $cmd-str $outputb ))
+            (error "No recognized program file suffix for this file."))))))
+
+  (global-set-key (kbd "C-x C-x") (lambda() (interactive)
+                                    (if (null (get-buffer-window "*shell*"))
+                                        (progn
+                                          (split-window-right-and-focus) (shell))
+                                      (if (string= (buffer-name) "*shell*")
+                                          (delete-window)
+                                        (select-window (get-buffer-window "*shell*"))))))
 
   ;; complier
   (defun smart-compile()
@@ -406,18 +441,6 @@ values."
 #include <vector>
 #include <algorithm>\n")))
 
-  (defun veri()
-    (interactive)
-    (insert (format "\n
-   initial begin
-      $dumpfile(\"out.vcd\");
-      $dumpvars(0, "))
-    (insert
-     (file-name-sans-extension
-      (file-name-nondirectory buffer-file-name)))
-    (insert ");\n")
-    (insert (format "\
-   end")))
 
   (set-variable 'ycmd-server-command '("/usr/bin/python3.7" "-u" "/home/angel/.dotfiles/.vim/vimfiles/YouCompleteMe/third_party/ycmd/ycmd"))
   (set-variable 'ycmd-global-config "/home/angel/.config/ycmd/ycmd_conf.py")
@@ -442,6 +465,8 @@ values."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(evil-want-Y-yank-to-eol nil)
+ '(org-agenda-files (quote ("~/todo.org")))
  '(package-selected-packages
    (quote
     (sql-indent skewer-mode powerline spinner simple-httpd json-snatcher json-reformat js2-mode parent-mode company iedit smartparens evil flycheck helm multiple-cursors avy markdown-mode projectile hydra yasnippet dash web-mode tagedit slim-mode scss-mode sass-mode pug-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data phpunit phpcbf php-extras php-auto-yasnippets drupal-mode php-mode org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download htmlize gnuplot flyspell-correct-helm flyspell-correct auto-dictionary unfill mwim emms yapfify xterm-color ws-butler winum which-key web-beautify volatile-highlights vimrc-mode vi-tilde-fringe uuidgen use-package toc-org spaceline shell-pop restart-emacs rainbow-delimiters pyvenv pytest pyenv-mode py-isort popwin pip-requirements persp-mode pcre2el paradox org-plus-contrib org-bullets open-junk-file neotree multi-term move-text mmm-mode markdown-toc macrostep lorem-ipsum livid-mode live-py-mode linum-relative link-hint json-mode js2-refactor js-doc indent-guide hy-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gh-md fuzzy flycheck-ycmd flycheck-pos-tip flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help elisp-slime-nav dumb-jump disaster diminish define-word dactyl-mode cython-mode company-ycmd company-tern company-statistics company-c-headers company-anaconda column-enforce-mode coffee-mode cmake-mode clean-aindent-mode clang-format auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell))))

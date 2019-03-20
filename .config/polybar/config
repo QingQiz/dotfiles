@@ -30,8 +30,8 @@ throttle-input-for = 30
 screenchange-reload = true
 
 [bar/top]
-;monitor = ${env:MONITOR}
-;monitor-strict = true
+monitor = ${env:MONITOR}
+monitor-strict = true
 dpi = 72
 bottom = false
 width = 100%
@@ -83,8 +83,8 @@ wm-restack = i3
 ; scroll-down = i3wm-wsprev
 
 [bar/bottom]
-;monitor = ${env:MONITOR}
-;monitor-strict = true
+monitor = ${env:MONITOR}
+monitor-strict = true
 dpi = 72
 bottom = true
 width = 100%
@@ -196,7 +196,7 @@ index-sort = true
 wrapping-scroll = false
 
 ; Only show workspaces on the same output as the bar
-;pin-workspaces = true
+pin-workspaces = true
 
 label-mode-padding = 2
 label-mode-foreground = #000
