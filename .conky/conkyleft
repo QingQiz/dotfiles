@@ -17,7 +17,7 @@ draw_graph_borders yes
 draw_outline no
 draw_shades no
 gap_x 20
-gap_y 14
+gap_y 27
 border_outer_margin 20
 max_port_monitor_connections 64
 maximum_width 500

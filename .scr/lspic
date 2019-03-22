@@ -4,16 +4,21 @@
 import os
 import sys
 import subprocess
+import imghdr
 
+true_judge = False
 
 path = os.path.realpath('.')
 try:
     expath = sys.argv[1]
-    if expath[0] == '/' or expath[0] == '~':
-        path = expath
+    if expath == '--true':
+        true_judge = True
     else:
-        path = os.path.join(path, expath)
-    path = os.path.abspath(path)
+        if expath[0] == '/' or expath[0] == '~':
+            path = expath
+        else:
+            path = os.path.join(path, expath)
+        path = os.path.abspath(path)
 except IndexError:
     pass
 
@@ -23,8 +28,12 @@ piclist = []
 try:
     for r, d, f in os.walk(path):
         for file in f:
-            if file[-3:] in picq:
-                piclist.append(os.path.join(r, file))
+            if true_judge:
+                if imghdr.what(os.path.join(r, file)) != None:
+                    piclist.append(os.path.join(r, file))
+            else:
+                if file[-3:] in picq:
+                    piclist.append(os.path.join(r, file))
 except FileNotFoundError:
     print('Directory not found ' + path)
 except PermissionError:

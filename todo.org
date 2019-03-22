@@ -85,7 +85,8 @@
 ** TODO 端口转发
 
 * HOMEWORK
-** TODO 计算机组成原理
+** DONE 计算机组成原理
+   CLOSED: [2019-03-20 Wed 21:17]
 *** DONE 1.2
     CLOSED: [2019-03-17 Sun 17:08]
 *** DONE 1.3
@@ -96,22 +97,26 @@
     CLOSED: [2019-03-19 Tue 22:27]
 *** DONE 1.9
     CLOSED: [2019-03-19 Tue 23:00]
-*** TODO 1.12
-*** TODO 1.15
-** DONE Java
-   CLOSED: [2019-03-17 Sun 21:49]
+*** DONE 1.12
+    CLOSED: [2019-03-20 Wed 20:49]
+*** DONE 1.15
+    CLOSED: [2019-03-20 Wed 21:17]
 ** TODO 信号系统
-*** TODO This week
-**** TODO 2.13
-**** TODO 2.16
-***** TODO 1
-***** TODO 3
+*** TODO 2019-3-22
+**** DONE 2.13
+     CLOSED: [2019-03-21 Thu 21:31]
+**** DONE 2.16
+     CLOSED: [2019-03-21 Thu 21:36]
+***** DONE 1
+      CLOSED: [2019-03-21 Thu 21:36]
+***** DONE 3
+      CLOSED: [2019-03-21 Thu 21:36]
 **** TODO 2.17
 **** TODO 2.19
 **** TODO 2.20
 ***** TODO 2
 ***** TODO 4
-*** TODO Next week
+*** TODO 2019-3-29
 **** TODO 2.21
 ***** TODO d
 **** TODO 2.22
