@@ -30,7 +30,8 @@ xrandr --output DP-1 --right-of DP-3
 sleep 1
 xrandr --output VGA-0 --right-of DP-1
 sleep 1
-xrandr --output DP-3 --primary
+xrandr --output DP-1 --primary
 sleep 1
 i3 restart
+wallpaper 0
  

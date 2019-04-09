@@ -507,7 +507,6 @@ au BufReadPost *
       \   exe "normal! g`\""                                               |
       \ endif
 " }}}
-" }}}
 
 " Plugin {{{
 " plugin list {{{

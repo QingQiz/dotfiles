@@ -103,7 +103,7 @@ bindsym Mod4+Control+t exec thunar
 for_window [class="CrossOver"]           floating enable, border pixel 1
 for_window [class="Wine"]                floating enable, border pixel 1
 for_window [class="feh"]                 floating enable, border pixel 1
-# for_window [class="netease-cloud-music"] floating enable, border pixel 1
+for_window [class="netease-cloud-music"] floating enable, border pixel 1
 for_window [class="Shutter" instance="shutter"]   floating enable, border pixel 1
 # for_window [class="org.remmina.Remmina"] floating enable, border pixel 1
 for_window [class="Conky"]               floating enable, border pixel 0
@@ -207,13 +207,13 @@ exec_always brightness
 # bindsym XF86AudioStop  exec mpc --port=6699 stop
 
 # polybar exec
-exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+exec_always --no-startup-id __launch_polybar
 
 # ibus 
-exec --no-startup-id fcitx-autostart
+exec_always --no-startup-id __launch_fcitx
 
 # local ss
-exec_always --no-startup-id sslocal -c /etc/shadowsocks/vps6.json
+#exec_always --no-startup-id sslocal -c /etc/shadowsocks/vps6.json
 exec_always --no-startup-id sslocal -c /etc/shadowsocks/pi.json
 
 # lock when sleep
@@ -223,7 +223,7 @@ exec --no-startup-id xss-lock -- lockscreen &
 # no sleep
 exec_always xset b 0
 exec_always xset s 0
-exec_always xset dpms 300 0 0
+exec_always xset dpms 600 0 0
 
 # 更改边框样式
 bindsym Mod4+Shift+b border toggle
@@ -246,7 +246,7 @@ bindsym Mod4+p exec wallpaper -1
 bindsym Mod4+Shift+n exec wallpaper -r
 
 exec_always emacs --bg-daemon
-exec wallpaper 0
+exec_always wallpaper 0
 exec i3-config-wizard
 exec --no-startup-id i3-msg "workspace 1"
 exec compton &
@@ -256,5 +256,3 @@ exec_always numlockx &
 exec_always conky -c $HOME/.conky/conkyleft
 # exec_always --no-startup-id mpd
 # exec_always xrandr --output eDP1 --right-of HDMI1 --auto && i3 restart
-
-

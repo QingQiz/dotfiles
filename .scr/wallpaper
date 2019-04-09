@@ -7,7 +7,12 @@ import random
 from os import system
 from os import path
 
-wallp = '/home/{}/Pictures/WallP'.format(os.environ['USER'])
+default_wallp = '{}/Pictures/WallP'.format(os.environ['HOME'])
+try:
+    wallp = open('{}/.cache/wallpaper_path'.format(os.environ['HOME']), 'r').read().strip('\n')
+except:
+    wallp = default_wallp
+
 socdir = path.split(path.relpath(__file__))[0]
 
 pic = os.listdir(wallp)
@@ -29,12 +34,12 @@ def cp2wallp(_f):
     cnt = 1
     while True:
         file_name = 'P{}'.format(format(str(cnt), '0>3') + _f[-4:])
-        full_name = os.path.join(wallp, file_name)
+        full_name = os.path.join(default_wallp, file_name)
         if os.path.exists(full_name):
             cnt += 1
             continue
         os.system('cp "{}" "{}"'.format(_f, full_name))
-        print('copy "{}" to "{}" as "{}"'.format(_f, wallp, file_name))
+        print('copy "{}" to "{}" as "{}"'.format(_f, default_wallp, file_name))
         return True, file_name
 
 
@@ -47,6 +52,7 @@ Usage: wallpaper [OPTION]... [FILE]
     -r                  randomly select an image from hub as wallpaper
     -a file1 file2 ...  add file1, file2... to hub
     -s file             add file to hub and set it as wallpaper
+    --dir path          set wallpaper path
     """)
     # TODO: Complete this function
     pass
@@ -64,6 +70,7 @@ try:
     add = int(sys.argv[1])
 except IndexError:
     usage()
+    exit(0)
 except ValueError:
     if sys.argv[1] == '-d':
         system('rm -f "{}"'.format(path.join(wallp, pic[now])))
@@ -80,16 +87,23 @@ except ValueError:
             flg, f = cp2wallp(sys.argv[2])
             if not flg:
                 print('"{}" is not a valid picture.')
-                exit(0)
-            pic = os.listdir(wallp)
-            add = pic.index(f) - now
-            siz += 1
+                exit(-1)
+            os.system('feh --bg-fill "{}"'.format(path.join(default_wallp, f)))
+            exit(0)
         except IndexError:
             print('No picture selected')
+    elif sys.argv[1] == '--dir':
+        try:
+            os.system('echo {} > $HOME/.cache/wallpaper_path'.format(get_path(sys.argv[2])))
+            exit(0)
+        except IndexError:
+            print('path is required.')
+            usage()
+            exit(-1)
     else:
         print('Invalid options\n')
         usage()
-        exit(0)
+        exit(-1)
 nxt = (now + add) % siz
 
 system('feh --bg-fill "{}"'.format(path.join(wallp, pic[nxt])))

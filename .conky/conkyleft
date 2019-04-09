@@ -16,8 +16,6 @@ draw_borders no
 draw_graph_borders yes
 draw_outline no
 draw_shades no
-gap_x 20
-gap_y 27
 border_outer_margin 20
 max_port_monitor_connections 64
 maximum_width 500
@@ -42,8 +40,10 @@ own_window_argb_visual yes
 update_interval 1
 uppercase no
 use_xft yes
+gap_x 20
+gap_y 36
 xftalpha 0.8
-xftfont  DejaVu Sans Mono Bold:size=12
+xftfont  DejaVu Sans Mono Bold:size=13
 
 
 
@@ -82,8 +82,8 @@ ${color1}/dev/sda1${alignr}${color}${fs_used /}/${fs_size /}${color1}
 ${fs_bar 12 /}
 ${color1}Read ${color} ${diskio_read /dev/sda1}${goto 270}${color1}Write: ${color}${diskio_write /dev/sda1}
 ${color1}${diskiograph_read /dev/sda1 60,240 07CC0D FF0000 -t}${color1}${goto 270}${diskiograph_write /dev/sda1 60,250 07CC0D FF0000 -t}
-${color1}/dev/sdb1${alignr}${color}${fs_used /media/sdb1}/${fs_size /media/sdb1}${color1}
-${fs_bar 12 /dev/sdb1}
+${color1}/media/sdb1${alignr}${color}${fs_used /media/sdb1}/${fs_size /media/sdb1}${color1}
+${fs_bar 12 /media/sdb1}
 ${color1}Read ${color} ${diskio_read /dev/sdb1}${goto 270}${color1}Write: ${color}${diskio_write /dev/sdb1}
 ${color1}${diskiograph_read /dev/sdb1 60,240 07CC0D FF0000 -t}${color1}${goto 270}${diskiograph_write /dev/sdb1 60,250 07CC0D FF0000 -t}
 ${color 88cc00}$hr

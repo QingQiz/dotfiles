@@ -1,5 +1,6 @@
 export TERM='termite'
 export ZSH=$HOME/.oh-my-zsh
+export JAVA_HOME=/usr/lib/jvm/java-10-openjdk
 export PATH=$PATH:/home/angel/.scr
 export PATH=$PATH:$HOME/.dotnet/tools
 export MANPAGER=cat
@@ -153,6 +154,17 @@ saveback() {
     then
         rm -f "$1"
         mv '/media/sdb1/Arch/'"$1" "$1"
+    fi
+}
+
+ver() {
+    iverilog -o now $1 $2
+    if [[ $? == 0 ]]; then
+        echo -e "\e[32mRuning Result...\e[0m\n"
+        echo "finish" | ./now
+        rm -f now
+    else
+        echo -e "\n\e[41mCompile Failed...\e[0m\n"
     fi
 }
 
