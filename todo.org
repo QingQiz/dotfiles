@@ -39,7 +39,8 @@
 ** TODO Unit Testing
 *** DONE ContestAppService
     CLOSED: [2019-04-07 Sun 21:29]
-*** TODO JudgementAppService
+*** DONE JudgementAppService
+    CLOSED: [2019-04-10 Wed 17:12]
 *** TODO ScoreAppService
 *** DONE LanguageAppService
     CLOSED: [2019-04-08 Mon 22:39]

@@ -145,8 +145,13 @@ mv2hd() {
 }
 
 save2hd() {
-    mv $1 "/media/sdb1/Arch/"
-    ln -s "/media/sdb1/Arch/$1" "`pwd`/$1"
+    dir="/media/sdb1/Arch/"
+    if [ -d $dir$1 ] || [ -f $dir$1 ]; then
+        echo 'file exists'
+        return
+    fi
+    mv $1 $dir
+    ln -s $dir"$1" "`pwd`/$1"
 }
 
 saveback() {
