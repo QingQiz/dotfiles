@@ -240,4 +240,5 @@ if [ "$chc" == "y" ]; then
     install_q -d "wireshark" +"wireshark"
     install_q -d "create_ap" +"create_ap"
     install_q -d "zbar (read and create qrcode)" +"zbar"
+    install_q -d "xfreerdp" +"xfreerdp"
 fi

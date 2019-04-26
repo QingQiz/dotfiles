@@ -163,7 +163,7 @@ saveback() {
 }
 
 ver() {
-    iverilog -o now $1 $2
+    iverilog -o now $@
     if [[ $? == 0 ]]; then
         echo -e "\e[32mRuning Result...\e[0m\n"
         echo "finish" | ./now

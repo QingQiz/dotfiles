@@ -108,6 +108,7 @@ for_window [class="Shutter" instance="shutter"]   floating enable, border pixel 
 # for_window [class="org.remmina.Remmina"] floating enable, border pixel 1
 for_window [class="Conky"]               floating enable, border pixel 0
 for_window [class="zbar"]                floating enable, border pixel 1
+for_window [class="xfreerdp"]                floating enable, border pixel 1
 
 # assigns focus
 # assign [class="Connman-gtk"] $tag10
@@ -209,12 +210,12 @@ exec_always brightness
 # polybar exec
 exec_always --no-startup-id __launch_polybar
 
-# ibus 
+# fcitx
 exec_always --no-startup-id __launch_fcitx
 
 # local ss
-#exec_always --no-startup-id sslocal -c /etc/shadowsocks/vps6.json
-exec_always --no-startup-id sslocal -c /etc/shadowsocks/pi.json
+exec_always --no-startup-id sslocal -c /etc/shadowsocks/vps.json
+# exec_always --no-startup-id sslocal -c /etc/shadowsocks/pi.json
 
 # lock when sleep
 # exec --no-startup-id xss-lock -- betterlockscreen -l &
@@ -243,7 +244,7 @@ focus_follows_mouse true
 # Others
 bindsym Mod4+n exec wallpaper +1
 bindsym Mod4+p exec wallpaper -1
-bindsym Mod4+Shift+n exec wallpaper -r
+#bindsym Mod4+Shift+n exec wallpaper -r
 
 exec_always emacs --bg-daemon
 exec_always wallpaper 0
@@ -252,7 +253,6 @@ exec --no-startup-id i3-msg "workspace 1"
 exec compton &
 exec setterm -bleng 0
 exec_always numlockx &
-# exec_always $HOME/.scr/startConky
-exec_always conky -c $HOME/.conky/conkyleft
+exec_always __launch_conky
 # exec_always --no-startup-id mpd
 # exec_always xrandr --output eDP1 --right-of HDMI1 --auto && i3 restart

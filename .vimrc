@@ -144,17 +144,18 @@ cabbrev c call SmartComplier()
 cabbrev r call RunResult()
 cabbrev w!! w !sudo tee %
 cabbrev vimrc e $HOME/.vimrc
+command M %s///
 command! Compile call SmartComplier();
 command! Run call RunResult();
 command! W w
 command! Format !clang-format -i
       \ -style="{BasedOnStyle: Google, IndentWidth: 2}" %
 command! Cls %s/\s*$//
-command! Vimrc e $HOME/.vimrc
-command! AddHead call AddHead()
-command! Comments call Comments()
-command! Reload source ~/.vimrc
-command! MakeTags !ctags -R .
+" command! Vimrc e $HOME/.vimrc
+" command! AddHead call AddHead()
+" command! Comments call Comments()
+" command! Reload source ~/.vimrc
+" command! MakeTags !ctags -R .
 " }}}
 
 " functions {{{

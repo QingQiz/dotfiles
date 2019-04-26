@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+killall conky
+sleep 1
+conky -c $HOME/.conky/conkyleft

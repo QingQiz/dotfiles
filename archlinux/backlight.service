@@ -1,10 +1,11 @@
 [Unit]
-Description = change permission for /sys/class/backlight/XXX/brightness
+Description = change permission for /sys/class/backlight/XXX/brightness and so on.
 
 [Service]
 Type=simple
 ExecStart=/usr/bin/sleep 3
 ExecStartPost=/usr/bin/chmod 666 /sys/class/backlight/nvidia_0/brightness
+ExecStartPost=/usr/bin/echo 'power on' | /usr/bin/bluetoothctl
 Restart=on-failure
 RestartSec=3
 

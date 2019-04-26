@@ -50,15 +50,12 @@
     CLOSED: [2019-04-07 Sun 21:30]
 *** DONE SubmissionAppService
     CLOSED: [2019-04-08 Mon 22:33]
+* NWPU.IP
+** Build database
+*** DONE public
+    CLOSED: [2019-04-25 Thu 21:32]
 * HOMEWORK
 ** TODO 信号系统
-*** TODO 2019-4-6
-**** TODO 3.6
-**** TODO 3.8
-**** TODO 3.10
-**** TODO 3.13
-**** TODO 3.14
 ** TODO Englis
-*** TODO 批改网 19-4-14
 *** TODO 听力
 *** TODO 长篇阅读
