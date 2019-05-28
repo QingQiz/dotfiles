@@ -460,7 +460,7 @@ augroup filetype_frmats " {{{
         \ setlocal nowrap                                          |
         \ setlocal sidescroll=5                                    |
         \ setlocal colorcolumn=81
-  au BufNewFile,BufRead *.js,*.html,*.php,*.md
+  au BufNewFile,BufRead *.html,*.md
         \ setlocal tabstop=2                                       |
         \ setlocal softtabstop=2                                   |
         \ setlocal shiftwidth=2
@@ -545,7 +545,7 @@ let g:startify_custom_indices = ['a', 's', 'd']
 " Indentline {{{
 let g:indentLine_fileType = [
       \ 'c', 'cpp', 'html', 'php', 'cs', 'shell',
-      \ 'config', 'vim', 'python', 'java', 'zsh', 'sh',
+      \ 'config', 'vim', 'python', 'java', 'zsh', 'sh', 'javascript',
       \ 'conf'
       \ ]
 let g:indentLine_char = '┆'
@@ -599,7 +599,7 @@ let g:tagbar_width=25
 let g:tagbar_autoclose=1
 
 if has("persistent_undo")
-  set undodir=~/.cache/vim/undotree/
+  set undodir=$HOME."/.cache/vim/undotree/"
   set undofile
 endif
 nn <F7> :UndotreeToggle<CR>
