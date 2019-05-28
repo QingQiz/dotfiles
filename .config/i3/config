@@ -186,7 +186,7 @@ mode "resize" {
 bindsym Mod4+r mode "resize"
 
 # bindsym Mod4+Ctrl+l exec betterlockscreen -l dim
-bindsym Mod4+Ctrl+l exec lockscreen
+bindsym Mod4+Ctrl+l exec "sleep 1 && xset dpms force off"
 # bindsym Mod4+Ctrl+Shift+L exec betterlockscreen -s dim
 # screenshot
 bindsym Mod4+Ctrl+k exec screenshot
@@ -224,7 +224,7 @@ exec --no-startup-id xss-lock -- lockscreen &
 # no sleep
 exec_always xset b 0
 exec_always xset s 0
-exec_always xset dpms 600 0 0
+exec_always xset dpms 0 0 0
 
 # 更改边框样式
 bindsym Mod4+Shift+b border toggle
@@ -252,6 +252,7 @@ exec i3-config-wizard
 exec --no-startup-id i3-msg "workspace 1"
 exec compton &
 exec setterm -bleng 0
+exec "echo 'power on' | bluetoothctl"
 exec_always numlockx &
 exec_always __launch_conky
 # exec_always --no-startup-id mpd
