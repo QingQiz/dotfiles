@@ -86,6 +86,7 @@ alias sqlserver='sudo /opt/mssql/bin/sqlservr'
 
 alias ColorCoded='cp ~/.config/color_coded/.color_coded .'
 #alias AddCMakeList='cp ~/workspace/Progeaming-Practice/Note/CMakeLists.txt .'
+alias g='/home/angel/workspace/you-get/you-get'
 
 
 ##-----------------------------------------------------------------------
