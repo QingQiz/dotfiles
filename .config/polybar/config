@@ -287,10 +287,10 @@ format-prefix-foreground = ${colors.foreground-alt}
 label = %percentage%
 ramp-coreload-0 = %{F#5b}▁%{F-}
 ramp-coreload-1 = %{F#5b}▂%{F-}
-ramp-coreload-2 = %{F#ffb52a}▃%{F-}
-ramp-coreload-3 = %{F#ffb52a}▄%{F-}
+ramp-coreload-2 = %{F#5b}▃%{F-}
+ramp-coreload-3 = %{F#5b}▄%{F-}
 ramp-coreload-4 = %{F#ffb52a}▅%{F-}
-ramp-coreload-5 = %{F#ff5c57}▆%{F-}
+ramp-coreload-5 = %{F#ffb52a}▆%{F-}
 ramp-coreload-6 = %{F#ff5c57}▇%{F-}
 ramp-coreload-7 = %{F#ff5c57}█%{F-}
 

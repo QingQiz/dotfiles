@@ -54,8 +54,8 @@ alias gcl='git clone'
 alias gdf='git diff'
 alias gcam='git commit -am'
 
-alias l='ls'
-alias ll='ls -al'
+alias l='ls++'
+alias ll='ls++ --potsf -a'
 alias la='ls -a'
 alias lh="du -ahd1 | sort -h"
 alias t='tmux'

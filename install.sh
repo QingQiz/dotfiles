@@ -241,4 +241,7 @@ if [ "$chc" == "y" ]; then
     install_q -d "create_ap" +"create_ap"
     install_q -d "zbar (read and create qrcode)" +"zbar"
     install_q -d "xfreerdp" +"xfreerdp"
+
+    install_q -d "ls++" +"ls++" \
+        -e "cp /etc/ls++.conf $HOME/.ls++.conf"
 fi
