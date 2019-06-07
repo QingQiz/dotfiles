@@ -214,8 +214,9 @@ exec_always --no-startup-id __launch_polybar
 exec_always --no-startup-id __launch_fcitx
 
 # local ss
-exec_always --no-startup-id sslocal -c /etc/shadowsocks/vps.json
-# exec_always --no-startup-id sslocal -c /etc/shadowsocks/pi.json
+#exec_always --no-startup-id sslocal -c /etc/shadowsocks/vps.json
+exec_always --no-startup-id sslocal -c /etc/shadowsocks/vps6.json
+#exec_always --no-startup-id sslocal -c /etc/shadowsocks/pi.json
 
 # lock when sleep
 # exec --no-startup-id xss-lock -- betterlockscreen -l &
