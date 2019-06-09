@@ -1,5 +1,5 @@
 [Unit]
-Description = change permission for /sys/class/backlight/XXX/brightness and so on.
+Description = change permission of /sys/class/backlight/XXX/brightness
 
 [Service]
 Type=simple
