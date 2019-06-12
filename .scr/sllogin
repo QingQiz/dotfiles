@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-[[ `netctl status enp0s25-Home | grep -i 'active: active'` ]] || sudo netctl restart enp0s25-Home && sleep 1
+[[ `netctl status enp0s25-Home | grep -i 'active: active'` ]] || sudo netctl restart enp0s25-Home
 while (true); do
     res=`curl 'http://222.24.215.2/srun_portal_pc.php' --data 'action=login&ac_id=14&url=&username=2017302344&password=zxcvbnm1234567' --silent`
     [[ $? == 0 ]] && break || sleep 1
