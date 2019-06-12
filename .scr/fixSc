@@ -30,11 +30,12 @@ xrandr --output DP-1 --right-of DP-3
 sleep 1
 xrandr --output VGA-0 --right-of DP-1
 sleep 1
-xrandr --output DP-1 --primary
+xrandr --output VGA-0 --primary
 sleep 1
 i3 restart
 wallpaper 0
- 
+sleep 1
+i3-msg 'workspace 1' -q
 i3-msg 'move container to workspace 2' -q
 i3-msg 'workspace 10' -q
 i3-msg 'workspace 3' -q
@@ -42,3 +43,5 @@ i3-msg 'workspace 7' -q
 i3-msg 'workspace 2' -q
 i3-msg 'move container to workspace 1' -q
 i3-msg 'workspace 1' -q
+sleep 1
+sllogin
