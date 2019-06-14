@@ -45,9 +45,12 @@ parse.add_argument(
     help='users'
 )
 parse.add_argument(
-    '-m', '--multi-monitors', action='store_true',
+    '-mm', '--multi-monitors', action='store_true',
     help='use multi monitors'
-
+)
+parse.add_argument(
+    '-m', '--monitors', nargs=1,
+    help='Select monitors to use\texample: 1,2,3'
 )
 parse.add_argument(
     '-s', '--sound', action='store_true',
@@ -73,6 +76,8 @@ cmd = 'xfreerdp /u:{user} /v:{ip} /f'.format(
 )
 if args.multi_monitors:
     cmd += ' /multimon'
+if args.monitors is not None:
+    cmd += ' /monitors:' + args.monitors[0]
 if args.sound:
     cmd += ' /sound:sys:alsa'
 if args.drive is not None:

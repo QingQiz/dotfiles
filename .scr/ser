@@ -1,0 +1,48 @@
+#!/usr/bin/env python3
+
+import os
+import json
+import socket
+import argparse
+
+default_config = os.environ['HOME'] + '/.config/ser.json'
+
+parse = argparse.ArgumentParser()
+parse.add_argument(
+    '-c', '--config', nargs=1,
+    help='select config file'
+)
+parse.add_argument(
+    'ser',
+    help='alias of server'
+)
+parse.add_argument(
+    '-mm', '--multi-monitors', action='store_true',
+    help='use multi monitors'
+)
+parse.add_argument(
+    '-m', '--monitors', nargs=1,
+    help='Select monitors to use\texample: 1,2,3'
+)
+args = parse.parse_args()
+
+if args.config is None:
+    js = json.load(open(os.environ['HOME'] + '/.config/ser.json'))
+else:
+    js = json.load(open(args.config[0]))
+
+name = js.get(args.ser)
+
+if name is None:
+    print('no such server')
+    exit('-1')
+
+ip = socket.gethostbyname(name)
+
+cmd = 'rdp -u angel -s -au -aun 20 -d angel,/home/angel ' + ip
+if args.monitors is not None:
+    cmd += ' -m ' + args.monitors[0]
+if args.multi_monitors:
+    cmd += ' -mm'
+
+os.system(cmd)
