@@ -31,7 +31,7 @@ own_window yes
 # wm_class_name Conky
 own_window_title leftconky
 own_window_class Conky
-own_window_type override
+#own_window_type override
 own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
 own_window_transparent no
 own_window_argb_value 200
@@ -41,7 +41,7 @@ update_interval 1
 uppercase no
 use_xft yes
 gap_x 20
-gap_y 36
+gap_y 45
 xftalpha 0.8
 xftfont  DejaVu Sans Mono Bold:size=13
 

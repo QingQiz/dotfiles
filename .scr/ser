@@ -34,8 +34,10 @@ else:
 name = js.get(args.ser)
 
 if name is None:
-    print('no such server')
-    exit('-1')
+    print('Avaliable servers:\n')
+    for i in js:
+        print(i,'\t\t', js.get(i))
+    exit(1)
 
 ip = socket.gethostbyname(name)
 
