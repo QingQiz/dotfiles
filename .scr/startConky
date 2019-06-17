@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+from time import sleep
 from pymouse import PyMouse
 import os
 import i3ipc
@@ -11,6 +12,7 @@ div = 2
 
 
 os.system('killall conky')
+sleep(0.1)
 os.system('/usr/bin/conky -c $HOME/.conky/conkyleft')
 os.system('/usr/bin/conky -c $HOME/.conky/conkyright')
 
@@ -20,11 +22,11 @@ focused = tree.find_focused()
 conkyl = tree.find_named('leftconky')[0]
 conkyr = tree.find_named('rightconky')[0]
 
-os.system('sleep 0.2')
+sleep(0.2)
 conkyl.command('move left 540')
-os.system('sleep 0.2')
+sleep(0.2)
 conkyr.command('move right 540')
-os.system('sleep 0.2')
+sleep(0.2)
 focused.command('focus')
 
 flagl = False
@@ -39,24 +41,24 @@ while True:
         if not flagl:
             for i in range(10):
                 conkyl.command('move right 54')
-                os.system('sleep 0.01')
+                sleep(0.01)
             flagl = True
     if x > size - div:
         if not flagr:
             for i in range(10):
                 conkyr.command('move left 54')
-                os.system('sleep 0.01')
+                sleep(0.01)
             flagr = True
     if flagl:
         if x > 543:
             for i in range(10):
                 conkyl.command('move left 54')
-                os.system('sleep 0.01')
+                sleep(0.01)
             flagl = False
     if flagr:
         if x < size - 543:
             for i in range(10):
                 conkyr.command('move right 54')
-                os.system('sleep 0.01')
+                sleep(0.01)
             flagr = False
-    os.system('sleep 0.2')
+    sleep(0.2)

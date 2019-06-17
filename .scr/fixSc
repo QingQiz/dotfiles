@@ -1,49 +1,29 @@
 #!/usr/bin/env bash
 
-# xx=$( xrandr | grep ' conn' | awk '{print $1}' )
-# echo $xx
-# 
-# scr1=$( echo $xx | awk '{print $1}' )
-# scr2=$( echo $xx | awk '{print $2}' )
-# 
-# xrandr --output $scr1 --right-of $scr2 --auto
-# xrandr --output $scr2 --primary
-# 
-# sleep 1
-# 
-# i3 restart
-
-
 # xrandr --auto
 # sleep 1
-# xrandr --output DP-2 --right-of eDP-1
+# xrandr --output DP-0 --right-of VGA-0
 # sleep 1
-# xrandr --output VGA-1 --right-of DP-2
+# xrandr --output DP-1 --right-of DP-0
 # sleep 1
-# xrandr --output eDP-1 --primary
+# xrandr --output VGA-0 --primary
 # sleep 1
 # i3 restart
+# sleep 1
+# startConky
 
-xrandr --auto
-sleep 1
-xrandr --output DP-1 --right-of DP-3
-sleep 1
-xrandr --output VGA-0 --right-of DP-1
-sleep 1
-xrandr --output VGA-0 --primary
-sleep 1
-i3 restart
-wallpaper 0
-sleep 1
+# wallpaper 0
+# sleep 1
+
 i3-msg 'workspace 1' -q
-i3-msg 'move container to workspace 2' -q
-i3-msg 'workspace 10' -q
+i3-msg 'workspace 6' -q
 i3-msg 'workspace 3' -q
-i3-msg 'workspace 7' -q
+i3-msg 'workspace 10' -q
 i3-msg 'workspace 2' -q
+i3-msg 'focus child' -q
 i3-msg 'move container to workspace 1' -q
 i3-msg 'workspace 1' -q
-sleep 1
+# sleep 1
 #sllogin
 
-[[ `netctl status enp0s25-CHANG | grep -i 'active: active'` ]] || sudo netctl restart enp0s25-Home
+[[ `netctl status enp0s25-CHANG | grep -i 'active: active'` ]] || sudo netctl restart enp0s25-CHANG
