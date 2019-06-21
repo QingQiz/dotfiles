@@ -71,7 +71,7 @@ parse.add_argument(
 args = parse.parse_args()
 
 
-cmd = 'xfreerdp /u:{user} /v:{ip} /f'.format(
+cmd = 'xfreerdp /u:{user} /v:{ip} /f -floatbar'.format(
     user=args.user[0], ip=args.IP if args.IP.find(':') > 0 else args.IP + ':3389'
 )
 if args.multi_monitors:
@@ -86,7 +86,6 @@ if args.auto_reconnect:
     cmd += ' /auto-reconnect'
 if args.auto_reconnect_max_retries is not None:
     cmd += ' /auto-reconnect-max-retries:' + args.auto_reconnect_max_retries[0]
-
 
 print(cmd)
 os.system(cmd)

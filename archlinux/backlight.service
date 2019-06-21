@@ -5,7 +5,6 @@ Description = change permission of /sys/class/backlight/XXX/brightness
 Type=simple
 ExecStart=/usr/bin/sleep 3
 ExecStartPost=/usr/bin/chmod 666 /sys/class/backlight/nvidia_0/brightness
-ExecStartPost=/usr/bin/echo 'power on' | /usr/bin/bluetoothctl
 Restart=on-failure
 RestartSec=3
 

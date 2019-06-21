@@ -177,7 +177,9 @@ bindsym Mod4+r mode "resize"
 bindsym Mod4+Ctrl+l exec "sleep 1 && xset dpms force off"
 # bindsym Mod4+Ctrl+Shift+L exec betterlockscreen -s dim
 # screenshot
-bindsym Mod4+Ctrl+k exec screenshot
+#bindsym Mod4+Ctrl+k exec screenshot
+bindsym --release Mod4+i exec "import a.jpg"
+bindsym --release Mod4+c exec "xkill"
 
 # sound & brightness
 bindsym XF86AudioRaiseVolume  exec --no-startup-id amixer -q sset Master 3%+

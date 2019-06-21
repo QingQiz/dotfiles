@@ -85,6 +85,12 @@ ln_ .gitconfig .scr
 cd $script_dir/config
 ln_ ser.json
 cd -
+
+# rc-local
+cd $script_dir/archlinux
+sudo ln -f rc-local.service /usr/lib/systemd/system/
+sudo systemctl enable rc-local
+sudo ln -f "rc.local" /etc/
 #--------------------------------------------------
 # vim
 #--------------------------------------------------
