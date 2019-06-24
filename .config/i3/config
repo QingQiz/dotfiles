@@ -39,10 +39,6 @@ bindsym Mod4+Shift+h        move left
 bindsym Mod4+Shift+j        move down
 bindsym Mod4+Shift+k        move up
 bindsym Mod4+Shift+l        move right
-# bindsym Mod1+Shift+h        move left
-# bindsym Mod1+Shift+j        move down
-# bindsym Mod1+Shift+k        move up
-# bindsym Mod1+Shift+l        move right
 
 # split in horizontal orientation
 # bindsym Mod4+g split h
@@ -93,7 +89,7 @@ smart_gaps on
 smart_borders on
 
 #rofi_power menu
-bindsym Mod4+Shift+q exec ~/.config/rofi/powermenu.sh
+#bindsym Mod4+Shift+q exec ~/.config/rofi/powermenu.sh
 
 # apps
 bindsym Mod4+Control+t exec thunar
@@ -158,20 +154,47 @@ bindsym Mod4+Shift+e exec "i3-nagbar -t warning -m 'This will end your X session
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
-        bindsym h      resize shrink width  5 px or 5 ppt
-        bindsym j      resize grow   height 5 px or 5 ppt
-        bindsym k      resize shrink height 5 px or 5 ppt
-        bindsym l      resize grow   width  5 px or 5 ppt
+    bindsym h      resize shrink width  5 px or 5 ppt
+    bindsym j      resize grow   height 5 px or 5 ppt
+    bindsym k      resize shrink height 5 px or 5 ppt
+    bindsym l      resize grow   width  5 px or 5 ppt
 
-        bindsym Left   resize shrink width  5 px or 5 ppt
-        bindsym Down   resize grow   height 5 px or 5 ppt
-        bindsym Up     resize shrink height 5 px or 5 ppt
-        bindsym Right  resize grow   width  5 px or 5 ppt
-        bindsym Return mode   "default"
-        bindsym Escape mode   "default"
+    bindsym Return mode   "default"
+    bindsym Escape mode   "default"
 }
 
 bindsym Mod4+r mode "resize"
+
+mode "move" {
+    bindsym h   focus left
+    bindsym j   focus down
+    bindsym k   focus up
+    bindsym l   focus right
+
+    bindsym Shift+h move left
+    bindsym Shift+j move down
+    bindsym Shift+k move up
+    bindsym Shift+l move right
+
+    bindsym 1  workspace 1 
+    bindsym 2  workspace 2 
+    bindsym 3  workspace 3 
+    bindsym 4  workspace 4 
+    bindsym 5  workspace 5 
+    bindsym 6  workspace 6 
+    bindsym 7  workspace 7 
+    bindsym 8  workspace 8 
+    bindsym 9  workspace 9 
+    bindsym 0  workspace 10 
+
+    bindsym space focus mode_toggle
+    bindsym m floating toggle
+    bindsym f fullscreen toggle
+
+    bindsym Return mode   "default"
+    bindsym Escape mode   "default"
+}
+bindsym Mod4+g mode "move"
 
 # bindsym Mod4+Ctrl+l exec betterlockscreen -l dim
 bindsym Mod4+Ctrl+l exec "sleep 1 && xset dpms force off"
@@ -241,7 +264,6 @@ exec i3-config-wizard
 exec --no-startup-id i3-msg "workspace 1"
 exec compton &
 exec setterm -bleng 0
-exec "echo 'power on' | bluetoothctl"
 exec_always numlockx &
 exec_always __launch_conky
 #exec_always --no-startup-id mpd

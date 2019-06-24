@@ -39,9 +39,10 @@ if name is None:
         print(i,'\t\t', js.get(i))
     exit(1)
 
-ip = socket.gethostbyname(name)
+ip = socket.gethostbyname(name.get('name'))
+user = name.get('user')
 
-cmd = 'rdp -u angel -s -au -aun 20 -d angel,/home/angel ' + ip
+cmd = 'rdp -u {} -s -au -aun 20 -d angel,/home/angel {}'.format(user, ip)
 if args.monitors is not None:
     cmd += ' -m ' + args.monitors[0]
 if args.multi_monitors:

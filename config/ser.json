@@ -1,5 +1,14 @@
 {
-    "gpu": "ai.sagiri.ren",
-    "bk": "10.69.26.19",
-    "lc": "102.honoka.tw"
+    "gpu": {
+        "name": "gpu.xyzhub.xyz",
+        "user": "angel"
+    },
+    "bk": {
+        "name": "10.69.26.19",
+        "user": "angel"
+    },
+    "lc": {
+        "name": "102.honoka.tw",
+        "user": "angel"
+    }
 }
