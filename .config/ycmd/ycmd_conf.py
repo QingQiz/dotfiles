@@ -8,7 +8,7 @@ flags = [
   'c++',
   '-std=c++11',
 
-  '-I/usr/include/c++/8.2.1',
+  '-I/usr/include/c++/9.1.0',
   '-I/usr/include',
 ]
 

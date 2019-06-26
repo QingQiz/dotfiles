@@ -8,44 +8,76 @@ import argparse
 default_config = os.environ['HOME'] + '/.config/ser.json'
 
 parse = argparse.ArgumentParser()
-parse.add_argument(
+
+remote = parse.add_argument_group('remote options')
+remote.add_argument(
+    'ser', nargs='?',
+    help='alias of server'
+)
+remote.add_argument(
     '-c', '--config', nargs=1,
     help='select config file'
 )
-parse.add_argument(
-    'ser',
-    help='alias of server'
-)
-parse.add_argument(
-    '-mm', '--multi-monitors', action='store_true',
-    help='use multi monitors'
-)
-parse.add_argument(
+remote.add_argument(
     '-m', '--monitors', nargs=1,
-    help='Select monitors to use\texample: 1,2,3'
+    help='Select monitors to use.\nexample: ser NAME -mm -m 1,2,3'
 )
+remote.add_argument(
+    '-s', '--share', nargs=1,
+    help='select directory to share, default: ~'
+)
+
+manage = parse.add_argument_group('manage server list')
+manage.add_argument(
+    '--new', nargs=1,
+    help='add a new server to list'
+)
+manage.add_argument(
+    '--alias', nargs=1,
+    help='set server alias'
+)
+manage.add_argument(
+    '--addr', nargs=1,
+    help='server address'
+)
+manage.add_argument(
+    '--user', nargs=1,
+    help='set user name'
+)
+manage.add_argument(
+    '--show', action='store_true',
+    help='show all servers',
+)
+manage.add_argument(
+    '--del', nargs='+',
+)
+
 args = parse.parse_args()
+
 
 if args.config is None:
     js = json.load(open(os.environ['HOME'] + '/.config/ser.json'))
 else:
     js = json.load(open(args.config[0]))
 
-name = js.get(args.ser)
 
-if name is None:
-    print('Avaliable servers:\n')
-    for i in js:
-        print(i,'\t\t', js.get(i))
-    exit(1)
+if args.ser is not None:
+    name = js.get(args.ser)
+    if name is None:
+        print('Avaliable servers:\n')
+        for i in js:
+            print(i,'\t\t', js.get(i).get('name'))
+        exit(1)
 
-ip = socket.gethostbyname(name.get('name'))
-user = name.get('user')
+    ip = socket.gethostbyname(name.get('name'))
+    user = name.get('user')
 
-cmd = 'rdp -u {} -s -au -aun 20 -d angel,/home/angel {}'.format(user, ip)
-if args.monitors is not None:
-    cmd += ' -m ' + args.monitors[0]
-if args.multi_monitors:
-    cmd += ' -mm'
+    cmd = 'rdp -u {} -s -au -aun 20 -d angel,{} {}'\
+        .format(user, '~' if args.share is None else args.share[0], ip)
 
-os.system(cmd)
+    if args.monitors is not None:
+        cmd += ' -mm -m ' + args.monitors[0]
+    os.system(cmd)
+else:
+    # TODO
+    pass
