@@ -261,7 +261,7 @@ bindsym Mod4+p exec wallpaper -1
 exec_always emacs --bg-daemon
 exec_always wallpaper 0
 exec i3-config-wizard
-exec --no-startup-id i3-msg "workspace 1"
+exec --no-startup-id i3-msg "workspace 2"
 exec compton &
 exec setterm -bleng 0
 exec_always numlockx &

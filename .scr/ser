@@ -73,7 +73,7 @@ if args.ser is not None:
     user = name.get('user')
 
     cmd = 'rdp -u {} -s -au -aun 20 -d angel,{} {}'\
-        .format(user, '~' if args.share is None else args.share[0], ip)
+        .format(user, '/home/angel' if args.share is None else args.share[0], ip)
 
     if args.monitors is not None:
         cmd += ' -mm -m ' + args.monitors[0]
