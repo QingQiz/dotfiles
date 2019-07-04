@@ -29,10 +29,10 @@ bindsym Mod4+j      focus down
 bindsym Mod4+k      focus up
 bindsym Mod4+l      focus right
 bindsym Mod4+h      focus left
-# bindsym Mod1+j      focus down
-# bindsym Mod1+k      focus up
-# bindsym Mod1+l      focus right
-# bindsym Mod1+h      focus left
+bindsym Mod1+j      focus down
+bindsym Mod1+k      focus up
+bindsym Mod1+l      focus right
+bindsym Mod1+h      focus left
 
 # move focused window
 bindsym Mod4+Shift+h        move left

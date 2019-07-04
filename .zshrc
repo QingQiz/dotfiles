@@ -12,6 +12,7 @@ source ~/.oh-my-zsh/plugins/z/z.plugin.zsh
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
 fpath=( "$HOME/.zsh/zfunctions" $fpath )
 
+
 #turn on comments with # in shell
 setopt interactivecomments
 
@@ -87,6 +88,7 @@ alias sqlserver='sudo /opt/mssql/bin/sqlservr'
 alias ColorCoded='cp ~/.config/color_coded/.color_coded .'
 #alias AddCMakeList='cp ~/workspace/Progeaming-Practice/Note/CMakeLists.txt .'
 alias g='/home/angel/workspace/you-get/you-get'
+alias gs='/home/angel/workspace/you-get/you-get -s 127.0.0.1:1080'
 
 
 ##-----------------------------------------------------------------------
@@ -96,6 +98,10 @@ alias g='/home/angel/workspace/you-get/you-get'
 
 ##=======================================================================
 # commonly used functions
+
+qb() {
+    qutebrowser --target tab $@
+}
 
 ssh() {
     trap 'export TERM=termite; trap 2; return' 2
@@ -172,6 +178,9 @@ ver() {
     else
         echo -e "\n\e[41mCompile Failed...\e[0m\n"
     fi
+}
+rmv() {
+    mv $2 $1
 }
 
 ##-----------------------------------------------------------------------
