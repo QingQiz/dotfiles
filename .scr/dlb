@@ -1,0 +1,5 @@
+#!/usr/bin/env zsh
+
+cd ~/Documents/Video/
+nohup /home/angel/workspace/you-get/you-get -d -c /home/angel/cookies.txt $@ > /dev/null &
+

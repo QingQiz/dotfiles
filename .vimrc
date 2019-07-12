@@ -272,6 +272,8 @@ func! RunResult()
     exec "!zsh %"
   elseif &ft == "vim"
     exec "source %"
+  elseif &ft == "javascript"
+    exec "!node %"
   endif
 endf
 " }}}
