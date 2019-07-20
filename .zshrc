@@ -72,7 +72,7 @@ alias py='python3'
 alias ipy='ipython'
 alias sx='startx'
 alias prename='perl-rename'
-alias p='ping baidu.com'
+alias p='ping bilibili.com'
 alias pscp='psshscp'
 alias ch='chromium'
 
@@ -98,6 +98,10 @@ alias gs='/home/angel/workspace/you-get/you-get -s 127.0.0.1:1080'
 
 ##=======================================================================
 # commonly used functions
+conda() {
+    [[ `echo $PATH | grep 'conda'` ]] || source /opt/anaconda/bin/activate
+    \conda $@
+}
 
 qb() {
     qutebrowser --target tab $@
@@ -117,6 +121,7 @@ pushmod() {
         cp ./$1 ~/workspace/Progeaming-Practice/ACM-ICPC/Mod/$2
     fi
 }
+
 pushcode() {
     if [[ $# == 1 ]]; then
         cp ./_.cc ~/workspace/Progeaming-Practice/ACM-ICPC/CodeHub/$1
@@ -124,9 +129,11 @@ pushcode() {
         cp ./$1 ~/workspace/Progeaming-Practice/ACM-ICPC/CodeHub/$2
     fi
 }
+
 dupkg() {
     expac '%m\t%n' | sort -h | awk '{cmd = "numfmt --to=si "$1; cmd | getline n; close(cmd); print n, $2}'
 }
+
 dupkg_ex() {
     expac -H M "%011m\t%-20n\t%10d" $(comm -23 <(pacman -Qqen | sort) <(pacman -Qqg base base-devel | sort)) | sort -n
 }
@@ -139,6 +146,10 @@ lhs() {
 
 lanip() {
     ip a | grep `ip r | head -n 1 | awk '{print $3}'` | grep inet | awk '{print $2}'
+}
+
+lanip6() {
+    ip a | grep inet6 | grep global | awk '{print $2}' | cut -d\/ -f1
 }
 
 ycm() {
@@ -179,6 +190,7 @@ ver() {
         echo -e "\n\e[41mCompile Failed...\e[0m\n"
     fi
 }
+
 rmv() {
     mv $2 $1
 }
@@ -203,3 +215,4 @@ compdef _nothing dupkg_ex
 
 
 ##-----------------------------------------------------------------------
+
