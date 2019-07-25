@@ -194,6 +194,8 @@ if [ "$chc" = "y" ]; then
 
     ln_ .oh-my-zsh .bashrc .zsh .zshrc
     
+    install_n pkgfile
+    sudo pkgfile --update
 fi
 #--------------------------------------------------
 # i3-gap

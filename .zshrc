@@ -1,26 +1,25 @@
+export LANG='en_US.UTF-8'
+export EDITOR='vim'
+export VISUAL='vim'
+export PAGER='most'
 export TERM='termite'
 export ZSH=$HOME/.oh-my-zsh
 export JAVA_HOME=/usr/lib/jvm/java-10-openjdk
 export PATH=$PATH:/home/angel/.scr
 export PATH=$PATH:$HOME/.dotnet/tools
 export MANPAGER=cat
+export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
+export fpath=( "$HOME/.zsh/zfunctions" $fpath )
 
 source $ZSH/oh-my-zsh.sh
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 source ~/.oh-my-zsh/plugins/z/z.plugin.zsh
-export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
-fpath=( "$HOME/.zsh/zfunctions" $fpath )
 
 
 #turn on comments with # in shell
 setopt interactivecomments
 
-### EXPORTS
-export LANG='en_US.UTF-8'
-export EDITOR='vim'
-export VISUAL='vim'
-export PAGER='most'
 
 if [[ $DISPLAY ]]; then
     export POWERLINE_CONFIG_COMMAND='powerline-config'
@@ -69,6 +68,7 @@ alias vs='vim -u ~/.vimrc_simple --noplugin'
 alias vims='vim --noplugin -u NONE'
 alias cls='clear'
 alias py='python3'
+alias py2='python2'
 alias ipy='ipython'
 alias sx='startx'
 alias prename='perl-rename'
@@ -85,8 +85,6 @@ alias aria2='aria2c --conf-path=/home/angel/.config/aria2/aria2.conf'
 
 alias sqlserver='sudo /opt/mssql/bin/sqlservr'
 
-alias ColorCoded='cp ~/.config/color_coded/.color_coded .'
-#alias AddCMakeList='cp ~/workspace/Progeaming-Practice/Note/CMakeLists.txt .'
 alias g='/home/angel/workspace/you-get/you-get'
 alias gs='/home/angel/workspace/you-get/you-get -s 127.0.0.1:1080'
 
@@ -98,6 +96,29 @@ alias gs='/home/angel/workspace/you-get/you-get -s 127.0.0.1:1080'
 
 ##=======================================================================
 # commonly used functions
+command_not_found_handler() {
+    local pkgs cmd="$1"
+    typeset -l lcmd
+    lcmd=$cmd
+
+    if [[ $(command -v $lcmd) ]]; then
+        shift
+        [[ `alias $lcmd` ]] && lcmd=${${$(alias $lcmd)#$lcmd=\'}%\'}
+        eval "sudo "$lcmd $@
+        return $?
+    fi
+
+    pkgs=(${(f)"$(pkgfile -b -v -- "$lcmd" 2>/dev/null)"})
+    if [[ -n "$pkgs" ]]; then
+        printf '%s may be found in the following packages:\n' "$lcmd"
+        printf '  %s\n' $pkgs[@]
+        return 0
+    fi
+
+    printf 'zsh: command not found: %s\n' "$cmd" 1>&2
+    return 127
+}
+
 conda() {
     [[ `echo $PATH | grep 'conda'` ]] || source /opt/anaconda/bin/activate
     \conda $@
