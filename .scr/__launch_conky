@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
 killall conky
-sleep 1
+sleep 2
 conky -c $HOME/.conky/conkyleft
 # nohup startConky > /dev/null &

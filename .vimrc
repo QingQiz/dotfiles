@@ -144,7 +144,6 @@ cabbrev c call SmartComplier()
 cabbrev r call RunResult()
 cabbrev w!! w !sudo tee %
 cabbrev vimrc e $HOME/.vimrc
-command M %s///
 command! Compile call SmartComplier();
 command! Run call RunResult();
 command! W w

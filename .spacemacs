@@ -343,6 +343,12 @@ values."
         (shell-command-to-string (format "%s %s" format-command buffer-file-name))
         (message "format done"))))
 
+  (defun atfd ()
+    (interactive)
+    (comint-dynamic-list-filename-completions)
+    (comint-dynamic-complete-as-filename))
+  (global-set-key (kbd "C-c k") 'atfd)
+
   ;; RunResult
   (defun Run()
     (interactive)
