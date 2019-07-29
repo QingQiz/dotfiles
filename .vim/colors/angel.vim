@@ -54,7 +54,7 @@ hi DiffChange     ctermfg=NONE ctermbg=234  cterm=NONE
 hi Cursor         ctermfg=NONE ctermbg=230  cterm=NONE
 hi Error          ctermfg=89   ctermbg=53   cterm=NONE
 hi PMenu          ctermfg=86   ctermbg=NONE cterm=bold
-hi SpecialKey     ctermfg=81   ctermbg=NONE cterm=NONE
+hi SpecialKey     ctermfg=238  ctermbg=NONE cterm=NONE
 hi Constant       ctermfg=141  ctermbg=NONE cterm=bold
 hi Tag            ctermfg=197  ctermbg=NONE cterm=NONE
 hi PMenuThumb     ctermfg=81   ctermbg=NONE cterm=NONE

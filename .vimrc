@@ -28,6 +28,9 @@ set gcr=a:block-blinkon0
 
 set ttimeoutlen=100
 
+set list
+set listchars=tab:▸\ 
+
 set path+=**
 set rtp+=/home/angel/.vim/vimfiles/*
 set rtp+=/home/angel/.vim/vimfiles/indentLine/after
@@ -450,28 +453,30 @@ endf
 " Autocmd {{{
 augroup filetype_frmats " {{{
   au!
-  au BufNewFile,BufRead *.{vim,vimrc,vimrc_simple}
+  au FileType vim
         \ setlocal tabstop=2                                       |
         \ setlocal softtabstop=2                                   |
         \ setlocal shiftwidth=2                                    |
         \ setlocal foldmarker={{{,}}}                              |
         \ setlocal foldcolumn=1
-  au BufNewFile,BufRead *.py
+  au FileType python
         \ setlocal autoindent                                      |
         \ setlocal nowrap                                          |
         \ setlocal sidescroll=5                                    |
         \ setlocal colorcolumn=81
-  au BufNewFile,BufRead *.html,*.md
+  au FileType {markdown,html}
         \ setlocal tabstop=2                                       |
         \ setlocal softtabstop=2                                   |
         \ setlocal shiftwidth=2
-  au BufNewFile,BufRead *.c,*.cc,*.cpp
+  au FileType {c,cc}
         \ setlocal foldmarker=#ifdef,#endif                        |
         \ setlocal colorcolumn=81                                  |
         \ setlocal foldcolumn=1
-  au BufNewFile,BufRead *.html
+  au FileType html
         \ let b:AutoPairs = {"<": ">", '"': '"', "'": "'", '{': '}', '(': ')', '[': ']'}
-  au BufNewFile,BufRead *.py,*.c,*.cc,*.cpp,*.h*,.{vim,vimrc}
+  au FileType {sh,zsh}
+        \ setlocal noexpandtab
+  au FileType {c,cpp,python,vim,sh,zsh}
         \ match BadWhiteSpace /\v\s+$/
 
 augroup END " }}}
