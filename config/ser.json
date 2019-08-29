@@ -3,16 +3,25 @@
         "name": "gpu.xyzhub.xyz",
         "user": "angel"
     },
-    "bk": {
+    "bk_": {
         "name": "10.69.26.19",
+        "user": "angel"
+    },
+    "bk": {
+        "name": "169.254.230.102",
         "user": "angel"
     },
     "lc": {
         "name": "102.honoka.tw",
         "user": "angel"
     },
-    "ip": {
+    "ip_": {
         "name": "192.168.0.90",
+        "user": "angel"
+    },
+    "ip": {
+        "name": "127.0.0.1",
+        "port": "3390",
         "user": "angel"
     }
 }
