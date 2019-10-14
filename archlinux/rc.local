@@ -12,3 +12,5 @@ until [[ $DISPLAY ]]; do
 done
 
 echo 'power on' | /usr/bin/bluetoothctl
+
+/opt/ddns.sh

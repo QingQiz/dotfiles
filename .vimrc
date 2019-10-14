@@ -5,6 +5,7 @@ set nobackup nocompatible noerrorbells
 set endofline binary fixeol
 set modeline
 set autoread
+set nowrap
 
 set mouse=
 set nu relativenumber
@@ -252,6 +253,8 @@ fun! SmartComplier()
     exec "!javac %"
   elseif &ft == "cs"
     exec "!mcs %"
+	elseif &ft == "asm"
+		exec "!nasm -f bin -o now %"
   endif
 endf
 
@@ -474,7 +477,7 @@ augroup filetype_frmats " {{{
         \ setlocal foldcolumn=1
   au FileType html
         \ let b:AutoPairs = {"<": ">", '"': '"', "'": "'", '{': '}', '(': ')', '[': ']'}
-  au FileType {sh,zsh}
+  au FileType {vim,asm,sh,zsh}
         \ setlocal noexpandtab
   au FileType {c,cpp,python,vim,sh,zsh}
         \ match BadWhiteSpace /\v\s+$/

@@ -75,6 +75,8 @@ alias prename='perl-rename'
 alias p='ping bilibili.com'
 alias pscp='psshscp'
 alias ch='chromium'
+alias vbox='virtualbox'
+alias nc='ncat'
 
 alias zsh='source ~/.zshrc'
 alias zshrc='vim ~/.zshrc'
@@ -88,6 +90,7 @@ alias sqlserver='sudo /opt/mssql/bin/sqlservr'
 alias g='/home/angel/workspace/you-get/you-get'
 alias gs='/home/angel/workspace/you-get/you-get -s 127.0.0.1:1080'
 
+alias sl='ls'
 
 ##-----------------------------------------------------------------------
 
@@ -119,10 +122,10 @@ command_not_found_handler() {
     return 127
 }
 
-conda() {
-    [[ `echo $PATH | grep 'conda'` ]] || source /opt/anaconda/bin/activate
-    \conda $@
-}
+# conda() {
+#    [[ `echo $PATH | grep 'conda'` ]] || source /opt/anaconda/bin/activate
+#    \conda $@
+#}
 
 qb() {
     qutebrowser --target tab $@
