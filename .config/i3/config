@@ -267,3 +267,5 @@ exec setterm -bleng 0
 exec_always numlockx &
 exec_always __launch_conky
 #exec_always --no-startup-id mpd
+exec --no-startup-id /opt/ddns.sh
+exec --no-startup-id aria2c --conf-path=/home/angel/.config/aria2/aria2.conf
