@@ -4,13 +4,9 @@ nohup socat TCP4-LISTEN:10086,reuseaddr,fork TCP6:[2001:19f0:9002:3ad:5400:01ff:
 
 #nohup socat UDP4-LISTEN:10086,reuseaddr,fork UDP6:[2001:19f0:9002:3ad:5400:01ff:fe3e:99a7]:8388 > /dev/null &
 
-netctl restart enp0s25-CHANG
-nohup create_ap wlo1 enp0s25 邪王真眼 xwzyszqd
-
-until [[ $DISPLAY ]]; do
-	sleep 1
-done
+[[ `netctl status enp0s25-CHANG | grep -i 'active: active'` ]] || netctl restart enp0s25-CHANG
+# nohup create_ap wlo1 enp0s25 邪王真眼 xwzyszqd
 
 echo 'power on' | /usr/bin/bluetoothctl
 
-/opt/ddns.sh
+
