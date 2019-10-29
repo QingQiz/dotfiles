@@ -57,6 +57,8 @@ syn region asmComment		start="//" end="$" keepend contains=asmTodo
 syn match asmComment		"[#;!|].*" contains=asmTodo
 
 syn match asmInclude		"[.%]include"
+syn match asmCond		"[.%]ifdef"
+syn match asmCond		"[.%]ifndef"
 syn match asmCond		"[.%]if"
 syn match asmCond		"[.%]else"
 syn match asmCond		"[.%]endif"
@@ -83,8 +85,8 @@ syn match	asmStringCont	contained	+\(\\\\\|.\)\{-}[^\\]"+
 
 syn case match
 
-hi def link asmLabel	Statement
-hi def link asmVar	Statement
+hi def link asmLabel	Label
+hi def link asmVar	Identifier
 hi def link asmComment	Comment
 hi def link asmTodo	Todo
 hi def link asmDirective	Statement
@@ -98,8 +100,8 @@ hi def link decNumber	Number
 hi def link octNumber	Number
 hi def link binNumber	Number
 
-hi def link asmInst	Identifier
-hi def link asmType	Type
+hi def link asmInst	function
+hi def link asmType	Statement
 hi def link asmString	string
 
 
