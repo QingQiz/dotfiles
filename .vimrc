@@ -5,7 +5,7 @@ set nobackup nocompatible noerrorbells
 set endofline binary fixeol
 set modeline
 set autoread
-set nowrap
+" set nowrap
 
 set mouse=
 set nu relativenumber
@@ -66,9 +66,7 @@ nnoremap H                  ^
 vnoremap H                  ^
 nnoremap L                  $
 vnoremap L                  $
-inoremap <c-l>              <C-r>=execute("normal! $")<CR><right>
 snoremap <c-l>              <ESC>A
-inoremap <c-a>              <C-r>=execute("normal! ^")<CR>
 inoremap <c-f>              <right>
 inoremap <c-b>              <left>
 nnoremap <down>             <nop>
@@ -536,7 +534,8 @@ au BufReadPost *
       \ ['mbbill/undotree'],
       \ ['easymotion/vim-easymotion'],
       \ ['junegunn/vim-easy-align'],
-      \ ['mhinz/vim-startify']
+      \ ['mhinz/vim-startify'],
+      \ ['tenfyzhong/CompleteParameter.vim']
       \ ]
 " }}}
 
@@ -580,6 +579,15 @@ omap / <Plug>(easymotion-tn)
 
 map  n <Plug>(easymotion-next)
 map  N <Plug>(easymotion-prev)
+" }}}
+
+" Complete Parameters {{{
+inoremap <silent><expr> <c-l> complete_parameter#pre_complete("()")
+smap <c-j> <Plug>(complete_parameter#goto_next_parameter)
+imap <c-j> <Plug>(complete_parameter#goto_next_parameter)
+smap <c-k> <Plug>(complete_parameter#goto_previous_parameter)
+imap <c-k> <Plug>(complete_parameter#goto_previous_parameter)
+let g:complete_parameter_use_ultisnips_mappings=1
 " }}}
 
 " AutoPairs & rainbow {{{
@@ -669,10 +677,11 @@ let g:airline#extensions#fugitiveline#enabled = 0
 let g:airline#extensions#hunks#enabled = 0
 " }}}
 
+
 " YouCompleteMe {{{
-let g:ycm_server_python_interpreter='/usr/bin/python3.7'
+let g:ycm_server_python_interpreter='/usr/bin/python3'
 let g:ycm_global_ycm_extra_conf='/home/angel/.config/ycmd/ycmd_conf.py'
-let g:ycm_python_binary_path = '/usr/bin/python'
+let g:ycm_python_binary_path = '/usr/bin/python3.8'
 let g:ycm_min_num_indentifier_candidate_chars=2
 let g:ycm_key_invoke_completion='<c-d>'
 " let g:ycm_key_invoke_completion='<c-@>'
@@ -685,6 +694,7 @@ set completeopt=longest,menuone
 
 let g:ycm_semantic_triggers =  {
       \   'c' : ['->', '.', '-> '],
+      \   'python' : ['.'],
       \   'cpp,objcpp' : ['->', '.', '::', '-> '],
       \ }
 nn <silent>gd :YcmCompleter GoTo<CR>

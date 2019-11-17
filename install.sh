@@ -115,6 +115,7 @@ plugin_list2=(\
     "easymotion/vim-easymotion" \
     "junegunn/vim-easy-align" \
     "lilydjwg/fcitx.vim.git"\
+    "tenfyzhong/CompleteParameter.vim" \
     )
 echo "config vim? (y/n)"
 read chc

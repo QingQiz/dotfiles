@@ -29,10 +29,6 @@ bindsym Mod4+j      focus down
 bindsym Mod4+k      focus up
 bindsym Mod4+l      focus right
 bindsym Mod4+h      focus left
-bindsym Mod1+j      focus down
-bindsym Mod1+k      focus up
-bindsym Mod1+l      focus right
-bindsym Mod1+h      focus left
 
 # move focused window
 bindsym Mod4+Shift+h        move left
@@ -124,16 +120,6 @@ bindsym Mod4+7 workspace 7
 bindsym Mod4+8 workspace 8
 bindsym Mod4+9 workspace 9
 bindsym Mod4+0 workspace 10
-bindsym Mod1+1 workspace 1
-bindsym Mod1+2 workspace 2
-bindsym Mod1+3 workspace 3
-bindsym Mod1+4 workspace 4
-bindsym Mod1+5 workspace 5
-bindsym Mod1+6 workspace 6
-bindsym Mod1+7 workspace 7
-bindsym Mod1+8 workspace 8
-bindsym Mod1+9 workspace 9
-bindsym Mod1+0 workspace 10
 
 # move focused container to workspace
 bindsym Mod4+Shift+1 move container to workspace 1
@@ -258,7 +244,7 @@ bindsym Mod4+n exec wallpaper +1
 bindsym Mod4+p exec wallpaper -1
 #bindsym Mod4+Shift+n exec wallpaper -r
 
-exec_always emacs --bg-daemon
+# exec_always emacs --bg-daemon
 exec_always wallpaper 0
 exec i3-config-wizard
 exec --no-startup-id i3-msg "workspace 2"
