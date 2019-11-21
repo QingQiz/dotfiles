@@ -77,6 +77,7 @@ hi LineNr     ctermfg=NONE ctermbg=234  cterm=NONE
 hi Number     ctermfg=141  ctermbg=NONE cterm=NONE
 hi String     ctermfg=36   ctermbg=NONE cterm=bold
 hi Repeat     ctermfg=197  ctermbg=NONE cterm=bold
+hi SpecialVar ctermfg=255  ctermbg=NONE cterm=NONE
 
 hi link Union           Type
 hi link Typedef         Function
