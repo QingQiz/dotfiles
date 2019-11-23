@@ -1,7 +1,8 @@
 " basic set {{{
 syntax on
 filetype plugin indent on
-set nobackup nocompatible noerrorbells
+" set nobackup nocompatible
+set noerrorbells
 set endofline binary fixeol
 set modeline
 set autoread
@@ -32,6 +33,10 @@ set ttimeoutlen=100
 set list
 set listchars=tab:▸\ 
 
+set undodir=~/.cache/vim/undo
+set undofile
+
+set tags=./tags,../tags,../../tags,../../../tags,../../../../tags
 set path+=**
 set rtp+=/home/angel/.vim/vimfiles/*
 set rtp+=/home/angel/.vim/vimfiles/indentLine/after
@@ -163,7 +168,7 @@ command! Cls %s/\s*$//
 " Comments {{{
 func! Comments()
   let line = getline('.')
-  if &ft == "cpp" || &ft == "cs" || &ft == 'javascript'
+  if &ft == "cpp" || &ft == "cs" || &ft == 'javascript' || &ft == 'c'
     if line =~'.*\/\*.*$'
       s!/\*\(\_.\{-}\)\*/!\1!
     elseif line =~'^\s*\/\/.*$'
@@ -615,10 +620,6 @@ let g:tagbar_left=0
 let g:tagbar_width=25
 let g:tagbar_autoclose=1
 
-if has("persistent_undo")
-  set undodir=$HOME."/.cache/vim/undotree/"
-  set undofile
-endif
 nn <F7> :UndotreeToggle<CR>
 " }}}
 
@@ -690,6 +691,7 @@ let g:ycm_complete_in_strings=1
 let g:ycm_collect_identifiers_from_comments_and_strings=1
 let g:ycm_enable_diagnostic_highlighting=0
 let g:ycm_enable_diagnostic_signs = 0
+let g:ycm_confirm_extra_conf = 0
 set completeopt=longest,menuone
 
 let g:ycm_semantic_triggers =  {

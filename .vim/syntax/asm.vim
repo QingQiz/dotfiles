@@ -156,7 +156,7 @@ syn keyword asmInst vgatherpf0qpd vgatherpf0qps vgatherpf1dpd vgatherpf1dps vgat
 syn keyword asmInst vp4dpwssd vp4dpwssds vrcp28pd vrcp28ps vrcp28sd vrcp28ss vrsqrt28pd vrsqrt28ps
 syn keyword asmInst vrsqrt28sd vrsqrt28ss vscatterpf0dpd vscatterpf0dps vscatterpf0qpd vscatterpf0qps
 syn keyword asmInst vscatterpf1dpd vscatterpf1dps vscatterpf1qpd vscatterpf1qps
-syn keyword asmInst jz jmp jcc jz j jne jc jnz ja jb je
+syn keyword asmInst jz jmp jcc jz j jne jc jnz ja jb je jae
 
 syn keyword asmInclude .include %include
 syn keyword asmCond .ifdef %ifdef .ifndef %ifndef .if %if .else %else .endif %endif
@@ -167,7 +167,7 @@ syn keyword asmReg rsp esp sp spl rbp ebp bp bpl rsi esi si sil rdi edi di dil
 syn keyword asmReg ss cs ds es fs gs eip cr0 cr1 cr2 cr3 cr
 syn keyword asmReg eflags cf pf af zf sf tf if df of iopl nt rf vm ac vif vip id
 
-syn keyword asmKeyword extern section bits org global align dw db dd equ times descriptor
+syn keyword asmKeyword extern section bits org global align dw db dd equ times descriptor pushq
 
 hi def link asmString	string
 hi def link asmInclude	Include
