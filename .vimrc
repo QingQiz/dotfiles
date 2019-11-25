@@ -194,7 +194,7 @@ func! Comments()
     else
       s/^\s*/&;; /
     endif
-  elseif &ft == 'dosini'
+  elseif &ft == 'dosini' || &ft == 'asm'
     if line =~'^\s*;.*'
       s/^\(\s*\);\s*/\1/
     else
@@ -677,7 +677,6 @@ let g:airline#extensions#whitespace#enabled = 0
 let g:airline#extensions#fugitiveline#enabled = 0
 let g:airline#extensions#hunks#enabled = 0
 " }}}
-
 
 " YouCompleteMe {{{
 let g:ycm_server_python_interpreter='/usr/bin/python3'
