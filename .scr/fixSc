@@ -17,9 +17,9 @@
 
 i3-msg 'workspace 1' -q
 i3-msg 'workspace 6' -q
-i3-msg 'workspace 3' -q
-i3-msg 'workspace 10' -q
 i3-msg 'workspace 2' -q
+i3-msg 'workspace 10' -q
+i3-msg 'workspace 3' -q
 i3-msg 'focus child' -q
 i3-msg 'move container to workspace 1' -q
 i3-msg 'workspace 1' -q

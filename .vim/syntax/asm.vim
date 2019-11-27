@@ -182,7 +182,7 @@ hi def link binNumber	Number
 hi def link asmType	Statement
 hi def link asmInst	function
 hi def link asmLabel	Label
-hi def link asmVar	SpecialVar
+hi def link asmVar	Variable
 hi def link asmDirective	Statement
 hi def link asmReg	Identifier
 hi def link asmKeyword	Identifier

@@ -11,3 +11,4 @@ socat TCP4-LISTEN:10086,reuseaddr,fork TCP6:[2001:19f0:9002:3ad:5400:01ff:fe3e:9
 echo 'power on' | /usr/bin/bluetoothctl
 
 ip addr add dev enp0s25 169.254.233.234/16
+

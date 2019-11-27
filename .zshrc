@@ -176,11 +176,11 @@ lanip6() {
     ip a | grep inet6 | grep global | awk '{print $2}' | cut -d\/ -f1
 }
 
-ycm() {
-    if ! [ -f '.ycm_extra_conf.py' ]; then
-        cp ~/.config/ycmd/ycmd_conf.py .ycm_extra_conf.py
-    fi
-}
+# ycm() {
+    # if ! [ -f '.ycm_extra_conf.py' ]; then
+        # cp ~/.config/ycmd/ycmd_conf.py .ycm_extra_conf.py
+    # fi
+# }
 
 mv2hd() {
     mv "$1" '/media/sdb1/document/files/'

@@ -678,7 +678,7 @@ let g:airline#extensions#fugitiveline#enabled = 0
 let g:airline#extensions#hunks#enabled = 0
 " }}}
 
-" YouCompleteMe {{{
+" YouCompleteMe & color coded {{{
 let g:ycm_server_python_interpreter='/usr/bin/python3'
 let g:ycm_global_ycm_extra_conf='/home/angel/.config/ycmd/ycmd_conf.py'
 let g:ycm_python_binary_path = '/usr/bin/python3.8'
