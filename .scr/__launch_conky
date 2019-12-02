@@ -2,5 +2,5 @@
 
 killall conky
 sleep 2
-conky -c $HOME/.conky/conkyleft
-# nohup startConky > /dev/null &
+# conky -c $HOME/.conky/conkyleft
+startConky

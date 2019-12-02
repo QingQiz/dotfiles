@@ -1,79 +1,79 @@
-snippet using
-using namespace ${1:std};
-endsnippet
-
-snippet us
-using ${1:std}::${2};
-endsnippet
+#snippet using
+#using namespace ${1:std};
+#endsnippet
+#
+#snippet us
+#using ${1:std}::${2};
+#endsnippet
 
 snippet inc
 #include <${1:iostream}>
 endsnippet
 
-snippet vec
-std::vector<${1:int}>
-endsnippet
+#snippet vec
+#std::vector<${1:int}>
+#endsnippet
 
-snippet que
-std::queue<${1:int}>
-endsnippet
+# snippet que
+# std::queue<${1:int}>
+# endsnippet
 
-snippet cout
-std::cout << ${1};
-endsnippet
+# snippet cout
+# std::cout << ${1};
+# endsnippet
 
-snippet endl
-std::endl${0}
-endsnippet
+# snippet endl
+# std::endl${0}
+# endsnippet
 
-snippet OX
-#pragma GCC optimize(${1:2})
-endsnippet
+# snippet OX
+# pragma GCC optimize(${1:2})
+# endsnippet
 
-snippet def
-#define ${1}
-endsnippet
+# snippet def
+# define ${1}
+# endsnippet
 
-snippet idef
-#ifdef ${1}
-$0
-#endif
-endsnippet
+# snippet idef
+# ifdef ${1}
+# $0
+# endif
+# endsnippet
 
-snippet indef
+# snippet indef
 #ifndef ${1}
-$0
+# $0
 #endif
-endsnippet
+# endsnippet
 
-snippet for
-for (int ${1:i} = ${2:0}; $1 <${3: n}; ${4:++$1}) {
-	$0
-}
-endsnippet
+# snippet for
+# for (int ${1:i} = ${2:0}; $1 <${3: n}; ${4:++$1}) {
+# $0
+# }
+# endsnippet
 
-snippet fore
-for (int ${1:i} = ${2:1}; $1 <= ${3:n}; ${4:++$1}) {
-	$0
-}
-endsnippet
+#snippet fore
+#for (int ${1:i} = ${2:1}; $1 <= ${3:n}; ${4:++$1}) {
+#	$0
+#}
+#endsnippet
 
-snippet whi
-while (${1:true}) {
-	$0
-}
-endsnippet
-
-snippet else
-else {
-	$0
-}
-endsnippet
-
-snippet mem
-memset(${1:a}, ${2:0}, sizeof $1);
-endsnippet
-
-snippet pcas
-printf("Case %d: ${1:%d}\n", ${2:c}${3});
-endsnippet
+#snippet whi
+#while (${1:true}) {
+#	$0
+#}
+#endsnippet
+#
+#snippet else
+#else {
+#	$0
+#}
+#endsnippet
+#
+#snippet mem
+#memset(${1:a}, ${2:0}, sizeof $1);
+#endsnippet
+#
+#snippet pcas
+#printf("Case %d: ${1:%d}\n", ${2:c}${3});
+#endsnippet

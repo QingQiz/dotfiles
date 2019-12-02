@@ -36,7 +36,7 @@ set listchars=tab:▸\
 set undodir=~/.cache/vim/undo
 set undofile
 
-set tags=./tags,../tags,../../tags,../../../tags,../../../../tags
+set tags=./tags,../tags,../../tags,../../../tags,../../../../tags,../../../../../tags
 set path+=**
 set rtp+=/home/angel/.vim/vimfiles/*
 set rtp+=/home/angel/.vim/vimfiles/indentLine/after

@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+feh --randomize --bg-fill --bg-fill --bg-fill /media/sdb1/Arch/Pictures/WallP

@@ -14,23 +14,23 @@ div = 2
 os.system('killall conky')
 sleep(0.1)
 os.system('/usr/bin/conky -c $HOME/.conky/conkyleft')
-os.system('/usr/bin/conky -c $HOME/.conky/conkyright')
+# os.system('/usr/bin/conky -c $HOME/.conky/conkyright')
 
 tree = i3.get_tree()
 
 focused = tree.find_focused()
 conkyl = tree.find_named('leftconky')[0]
-conkyr = tree.find_named('rightconky')[0]
+# conkyr = tree.find_named('rightconky')[0]
 
 sleep(0.2)
 conkyl.command('move left 540')
-sleep(0.2)
-conkyr.command('move right 540')
+# sleep(0.2)
+# conkyr.command('move right 540')
 sleep(0.2)
 focused.command('focus')
 
 flagl = False
-flagr = False
+# flagr = False
 
 
 while True:
@@ -43,22 +43,22 @@ while True:
                 conkyl.command('move right 54')
                 sleep(0.01)
             flagl = True
-    if x > size - div:
-        if not flagr:
-            for i in range(10):
-                conkyr.command('move left 54')
-                sleep(0.01)
-            flagr = True
+    # if x > size - div:
+        # if not flagr:
+            # for i in range(10):
+                # conkyr.command('move left 54')
+                # sleep(0.01)
+            # flagr = True
     if flagl:
-        if x > 543:
+        if x > div:
             for i in range(10):
                 conkyl.command('move left 54')
                 sleep(0.01)
             flagl = False
-    if flagr:
-        if x < size - 543:
-            for i in range(10):
-                conkyr.command('move right 54')
-                sleep(0.01)
-            flagr = False
+    # if flagr:
+        # if x < size - 543:
+            # for i in range(10):
+                # conkyr.command('move right 54')
+                # sleep(0.01)
+            # flagr = False
     sleep(0.2)
