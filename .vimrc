@@ -208,6 +208,12 @@ func! Comments()
       s/\s*$//
       s/\(\s*\)\(.*\)\s*/\1<!-- \2 -->/
     en
+	elseif &ft == "haskell"
+    if line =~'^\s*--.*'
+      s/^\(\s*\)--\s*/\1/
+    else
+      s/^\s*/&-- /
+    en
   else
     if line =~'^\s*#.*'
       s/^\(\s*\)#\s*/\1/
@@ -258,11 +264,13 @@ fun! SmartComplier()
     exec "!mcs %"
 	elseif &ft == "asm"
 		exec "!nasm -f bin -o now %"
+	elseif &ft == "haskell"
+		exec "!ghc -o now %"
   endif
 endf
 
 func! RunResult()
-  if &ft == "cpp" || &ft == 'c'
+  if &ft == "cpp" || &ft == 'c' || &ft == 'haskell'
     exec "!./now"
   elseif &ft == "python"
     exec "!python3 %"

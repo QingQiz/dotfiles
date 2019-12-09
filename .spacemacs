@@ -31,6 +31,9 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
+     chinese
+     latex
+     haskell
      sql
      php
      html
@@ -277,7 +280,7 @@ values."
 
 (defun dotspacemacs/user-init ()
   (setq-default tab-width 4)
-  (setq-default dotspacemacs-themes '(manoj-dark))
+  ;; (setq-default dotspacemacs-themes '(manoj-dark))
   (setq-default dotspacemacs-startup-banner '"~/.dotfiles/emacs/banner.png")
   (setq-default dotspacemacs-configuration-layers
                 '((auto-completion :variables
@@ -291,26 +294,17 @@ values."
   (setq sp-escape-quotes-after-insert nil)
   (setq shell-file-name "bash")
 
+
+  ;; c style
   (setq c-default-style "linux")
   (setq c-basic-offset 4)
   (setq default-tab-width 4)
 
-  (add-hook 'c-mode-common-hook
-            (lambda()
-              (c-set-offset 'case-label '+)))
+  (add-hook 'c-mode-common-hook (lambda() (c-set-offset 'case-label '+)))
   (add-hook 'before-save-hook (lambda () (whitespace-cleanup)))
 
   ;; set powerline
   (setq powerline-default-separator 'slant)
-
-  ;; disable mouse in insert ans normal mode
-  ;; (dolist (k '([mouse-1] [down-mouse-1] [drag-mouse-1] [double-mouse-1] [triple-mouse-1]
-  ;;              [mouse-2] [down-mouse-2] [drag-mouse-2] [double-mouse-2] [triple-mouse-2]
-  ;;              [mouse-3] [down-mouse-3] [drag-mouse-3] [double-mouse-3] [triple-mouse-3]
-  ;;              [mouse-4] [down-mouse-4] [drag-mouse-4] [double-mouse-4] [triple-mouse-4]
-  ;;              [mouse-5] [down-mouse-5] [drag-mouse-5] [double-mouse-5] [triple-mouse-5]))
-  ;;   (global-unset-key k))
-
 
   (global-set-key (kbd "C-<return>") 'yas-expand)
 
@@ -332,7 +326,6 @@ values."
   (evil-define-key 'normal global-map (kbd "C-x p") (kbd "\" + p"))
   ;; (evil-set-initial-state 'shell-mode 'emacs)
 
-  ;; (global-set-key (kbd "<f5>") 'smart-compile)
   (global-set-key (kbd "<f3>") 'neotree-toggle)
 
   ;; Format code
@@ -343,115 +336,83 @@ values."
         (shell-command-to-string (format "%s %s" format-command buffer-file-name))
         (message "format done"))))
 
-  (defun atfd ()
+  ;; compile
+  (defun C()
     (interactive)
-    (comint-dynamic-list-filename-completions)
-    (comint-dynamic-complete-as-filename))
-  (global-set-key (kbd "C-c k") 'atfd)
-
-  ;; RunResult
-  (defun Run()
-    (interactive)
-    (let (($outputb "*program output*")
-          (resize-mini-windows nil)
-          ($suffix-map
-           `(("php" . "php")
-             ("pl" . "perl")
-             ("py" . "python")
-             ("py3" . "python3")
-             ("rb" . "ruby")
-             ("js" . "node")
-             ("tsx" . "tsc")
-             ("sh" . "bash")
-             ("latex" . "pdflatex")
-             ("java" . "javac")
-             ))
-          $fname $fSuffix $prog-name $cmd-str)
-      (when (not (buffer-file-name)) (save-buffer))
-      (when (buffer-modified-p) (save-buffer))
-      (setq $fname (buffer-file-name))
-      (setq $fSuffix (file-name-extension $fname))
-      (setq $prog-name (cdr (assoc $fSuffix $suffix-map)))
-      (setq $cmd-str (concat $prog-name " \""   $fname "\" &"))
-      (cond
-       ((string-equal $fSuffix "el")
-        (load $fname))
-       ((string-equal $fSuffix "go")
-        (xah-run-current-go-file))
-       ((string-equal $fSuffix "java")
-        (progn
-          (shell-command (format "java %s" (file-name-sans-extension (file-name-nondirectory $fname))) $outputb )))
-       (t (if $prog-name
-              (progn
-                (message "Running")
-                (shell-command $cmd-str $outputb ))
-            (error "No recognized program file suffix for this file."))))))
-
-  (global-set-key (kbd "C-x C-x") (lambda() (interactive)
-                                    (if (null (get-buffer-window "*shell*"))
-                                        (progn
-                                          (split-window-right-and-focus) (shell))
-                                      (if (string= (buffer-name) "*shell*")
-                                          (delete-window)
-                                        (select-window (get-buffer-window "*shell*"))))))
-
-  ;; complier
-  (defun smart-compile()
-    (interactive)
-    (let ((candidate-make-file-name '("makefile" "Makefile" "GNUmakefile"))
+    (save-buffer)
+    (let ((fn (file-name-nondirectory buffer-file-name))
+          (fn-ex (downcase (file-name-extension buffer-file-name)))
           (command nil))
-      (if (not (null
-                (find t candidate-make-file-name :key
-                      '(lambda (f) (file-readable-p f)))))
-          (setq command "make -k ")
-        (if (null (buffer-file-name (current-buffer)))
-            (message "Buffer not attached to a file, won't compile!")
-          (if (eq major-mode 'c-mode)
-              (setq command
-                    (concat "gcc -Wall -o "
-                            (file-name-sans-extension
-                             (file-name-nondirectory buffer-file-name))
-                            " "
-                            (file-name-nondirectory buffer-file-name)
-                            " -g -lm "))
-            (if (eq major-mode 'c++-mode)
-                (setq command
-                      (concat "g++ -Wall -o now"
-                              ;; (file-name-sans-extension
-                              ;; (file-name-nondirectory buffer-file-name))
-                              " "
-                              (file-name-nondirectory buffer-file-name)
-                              " -g -lm "))
-              (message "Unknow mode, won't compile!")))))
+      (cond
+       ;; c
+       ((or (find fn-ex '("c") :test #'equal)
+            (find major-mode '(c-mode)))
+        (setq command (format "%s %s" "gcc -Wall -o /tmp/now" fn)))
+       ;; c++
+       ((or (find fn-ex '("cpp" "cc" "c++") :test #'equal)
+            (find major-mode '(c++-mode)))
+        (setq command (format "%s %s" "g++ -Wall -o /tmp/now" fn)))
+       ;; java
+       ((or (find fn-ex '("java") :test #'equal)
+            (find major-mode '(java-mode)))
+        (setq command (format "%s %s" "javac" fn)))
+       ;; asm
+       ((or (find fn-ex '("asm" "s") :test #'equal)
+            (find major-mode '(asm-mode)))
+        (setq command (format "%s %s" "nasm -f bin -o /tmp/now" fn)))
+       ;; cs
+       ((or (find fn-ex '("cs") :test #'equal)
+            (find major-mode '()))
+        (setq command (format "%s %s" "mcs" fn)))
+       ((or (find fn-ex '("hs") :test #'equal)
+            (find major-mode '(haskell-mode)))
+        (setq command (format "%s %s" "ghc -o /tmp/now" fn)))
+       )
       (if (not (null command))
-          (let ((command (read-from-minibuffer "Compile command: " command)))
-            (compile command)))))
-
-
-  (defun addhead()
+        (let ((command (read-from-minibuffer "Compile command: " command)))
+          (compile command)))
+      )
+    )
+  ;; run
+  (defun R()
     (interactive)
-    (insert (format "\
-// =============================================================================
-// Dsp:
-// URL:
-// Author: Sofee <  sofeeys@outlook.com  >
-// =============================================================================\n")))
+    (save-buffer)
+    (let ((fn (file-name-nondirectory buffer-file-name))
+          (fn-ex (downcase (file-name-extension buffer-file-name)))
+          (command nil))
+      (cond
+       ;; run compiled result
+       ((or (find fn-ex '("c" "cpp" "c++" "cc" "asm" "s" "hs") :test #'equal)
+            (find major-mode '(c-mode c++-mode asm-mode haskell-mode)))
+        (setq command "/tmp/now"))
+       ;; python
+       ((or (find fn-ex '("py") :test #'equal)
+            (find major-mode '(python-mode)))
+        (setq command (format "%s %s" "python3" buffer-file-name)))
+       ;; shell
+       ((or (find fn-ex '("sh") :test #'equal)
+            (find major-mode '(shell-script-mode)))
+        (setq command (format "%s %s" "bash" buffer-file-name)))
+       )
+      (if (not (null command))
+        (let ((command (read-from-minibuffer "Run command: " command)))
+          (compile command t)))
+      )
+    )
 
-  (defun chead()
-    (interactive)
-    (insert (format "\
-#include <iostream>
-#include <cstring>
-#include <cstdio>
-#include <vector>
-#include <algorithm>\n")))
-
-
-  (set-variable 'ycmd-server-command '("/usr/bin/python3.7" "-u" "/home/angel/.dotfiles/.vim/vimfiles/YouCompleteMe/third_party/ycmd/ycmd"))
+  (set-variable 'ycmd-server-command '("/usr/bin/python3.8" "-u" "/home/angel/.dotfiles/.vim/vimfiles/YouCompleteMe/third_party/ycmd/ycmd"))
   (set-variable 'ycmd-global-config "/home/angel/.config/ycmd/ycmd_conf.py")
   (add-hook 'c++-mode-hook 'ycmd-mode)
   (add-hook 'python-mode-hook 'ycmd-mode)
 
+  ;; latex privew size
+  (require 'org)
+  (setq org-format-latex-options (plist-put org-format-latex-options :scale 2.0))
+
+  ;; chinese font
+  (dolist (charset '(kana han cjk-misc bopomofo))
+    (set-fontset-font (frame-parameter nil 'font) charset
+                      (font-spec :family "Noto Sans CJK SC" :size 20)))
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -470,8 +431,11 @@ values."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   (quote
+    ("bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" default)))
  '(evil-want-Y-yank-to-eol nil)
  '(org-agenda-files (quote ("~/todo.org")))
  '(package-selected-packages
    (quote
-    (sql-indent skewer-mode powerline spinner simple-httpd json-snatcher json-reformat js2-mode parent-mode company iedit smartparens evil flycheck helm multiple-cursors avy markdown-mode projectile hydra yasnippet dash web-mode tagedit slim-mode scss-mode sass-mode pug-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data phpunit phpcbf php-extras php-auto-yasnippets drupal-mode php-mode org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download htmlize gnuplot flyspell-correct-helm flyspell-correct auto-dictionary unfill mwim emms yapfify xterm-color ws-butler winum which-key web-beautify volatile-highlights vimrc-mode vi-tilde-fringe uuidgen use-package toc-org spaceline shell-pop restart-emacs rainbow-delimiters pyvenv pytest pyenv-mode py-isort popwin pip-requirements persp-mode pcre2el paradox org-plus-contrib org-bullets open-junk-file neotree multi-term move-text mmm-mode markdown-toc macrostep lorem-ipsum livid-mode live-py-mode linum-relative link-hint json-mode js2-refactor js-doc indent-guide hy-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gh-md fuzzy flycheck-ycmd flycheck-pos-tip flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help elisp-slime-nav dumb-jump disaster diminish define-word dactyl-mode cython-mode company-ycmd company-tern company-statistics company-c-headers company-anaconda column-enforce-mode coffee-mode cmake-mode clean-aindent-mode clang-format auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell))))
+    (pyim pyim-basedict xr pangu-spacing find-by-pinyin-dired ace-pinyin pinyinlib company-auctex auctex-latexmk auctex cdlatex intero hlint-refactor hindent helm-hoogle haskell-snippets flycheck-haskell company-ghci company-ghc ghc haskell-mode company-cabal cmm-mode sql-indent skewer-mode powerline spinner simple-httpd json-snatcher json-reformat js2-mode parent-mode company iedit smartparens evil flycheck helm multiple-cursors avy markdown-mode projectile hydra yasnippet dash web-mode tagedit slim-mode scss-mode sass-mode pug-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data phpunit phpcbf php-extras php-auto-yasnippets drupal-mode php-mode org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download htmlize gnuplot flyspell-correct-helm flyspell-correct auto-dictionary unfill mwim emms yapfify xterm-color ws-butler winum which-key web-beautify volatile-highlights vimrc-mode vi-tilde-fringe uuidgen use-package toc-org spaceline shell-pop restart-emacs rainbow-delimiters pyvenv pytest pyenv-mode py-isort popwin pip-requirements persp-mode pcre2el paradox org-plus-contrib org-bullets open-junk-file neotree multi-term move-text mmm-mode markdown-toc macrostep lorem-ipsum livid-mode live-py-mode linum-relative link-hint json-mode js2-refactor js-doc indent-guide hy-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gh-md fuzzy flycheck-ycmd flycheck-pos-tip flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help elisp-slime-nav dumb-jump disaster diminish define-word dactyl-mode cython-mode company-ycmd company-tern company-statistics company-c-headers company-anaconda column-enforce-mode coffee-mode cmake-mode clean-aindent-mode clang-format auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell))))

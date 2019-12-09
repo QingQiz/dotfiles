@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: qurt
+# key: qurt
+# --
+\sqrt{$0}

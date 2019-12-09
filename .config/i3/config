@@ -245,7 +245,7 @@ focus_follows_mouse true
 # bindsym Mod4+p exec wallpaper -1
 bindsym Mod4+n exec __random_wallpaper
 
-# exec_always emacs --bg-daemon
+exec_always emacs --bg-daemon
 # exec_always wallpaper 0
 exec_always __random_wallpaper
 exec i3-config-wizard

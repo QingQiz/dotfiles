@@ -61,6 +61,7 @@ alias lh="du -ahd1 | sort -h"
 alias t='tmux'
 alias tks='tmux kill-session -t'
 alias f='feh'
+alias ff='ffmpeg'
 alias vi='vim'
 # alias ec='emacsclient -nw'
 alias ec='emacsclient -c -n'

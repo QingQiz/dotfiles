@@ -21,27 +21,3 @@
 *** 生产实习 (=3'=)
 *** 编译原理实验 (=2'=)
 ** 毕设 (=10'=)
-
-* NPUOJ
-** DONE Problem <-> Type
-   CLOSED: [2019-03-29 Fri 14:57]
-** DONE GetSampleData
-   CLOSED: [2019-03-30 Sat 17:34]
-** DONE regist contest
-   CLOSED: [2019-03-27 Wed 18:20]
-** TODO CMS
-** DONE Ignore Submission
-   CLOSED: [2019-03-30 Sat 17:34]
-** TODO Unit Testing
-*** DONE ContestAppService
-    CLOSED: [2019-04-07 Sun 21:29]
-*** DONE JudgementAppService
-    CLOSED: [2019-04-10 Wed 17:12]
-*** DONE LanguageAppService
-    CLOSED: [2019-04-08 Mon 22:39]
-*** DONE ProblemAppService
-    CLOSED: [2019-04-07 Sun 21:30]
-*** DONE TagAppService
-    CLOSED: [2019-04-07 Sun 21:30]
-*** DONE SubmissionAppService
-    CLOSED: [2019-04-08 Mon 22:33]

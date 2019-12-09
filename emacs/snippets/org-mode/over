@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: over
+# key: over
+# --
+\overline{$1}
