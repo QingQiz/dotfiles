@@ -154,8 +154,8 @@ cabbrev vimrc e $HOME/.vimrc
 command! Compile call SmartComplier();
 command! Run call RunResult();
 command! W w
-command! Format !clang-format -i
-      \ -style="{BasedOnStyle: Google, IndentWidth: 2}" %
+command! Format !clang-format -i --sort-includes=false
+      \ -style="{BasedOnStyle: Google, IndentWidth: 4}" %
 command! Cls %s/\s*$//
 " command! Vimrc e $HOME/.vimrc
 " command! AddHead call AddHead()
@@ -265,13 +265,19 @@ fun! SmartComplier()
 	elseif &ft == "asm"
 		exec "!nasm -f bin -o now %"
 	elseif &ft == "haskell"
-		exec "!ghc -o now %"
+		exec "!ghc -o now.haskell %"
   endif
 endf
 
 func! RunResult()
-  if &ft == "cpp" || &ft == 'c' || &ft == 'haskell'
+  if &ft == "cpp" || &ft == 'c'
     exec "!./now"
+  elseif &ft == "haskell"
+    if findfile('now.haskell', '.') == 'now.haskell'
+      exec "!./now.haskell"
+    else
+      exec "!runghc %"
+    en
   elseif &ft == "python"
     exec "!python3 %"
   elseif &ft == "java"

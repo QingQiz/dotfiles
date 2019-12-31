@@ -1,18 +1,14 @@
 {
     "gpu": {
-        "name": "gpu.xyzhub.xyz",
+        "name": "ai.inori.ren",
         "user": "angel"
     },
     "bk_": {
-        "name": "10.69.16.4",
+        "name": "bk.inori.ren",
         "user": "angel"
     },
     "bk": {
         "name": "169.254.215.240",
-        "user": "angel"
-    },
-    "lc": {
-        "name": "102.honoka.tw",
         "user": "angel"
     },
     "ip_": {
@@ -23,5 +19,10 @@
         "name": "222.24.212.146",
         "port": "3389",
         "user": "angel"
+    },
+    "hktkqj": {
+        "name": "169.254.39.78",
+        "port": "3389",
+        "user": "hktkqj"
     }
 }

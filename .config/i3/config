@@ -215,6 +215,7 @@ exec_always --no-startup-id __launch_fcitx
 
 # local ss
 exec_always --no-startup-id sslocal -c /etc/shadowsocks/vps6.json
+exec_always --no-startup-id sslocal -c /etc/shadowsocks/pi.json
 
 # lock when sleep
 # exec --no-startup-id xss-lock -- betterlockscreen -l &
@@ -253,7 +254,7 @@ exec i3-config-wizard
 exec compton &
 exec setterm -bleng 0
 exec_always numlockx &
-exec_always __launch_conky
+# exec_always __launch_conky
 #exec_always --no-startup-id mpd
 exec --no-startup-id /opt/ddns.sh
 exec --no-startup-id aria2c --conf-path=/home/angel/.config/aria2/aria2.conf

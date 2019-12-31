@@ -78,7 +78,8 @@ if args.ser is not None:
 
     if args.monitors is not None:
         cmd += ' -mm -m ' + args.monitors[0]
-    os.system(cmd)
+
+    a = os.system(cmd)
 else:
     # TODO
     pass
