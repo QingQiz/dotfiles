@@ -122,6 +122,7 @@ read chc
 if [ "$chc" = "y" ]; then
     echo "configing vim..."
     mkdir -p $script_dir/.vim/vimfiles
+    mkdir -p ~/.cache/vim/undo -p
     cd $script_dir/.vim/vimfiles/
 
     echo "installint gvim & some plugins..."
