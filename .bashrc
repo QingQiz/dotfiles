@@ -123,20 +123,3 @@ ver() {
     fi
 
 }
-
-pushmod() {
-    if [[ $# == 1 ]]; then
-        cp ./_.cc ~/workspace/Progeaming-Practice/ACM-ICPC/Mod/$1
-    else
-        cp ./$1 ~/workspace/Progeaming-Practice/ACM-ICPC/Mod/$2
-    fi
-}
-
-pushcode() {
-    if [[ $# == 1 ]]; then
-        cp ./_.cc ~/workspace/Progeaming-Practice/ACM-ICPC/CodeHub/$1
-    else
-        cp ./$1 ~/workspace/Progeaming-Practice/ACM-ICPC/CodeHub/$2
-    fi
-}
-

@@ -193,7 +193,7 @@ if [ "$chc" = "y" ]; then
     ln -sf "$script_dir/.zsh/pure/pure.zsh" zfunctions/pure
     ln -sf "$script_dir/.zsh/pure/async.zsh" zfunctions/async
 
-    ln_ .oh-my-zsh .bashrc .zsh .zshrc
+    ln_ .oh-my-zsh .bashrc .zsh .zshrc .colorrc
     
     install_n pkgfile
     sudo pkgfile --update
