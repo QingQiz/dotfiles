@@ -17,11 +17,10 @@ def add_albumart(sound_name, image_name):
         os.remove(image_name)
         return
 
-    os.rename(sound_name, "bak." + sound_name)
-    cmd = 'ffmpeg -i "{sound}" -i "{img}" -map 0:0 -map 1:0 -codec copy -id3v2_version 3 -metadata:s:v title="Album cover" -metadata:s:v comment="Cover (font)" -loglevel quiet -y "{output}"'
-    os.system(cmd.format(sound="bak."+sound_name, img=image_name, output=sound_name))
-    os.remove("bak." + sound_name)
-    os.remove(image_name)
+    os.rename(sound_name, "/tmp/" + sound_name)
+    cmd = 'ffmpeg -i "file:{sound}" -i "file:{img}" -map 0:0 -map 1:0 -codec copy -id3v2_version 3 -metadata:s:v title="Album cover" -metadata:s:v comment="Cover (font)" -loglevel quiet -y "file:{output}"'
+    os.system(cmd.format(sound="/tmp/"+sound_name, img=image_name, output=sound_name))
+    os.rename(image_name, '/tmp/' + image_name)
 
 
 def get_resource_info(soundcloud_url):
