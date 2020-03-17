@@ -1,5 +1,0 @@
-#!/usr/bin/env zsh
-
-cd ~/Documents/Video/
-nohup /home/angel/workspace/you-get/you-get -d -c -l /home/angel/cookies/bilibili.txt $@ > /dev/null &
-

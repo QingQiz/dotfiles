@@ -1,61 +1,58 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+import requests
+import re
 import os
 import sys
-import requests
-import json
-import base64
-from time import sleep
 from shutil import which
 
-api_url = 'https://v2api.savemp3.cc/v1/'
 proxy = {
     'http': 'http://127.0.0.1:1080',
     'https': 'http://127.0.0.1:1080'
 }
 
-def build_header_and_data(soundcloud_url):
-    site_url = 'https://savemp3.cc/soundcloud-downloader/'
-    soundcloud_url_b64 = base64.b64encode(soundcloud_url.encode()).decode()
-    req_header = {
-        'Content-Type': 'application/json',
-        'Origin': 'https://savemp3.cc',
-        'Referer': site_url + soundcloud_url_b64
-    }
-    req_data = {
-        "type": "crawler",
-        "params": { "video_url": soundcloud_url }
-    }
-    return req_header, json.dumps(req_data)
+def add_albumart(sound_name, image_name):
+    if which('ffmpeg') == None:
+        os.remove(image_name)
+        return
+
+    os.rename(sound_name, "/tmp/" + sound_name)
+    cmd = 'ffmpeg -i "file:{sound}" -i "file:{img}" -map 0:0 -map 1:0 -codec copy -id3v2_version 3 -metadata:s:v title="Album cover" -metadata:s:v comment="Cover (font)" -loglevel quiet -y "file:{output}"'
+    os.system(cmd.format(sound="/tmp/"+sound_name, img=image_name, output=sound_name))
+    os.rename(image_name, '/tmp/' + image_name)
 
 
 def get_resource_info(soundcloud_url):
-    header, data = build_header_and_data(soundcloud_url)
+    s = requests.Session()
+    s.proxies.update(proxy)
 
-    r = requests.post(url=api_url + 'job', headers=header, data=data, proxies=proxy)
-    job = json.loads(r.text)
-    assert job['code'] == 0, f"failed to get job: {r.text}"
+    r = s.get('https://sclouddownloader.net/')
 
-    r = requests.get(url=api_url + 'check', headers=header, params=job['data'], proxies=proxy)
-    check = json.loads(r.text)
-    assert check['code'] == 0, f"failed to get url: {r.text}"
-    print(check)
+    s.headers.update(Referer='https://sclouddownloader.net/')
 
-    check = check['data']
-    print(f"state: {check['state']}")
+    r = s.post('https://sclouddownloader.net/download-sound-track', data={
+        "csrfmiddlewaretoken": s.cookies.get_dict()['csrftoken'],
+        "sound-url": soundcloud_url
+    })
 
-    while check['state'] != 'completed':
-        sleep(0.5)
-        check = get_resource_info(soundcloud_url)
-        print(f"state: {check['state']}")
+    sound_url = re.search(r'<a href="(.*)" class=.*Manually', r.text).group(1)
+    sound_url = sound_url.replace('&amp;', '&')
+    image_url = re.search(r'<img id="thumbnail" src="(.*)" style', r.text).group(1)
+    image_url = image_url.replace('&amp;', '&')
 
-    return check
+    name = re.search(r'<i>(.*)\.mp3</i>', r.text).group(1)
+    name = name if name[-4:] == '.mp3' else name + '.mp3'
+    name = name.replace('&amp;', '&')
+
+    return {'thumbnail': image_url, 'sound': sound_url, 'title': name}
 
 
-def get_resource_data(resource_info):
+def download_resource_data(resource_info):
     image_url = resource_info['thumbnail']
-    sound_url = resource_info['formats'][0]['url']
+    sound_url = resource_info['sound']
+    image_name = image_url[image_url.find('artworks'):].replace('/', ' ')
+    sound_name = resource_info['title'].replace('/', ' ')
 
     print('downloading image...')
     r = requests.get(image_url, proxies=proxy)
@@ -65,46 +62,24 @@ def get_resource_data(resource_info):
     r = requests.get(sound_url, proxies=proxy)
     sound_data = r.content
 
-    return {
-        'image': {
-            'name': image_url[image_url.find('artworks'):],
-            'data': image_data
-        },
-        'sound': {
-            'name': resource_info['title'],
-            'data': sound_data,
-            'format': resource_info['formats'][0]['ext']
-        }
-    }
+    with open(sound_name, 'wb') as f:
+        f.write(sound_data)
 
-
-def add_albumart(sound_name, image_name):
-    if which('ffmpeg') == None:
-        return
-
-    os.rename(sound_name, "bak." + sound_name)
-    cmd = 'ffmpeg -i "{sound}" -i "{img}" -map 0:0 -map 1:0 -codec copy -id3v2_version 3 -metadata:s:v title="Album cover" -metadata:s:v comment="Cover (font)" -loglevel quiet -y "{output}"'
-    os.system(cmd.format(sound="bak."+sound_name, img=image_name, output=sound_name))
-    os.remove("bak." + sound_name)
-
-
-def dump_data(resource):
-    with open(image_name:=resource['image']['name'], 'wb') as f:
-        f.write(resource['image']['data'])
-    with open(sound_name:=f"{resource['sound']['name']}.{resource['sound']['format']}".replace('/', ''), 'wb') as f:
-        f.write(resource['sound']['data'])
-    # with open(sound_name:=f"a.mp3", 'wb') as f:
-        # f.write(resource['sound']['data'])
-    add_albumart(sound_name, image_name)
+    if len(image_data) > 100:
+        with open(image_name, 'wb') as f:
+            f.write(image_data)
+        add_albumart(sound_name, image_name)
 
 
 if __name__ == '__main__':
     assert len(sys.argv) == 2, 'usage: python3 soundcloud.py <url>'
     url = sys.argv[1]
-    
+
     assert url.find('https://soundcloud.com/') == 0, 'my name is SOUNDCLOUD.PY'
 
+    print('getting resource info...')
     resource_info = get_resource_info(url)
-    resource = get_resource_data(resource_info)
-    dump_data(resource)
+    print(f"image url:  {resource_info['thumbnail'][:50]}...")
+    print(f"sound url:  {resource_info['sound'][:50]}...")
+    download_resource_data(resource_info)
 

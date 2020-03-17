@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-
 import requests
 import re
+import json
 import os
 import sys
 from shutil import which
@@ -12,74 +12,157 @@ proxy = {
     'https': 'http://127.0.0.1:1080'
 }
 
-def add_albumart(sound_name, image_name):
+s = requests.Session()
+s.proxies.update(proxy)
+
+
+def get_sndcd_apikey():
+    print('GET: https://soundcloud.com')
+    r = s.get('https://soundcloud.com')
+    x = re.findall(r'script crossorigin src="(.+?)"></script>', r.text)
+
+    print(f'GET: {x[-1]}')
+    r = s.get(x[-1])
+    x = re.search(r'client_id:"(.+?)"', r.text)
+
+    return x.group(1)
+
+
+def get_resource_info(resource_url, client_id):
+    print('GET: ' + resource_url)
+    r = s.get(resource_url)
+    r.encoding = 'utf-8'
+
+    x = re.escape('forEach(function(e){n(e)})}catch(t){}})},')
+    x = re.search(r'' + x + r'(.*)\);</script>', r.text)
+
+    info = json.loads(x.group(1))[-1]['data'][0]
+    info = info['tracks'] if info.get('track_count') else [info]
+
+    ids = [i['id'] for i in info if i.get('comment_count') is None]
+    ids = list(map(str, ids))
+    ids_split = ['%2C'.join(ids[i:i+10]) for i in range(0, len(ids), 10)]
+    api_url = 'https://api-v2.soundcloud.com/tracks?ids={ids}&client_id={client_id}&%5Bobject%20Object%5D=&app_version=1584348206&app_locale=en'
+
+    res = []
+    for ids in ids_split:
+        uri = api_url.format(ids=ids, client_id=client_id)
+        print(f'GET: {uri[:80]}...')
+        r = s.get(uri)
+        r.encoding = 'utf-8'
+        res += json.loads(r.text)
+    res = iter(res)
+    info = [next(res) if i.get('comment_count') is None else i for i in info]
+
+    return info
+
+
+def download(resource_info, client_id):
+    for info in resource_info:
+        name = info['title']
+        name = name.replace('/', '、').replace('\\', '、')
+        name = name.replace(':', '：').replace('?', '？')
+        name = name.replace('"', "'").replace('*', '·')
+        name = name.replace('<', '[').replace('>', ']')
+        name = name.replace('|', '丨')
+        
+        artwork = info['artwork_url']
+        artwork = artwork.replace('large', 't500x500')
+        metadata = info['publisher_metadata']
+
+        print()
+        print('Dowload: ' + name)
+
+        transcodings = info['media']['transcodings']
+        sq = [i for i in transcodings if i['quality'] == 'sq']
+        hq = [i for i in transcodings if i['quality'] == 'hq']
+        surl = sq[0] if hq == [] else hq[0]
+        surl = surl['url']
+
+        uri = surl + '?client_id=' + client_id
+        print(f'GET: {uri[:80]}...')
+        r = s.get(uri)
+        surl = json.loads(r.text)['url']
+
+        print(f'GET: {surl[:80]}...')
+        m3u8 = s.get(surl)
+        m3u8 = m3u8.text
+        urll = re.findall(r'http.*?(?=\n)', m3u8)
+
+        resource = b''
+        for url in urll:
+            print(f'GET: {url[:80]}...')
+            r = s.get(url)
+            resource += r.content
+
+        print('GET: ' + artwork, end='')
+        r = s.get(artwork)
+        if r.text == 'not found':
+            print('...not found', end='')
+            artwork = artwork.replace('t500x500', 'large')
+            r = s.get(artwork)
+        print()
+
+        yield {
+            'title': name,
+            'sound': resource,
+            'artwork': r.content,
+            'metadata': metadata
+        }
+
+
+def add_metadata(sound_name, image_name, metadata):
     if which('ffmpeg') == None:
-        os.remove(image_name)
         return
 
-    os.rename(sound_name, "/tmp/" + sound_name)
-    cmd = 'ffmpeg -i "file:{sound}" -i "file:{img}" -map 0:0 -map 1:0 -codec copy -id3v2_version 3 -metadata:s:v title="Album cover" -metadata:s:v comment="Cover (font)" -loglevel quiet -y "file:{output}"'
-    os.system(cmd.format(sound="/tmp/"+sound_name, img=image_name, output=sound_name))
-    os.rename(image_name, '/tmp/' + image_name)
+    metadata_opt = ' '
+    for i in metadata:
+        metadata_opt += f'-metadata {i}="{metadata[i]}" '
+
+    cmd = 'ffmpeg -i "file:{sound}" -i "file:{img}" -map 0:0 -map 1:0 -codec copy -id3v2_version 3 -metadata:s:v title="Album cover" -metadata:s:v comment="Cover (font)" {metadata} -loglevel quiet -y "file:{output}"'
+    os.system(cmd.format(sound=sound_name, img=image_name, output='bak.'+sound_name, metadata=metadata_opt))
+
+    if os.path.exists('bak.' + sound_name):
+        os.remove(sound_name)
+        os.rename("bak." + sound_name, sound_name)
+        os.remove(image_name)
 
 
-def get_resource_info(soundcloud_url):
-    s = requests.Session()
-    s.proxies.update(proxy)
+def dump_download(downloaded):
+    with open(downloaded['title'] + '.mp3', 'wb') as f:
+        f.write(downloaded['sound'])
 
-    r = s.get('https://sclouddownloader.net/')
+    if len(downloaded['artwork']) < 20:
+        return
 
-    s.headers.update(Referer='https://sclouddownloader.net/')
+    with open(downloaded['title'] + '.jpg', 'wb') as f:
+        f.write(downloaded['artwork'])
 
-    r = s.post('https://sclouddownloader.net/download-sound-track', data={
-        "csrfmiddlewaretoken": s.cookies.get_dict()['csrftoken'],
-        "sound-url": soundcloud_url
-    })
+    if downloaded['metadata'] is None:
+        downloaded['metadata'] = {}
 
-    sound_url = re.search(r'<a href="(.*)" class=.*Manually', r.text).group(1)
-    sound_url = sound_url.replace('&amp;', '&')
-    image_url = re.search(r'<img id="thumbnail" src="(.*)" style', r.text).group(1)
-    image_url = image_url.replace('&amp;', '&')
-
-    name = re.search(r'<i>(.*)\.mp3</i>', r.text).group(1)
-    name = name if name[-4:] == '.mp3' else name + '.mp3'
-    name = name.replace('&amp;', '&')
-
-    return {'thumbnail': image_url, 'sound': sound_url, 'title': name}
-
-
-def download_resource_data(resource_info):
-    image_url = resource_info['thumbnail']
-    sound_url = resource_info['sound']
-    image_name = image_url[image_url.find('artworks'):].replace('/', ' ')
-    sound_name = resource_info['title'].replace('/', ' ')
-
-    print('downloading image...')
-    r = requests.get(image_url, proxies=proxy)
-    image_data = r.content
-
-    print('downloading sound...')
-    r = requests.get(sound_url, proxies=proxy)
-    sound_data = r.content
-
-    with open(sound_name, 'wb') as f:
-        f.write(sound_data)
-
-    if len(image_data) > 100:
-        with open(image_name, 'wb') as f:
-            f.write(image_data)
-        add_albumart(sound_name, image_name)
+    add_metadata(
+        downloaded['title'] + '.mp3',
+        downloaded['title'] + '.jpg',
+        downloaded['metadata']
+    )
 
 
 if __name__ == '__main__':
-    assert len(sys.argv) == 2, 'usage: python3 soundcloud.py <url>'
+    assert len(sys.argv) == 2, f'usage: python3 {sys.argv[0]} <url>'
+    # url = 'https://soundcloud.com/anthony-flieger/sets/cytus'
+    # url = 'https://soundcloud.com/keiny-pham/impure-bird'
     url = sys.argv[1]
+    assert url.find('https://soundcloud.com/') == 0
 
-    assert url.find('https://soundcloud.com/') == 0, 'my name is SOUNDCLOUD.PY'
+    client_id = get_sndcd_apikey()
+    info = get_resource_info(url, client_id)
 
-    print('getting resource info...')
-    resource_info = get_resource_info(url)
-    print(f"image url:  {resource_info['thumbnail'][:50]}...")
-    print(f"sound url:  {resource_info['sound'][:50]}...")
-    download_resource_data(resource_info)
+    if len(info) > 1:
+        x = re.search(r'^.*/(.*)$', url).group(1)
+        os.mkdir(x)
+        os.chdir(x)
+
+    for downloaded in download(info, client_id):
+        dump_download(downloaded)
 
