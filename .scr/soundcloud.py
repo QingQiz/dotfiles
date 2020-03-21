@@ -7,6 +7,7 @@ import os
 import sys
 from shutil import which
 
+DEBUG = 0
 proxy = {
     'http': 'http://127.0.0.1:1080',
     'https': 'http://127.0.0.1:1080'
@@ -15,28 +16,37 @@ proxy = {
 s = requests.Session()
 s.proxies.update(proxy)
 
+def D(s='', end='\n'):
+    if not DEBUG:
+        return
+    print(s if len(s) < 80 else (s[:80] + '...'), end=end)
+
 
 def get_sndcd_apikey():
-    print('GET: https://soundcloud.com')
+    D('GET: https://soundcloud.com')
     r = s.get('https://soundcloud.com')
     x = re.findall(r'script crossorigin src="(.+?)"></script>', r.text)
 
-    print(f'GET: {x[-1]}')
+    D(f'GET: {x[-1]}')
     r = s.get(x[-1])
     x = re.search(r'client_id:"(.+?)"', r.text)
 
     return x.group(1)
 
 
-def get_resource_info(resource_url, client_id):
-    print('GET: ' + resource_url)
-    r = s.get(resource_url)
-    r.encoding = 'utf-8'
+def get_resource_info(resource_url, client_id, resource=None):
+    if resource is None:
+        D('GET: ' + resource_url)
+        r = s.get(resource_url)
+        r.encoding = 'utf-8'
 
-    x = re.escape('forEach(function(e){n(e)})}catch(t){}})},')
-    x = re.search(r'' + x + r'(.*)\);</script>', r.text)
+        x = re.escape('forEach(function(e){n(e)})}catch(t){}})},')
+        x = re.search(r'' + x + r'(.*)\);</script>', r.text)
 
-    info = json.loads(x.group(1))[-1]['data'][0]
+        info = json.loads(x.group(1))[-1]['data'][0]
+    else:
+        info = resource
+
     info = info['tracks'] if info.get('track_count') else [info]
 
     ids = [i['id'] for i in info if i.get('comment_count') is None]
@@ -47,7 +57,7 @@ def get_resource_info(resource_url, client_id):
     res = []
     for ids in ids_split:
         uri = api_url.format(ids=ids, client_id=client_id)
-        print(f'GET: {uri[:80]}...')
+        D(f'GET: {uri}')
         r = s.get(uri)
         r.encoding = 'utf-8'
         res += json.loads(r.text)
@@ -70,7 +80,6 @@ def download(resource_info, client_id):
         artwork = artwork.replace('large', 't500x500')
         metadata = info['publisher_metadata']
 
-        print()
         print('Dowload: ' + name)
 
         transcodings = info['media']['transcodings']
@@ -80,28 +89,28 @@ def download(resource_info, client_id):
         surl = surl['url']
 
         uri = surl + '?client_id=' + client_id
-        print(f'GET: {uri[:80]}...')
+        D(f'GET: {uri}')
         r = s.get(uri)
         surl = json.loads(r.text)['url']
 
-        print(f'GET: {surl[:80]}...')
+        D(f'GET: {surl}')
         m3u8 = s.get(surl)
         m3u8 = m3u8.text
         urll = re.findall(r'http.*?(?=\n)', m3u8)
 
         resource = b''
         for url in urll:
-            print(f'GET: {url[:80]}...')
+            D(f'GET: {url}')
             r = s.get(url)
             resource += r.content
 
-        print('GET: ' + artwork, end='')
+        D('GET: ' + artwork, end='')
         r = s.get(artwork)
         if r.text == 'not found':
-            print('...not found', end='')
+            D('...not found', end='')
             artwork = artwork.replace('t500x500', 'large')
             r = s.get(artwork)
-        print()
+        D()
 
         yield {
             'title': name,
@@ -148,20 +157,57 @@ def dump_download(downloaded):
     )
 
 
+def sndcd_search(q, client_id):
+    url = 'https://api-v2.soundcloud.com/search'
+    param = {
+        "q": q,
+        "client_id": client_id,
+        "limit": 20,
+        "offset": 0,
+    }
+
+    D(f"GET: {url}")
+    r = s.get(url, params=param)
+    r.encoding = 'utf-8'
+    tracks = json.loads(r.text)
+    total = tracks['total_results']
+    tracks = [i for i in tracks['collection'] if i.get('kind') in ['playlist', 'track']]
+
+    print(f'Found {len(tracks)} of {total}')
+    for index, info in enumerate(tracks):
+        duration = info.get('duration')
+        duration = info.get('full_duration') if duration is None else duration
+        duration = int(duration) // 1000
+        print(f'{index+1:02} {duration:5}s {info["kind"]:>8}  {info["title"]}')
+
+    return tracks
+
+
 if __name__ == '__main__':
     assert len(sys.argv) == 2, f'usage: python3 {sys.argv[0]} <url>'
     # url = 'https://soundcloud.com/anthony-flieger/sets/cytus'
     # url = 'https://soundcloud.com/keiny-pham/impure-bird'
     url = sys.argv[1]
-    assert url.find('https://soundcloud.com/') == 0
 
     client_id = get_sndcd_apikey()
-    info = get_resource_info(url, client_id)
 
-    if len(info) > 1:
-        x = re.search(r'^.*/(.*)$', url).group(1)
-        os.mkdir(x)
-        os.chdir(x)
+    if url.find('https://soundcloud.com/') == 0:
+        info = get_resource_info(url, client_id)
+    else:
+        info = sndcd_search(url, client_id)
+
+        print('\nType id to download (for example 01): __\b\b', end='')
+        try:
+            idx = input()
+            info = info[int(idx) - 1]
+        except KeyboardInterrupt:
+            print('Interrupted')
+            exit(-1)
+        except (IndexError, ValueError):
+            print('Wrong input')
+            exit(-1)
+
+        info = get_resource_info(url, client_id, info)
 
     for downloaded in download(info, client_id):
         dump_download(downloaded)
