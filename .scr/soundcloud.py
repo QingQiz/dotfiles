@@ -184,7 +184,7 @@ def sndcd_search(q, client_id):
 
 
 if __name__ == '__main__':
-    assert len(sys.argv) == 2, f'usage: python3 {sys.argv[0]} <url>'
+    assert len(sys.argv) >= 2, f'usage: python3 {sys.argv[0]} <url>'
     # url = 'https://soundcloud.com/anthony-flieger/sets/cytus'
     # url = 'https://soundcloud.com/keiny-pham/impure-bird'
     url = sys.argv[1]
@@ -194,7 +194,8 @@ if __name__ == '__main__':
     if url.find('https://soundcloud.com/') == 0:
         info = get_resource_info(url, client_id)
     else:
-        info = sndcd_search(url, client_id)
+        q = ' '.join(sys.argv[1:])
+        info = sndcd_search(q, client_id)
 
         print('\nType id to download (for example 01): __\b\b', end='')
         try:
