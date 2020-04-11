@@ -74,6 +74,8 @@ vnoremap L                  $
 snoremap <c-l>              <ESC>A
 inoremap <c-f>              <right>
 inoremap <c-b>              <left>
+inoremap <c-a>              <home>
+inoremap <c-e>              <end>
 nnoremap <down>             <nop>
 nnoremap <up>               <nop>
 inoremap <c-@>              <nop>
@@ -497,7 +499,7 @@ augroup filetype_frmats " {{{
         \ setlocal foldcolumn=1
   au FileType html
         \ let b:AutoPairs = {"<": ">", '"': '"', "'": "'", '{': '}', '(': ')', '[': ']'}
-  au FileType {vim,asm,sh,zsh}
+  au FileType {asm,sh,zsh}
         \ setlocal noexpandtab
   au FileType {c,cpp,python,vim,sh,zsh}
         \ match BadWhiteSpace /\v\s+$/
@@ -508,6 +510,10 @@ augroup AddFileHeaders " {{{
   au!
   au BufNewFile *.sh
         \ call setline(1, '#!/usr/bin/env bash')                   |
+        \ call append(line('.'), '')                               |
+        \ normal! Go
+  au BufNewFile *.hs
+        \ call setline(1, '#!/usr/bin/env runhaskell')             |
         \ call append(line('.'), '')                               |
         \ normal! Go
   au BufNewFile *.py
