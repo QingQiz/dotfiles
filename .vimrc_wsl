@@ -422,7 +422,7 @@ class Py4Js:
         return self.ctx.call("TL", text)
 
 def translate(text):
-    url = 'https://translate.google.cn/translate_a/single'
+    url = 'https://translate.google.com/translate_a/single'
     r = requests.get(url, params=[
         ('client', 't'), ('sl', 'en'), ('tl', 'zh-CN'), ('dt', 'bd'),
         ('dt', 'rm'),  ('dt', 't'), ('dt', 'qca'), ('ie', 'UTF-8'),
@@ -510,10 +510,6 @@ augroup AddFileHeaders " {{{
   au!
   au BufNewFile *.sh
         \ call setline(1, '#!/usr/bin/env bash')                   |
-        \ call append(line('.'), '')                               |
-        \ normal! Go
-  au BufNewFile *.hs
-        \ call setline(1, '#!/usr/bin/env runhaskell')             |
         \ call append(line('.'), '')                               |
         \ normal! Go
   au BufNewFile *.py
