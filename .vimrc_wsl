@@ -44,6 +44,8 @@ set rtp+=/home/angel/.vim/vimfiles/indentLine/after
 
 " map {{{
 let mapleader = '\'
+nmap <f1> <nop>
+imap <f1> <nop>
 nnoremap <c-h>              <c-w>h
 nnoremap <c-j>              <c-w>j
 nnoremap <c-k>              <c-w>k
@@ -499,6 +501,8 @@ augroup filetype_frmats " {{{
         \ setlocal foldcolumn=1
   au FileType html
         \ let b:AutoPairs = {"<": ">", '"': '"', "'": "'", '{': '}', '(': ')', '[': ']'}
+  au FileType haskell
+        \ let b:AutoPairs = {'"': '"', "{": "}", "[": "]", "(": ")"}
   au FileType {asm,sh,zsh}
         \ setlocal noexpandtab
   au FileType {c,cpp,python,vim,sh,zsh}
