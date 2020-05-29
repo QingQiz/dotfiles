@@ -7,6 +7,7 @@ export ZSH=$HOME/.oh-my-zsh
 export JAVA_HOME=/usr/lib/jvm/java-10-openjdk
 export PATH=$PATH:/home/angel/.scr
 export PATH=$PATH:$HOME/.dotnet/tools
+export PATH=$PATH:$HOME/.local/bin
 export MANPAGER=cat
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
 export fpath=( "$HOME/.zsh/zfunctions" $fpath )
@@ -54,8 +55,8 @@ alias gcl='git clone'
 alias gdf='git diff'
 alias gcam='git commit -am'
 
-alias l='ls++'
-alias ll='ls++ --potsf -a'
+# alias l='ls++'
+# alias ll='ls++ --potsf -a'
 alias la='ls -a'
 alias lh="du -ahd1 | sort -h"
 alias t='tmux'

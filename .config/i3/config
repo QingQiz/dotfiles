@@ -248,7 +248,7 @@ bindsym Mod4+n exec __random_wallpaper
 
 exec_always emacs --bg-daemon
 # exec_always wallpaper 0
-exec_always __random_wallpaper
+# exec_always __random_wallpaper
 exec i3-config-wizard
 # exec --no-startup-id i3-msg "workspace 2"
 exec compton &

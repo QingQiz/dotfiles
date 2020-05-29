@@ -44,6 +44,8 @@ set rtp+=/home/angel/.vim/vimfiles/indentLine/after
 
 " map {{{
 let mapleader = '\'
+nmap <f1> <nop>
+imap <f1> <nop>
 nnoremap <c-h>              <c-w>h
 nnoremap <c-j>              <c-w>j
 nnoremap <c-k>              <c-w>k
@@ -74,6 +76,8 @@ vnoremap L                  $
 snoremap <c-l>              <ESC>A
 inoremap <c-f>              <right>
 inoremap <c-b>              <left>
+inoremap <c-a>              <home>
+inoremap <c-e>              <end>
 nnoremap <down>             <nop>
 nnoremap <up>               <nop>
 inoremap <c-@>              <nop>
@@ -256,7 +260,11 @@ fun! SmartComplier()
     elseif findfile('Makefile') == '' && findfile('CMakeLists.txt', '.') == 'CMakeLists.txt'
       exec "!(cmake . && make)"
     else
-      exec "!g++ -Wall -o now % -g -lm"
+			if &ft == "cpp"
+				exec "!g++ -Wall -o now % -g -lm"
+			else
+				exec "!gcc -Wall -o now % -g -lm"
+			en
     en
   elseif &ft == "java"
     exec "!javac %"
@@ -416,7 +424,7 @@ class Py4Js:
         return self.ctx.call("TL", text)
 
 def translate(text):
-    url = 'https://translate.google.cn/translate_a/single'
+    url = 'https://translate.google.com/translate_a/single'
     r = requests.get(url, params=[
         ('client', 't'), ('sl', 'en'), ('tl', 'zh-CN'), ('dt', 'bd'),
         ('dt', 'rm'),  ('dt', 't'), ('dt', 'qca'), ('ie', 'UTF-8'),
@@ -490,11 +498,12 @@ augroup filetype_frmats " {{{
         \ setlocal shiftwidth=2
   au FileType {c,cc}
         \ setlocal foldmarker=#ifdef,#endif                        |
-        \ setlocal colorcolumn=81                                  |
         \ setlocal foldcolumn=1
   au FileType html
         \ let b:AutoPairs = {"<": ">", '"': '"', "'": "'", '{': '}', '(': ')', '[': ']'}
-  au FileType {vim,asm,sh,zsh}
+  au FileType haskell
+        \ let b:AutoPairs = {'"': '"', "{": "}", "[": "]", "(": ")"}
+  au FileType {asm,sh,zsh}
         \ setlocal noexpandtab
   au FileType {c,cpp,python,vim,sh,zsh}
         \ match BadWhiteSpace /\v\s+$/
@@ -615,16 +624,20 @@ let g:AutoPairsMultilineClose=0
 
 let g:rainbow_active = 1
 let g:rainbow_conf = {
-      \	'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
-      \	'ctermfgs': ['69', '36', '75', '133', '94'],
-      \	'operators': '_,\|+\|-\|\*\|\/\(\/\|\*\)\@!\|=\|==\|<\|>\|!\|%\|\^\|&\||\|>>\|<<\|\.\|->_',
-      \	'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
-      \	'separately': {
-      \	  'lisp': {
-      \	    'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3'],
-      \		},
-      \	}
-      \}
+\	  'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
+\	  'ctermfgs': ['69', '36', '75', '133', '94'],
+\	  'operators': '_,\|+\|-\|\*\|\/\(\/\|\*\)\@!\|=\|==\|<\|>\|!\|%\|\^\|&\||\|>>\|<<\|\.\|->_',
+\	  'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
+\	  'separately': {
+\	    'lisp': {
+\	      'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick', 'darkorchid3'],
+\		  },
+\ 	  'haskell': {
+\       'operators': '',
+\	      'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold'],
+\		  },
+\   }
+\ }
 " }}}
 
 " NERDTree & tagbar & undotree {{{
@@ -713,6 +726,7 @@ let g:ycm_semantic_triggers =  {
       \   'cpp,objcpp' : ['->', '.', '::', '-> '],
       \ }
 nn <silent>gd :YcmCompleter GoTo<CR>
+nn <silent>gD :YcmCompleter GoToDefinition<CR>
 nn <silent><F12> :YcmDiags<CR>
 " }}}
 " }}}
