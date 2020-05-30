@@ -567,6 +567,13 @@ au BufReadPost *
       \ ]
 " }}}
 
+" Language Client {{{
+" let g:LanguageClient_serverCommands = {
+      " \ 'haskell': ['hie-wrapper', '--lsp']
+      " \ }
+" let g:LanguageClient_rootMarkers = ['Makefile']
+" }}}
+
 " startify {{{
 let g:startify_bookmarks = [
       \ { 'v': '~/.vimrc' },
@@ -651,7 +658,7 @@ nn <F7> :UndotreeToggle<CR>
 " }}}
 
 " AirLine {{{
-let g:airline_theme = 'badcat'
+let g:airline_theme = 'angr'
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_idx_mode = 1

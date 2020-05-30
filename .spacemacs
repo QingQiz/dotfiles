@@ -53,7 +53,7 @@ values."
             shell-default-height 30
             shell-default-position 'bottom)
      ;; spell-checking
-     syntax-checking
+     ;; syntax-checking
      ;; version-control
      )
    ;; List of additional packages that will be installed without being
@@ -285,15 +285,18 @@ values."
   (setq-default dotspacemacs-configuration-layers
                 '((auto-completion :variables
                                    auto-completion-enable-snippets-in-popup t)))
+  (setq-default dotspacemacs-configuration-layers
+                '(auto-completion
+                  (haskell :variables haskell-completion-backend 'ghci)))
   )
 
 (defun dotspacemacs/user-config ()
   (setq-default indent-tabs-mode nil)
+  (setq-default tab-width 4)
   (setq ycmd-force-semantic-completion t)
   (setq x-select-enable-clipboard nil)
   (setq sp-escape-quotes-after-insert nil)
   (setq shell-file-name "bash")
-
 
   ;; c style
   (setq c-default-style "linux")
@@ -302,6 +305,12 @@ values."
 
   (add-hook 'c-mode-common-hook (lambda() (c-set-offset 'case-label '+)))
   (add-hook 'before-save-hook (lambda () (whitespace-cleanup)))
+
+  (add-hook 'haskell-mode 'auto-complete-mode)
+  (remove-hook 'haskell-mode 'flycheck-mode)
+  (setq haskell-indentation-starter-offset 4)
+  (setq haskell-indentation-left-offset 4)
+  (setq haskell-indentation-layout-offset 4)
 
   ;; set powerline
   (setq powerline-default-separator 'slant)

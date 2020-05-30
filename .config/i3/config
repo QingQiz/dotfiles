@@ -29,6 +29,8 @@ bindsym Mod4+j      focus down
 bindsym Mod4+k      focus up
 bindsym Mod4+l      focus right
 bindsym Mod4+h      focus left
+bindsym Mod4+Right  focus right
+bindsym Mod4+Left   focus left
 
 # move focused window
 bindsym Mod4+Shift+h        move left
@@ -44,6 +46,15 @@ bindsym Mod4+v split v
 
 # enter fullscreen mode for the focused container
 bindsym Mod4+f fullscreen toggle
+
+bindsym Mod4+Up fullscreen toggle
+bindsym Mod4+Down fullscreen toggle
+
+bindsym Mod4+Shift+Left move workspace to output left
+bindsym Mod4+Shift+Right move workspace to output right
+
+bindsym Ctrl+Mod4+Left workspace prev_on_output
+bindsym Ctrl+Mod4+Right workspace next_on_output
 
 # change container layout (stacked, tabbed, toggle split)
 bindsym Mod4+s layout stacking
@@ -100,7 +111,7 @@ for_window [class="Shutter" instance="shutter"]   floating enable, border pixel 
 # for_window [class="org.remmina.Remmina"] floating enable, border pixel 1
 for_window [class="Conky"]               floating enable, border pixel 0
 for_window [class="zbar"]                floating enable, border pixel 1
-for_window [class="xfreerdp"]                floating enable, border pixel 1
+for_window [class="xfreerdp"]            floating enable, border pixel 1
 
 # mouse warped to the center of window
 mouse_warping none
