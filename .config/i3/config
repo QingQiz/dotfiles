@@ -112,6 +112,7 @@ for_window [class="Shutter" instance="shutter"]   floating enable, border pixel 
 for_window [class="Conky"]               floating enable, border pixel 0
 for_window [class="zbar"]                floating enable, border pixel 1
 for_window [class="xfreerdp"]            floating enable, border pixel 1
+# for_window [class="Qq"]                  floating enable, border pixel 1
 
 # mouse warped to the center of window
 mouse_warping none
@@ -199,7 +200,7 @@ bindsym Mod4+Ctrl+l exec "sleep 1 && xset dpms force off"
 # screenshot
 #bindsym Mod4+Ctrl+k exec screenshot
 bindsym --release Mod4+i exec "import a.jpg"
-bindsym --release Mod4+Shift+s exec "import a.jpg"
+bindsym --release Mod4+Shift+s exec "~/.scr/screenshot"
 bindsym --release Mod4+c exec "xkill"
 
 # sound & brightness

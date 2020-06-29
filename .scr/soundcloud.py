@@ -9,8 +9,8 @@ from shutil import which
 
 DEBUG = 0
 proxy = {
-    'http': 'http://127.0.0.1:1080',
-    'https': 'http://127.0.0.1:1080'
+    'http': 'http://p.inori.ren:65500',
+    'https': 'http://p.inori.ren:65500',
 }
 
 s = requests.Session()

@@ -9,6 +9,7 @@ export PATH=$PATH:/home/angel/.scr
 export PATH=$PATH:$HOME/.dotnet/tools
 # export PATH=$PATH:$HOME/.stack/programs/x86_64-linux/ghc-tinfo6-8.8.3/bin
 export MANPAGER=cat
+export PAGER=less
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
 export fpath=( "$HOME/.zsh/zfunctions" $fpath )
 

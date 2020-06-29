@@ -715,7 +715,7 @@ let g:airline#extensions#hunks#enabled = 0
 " YouCompleteMe & color coded {{{
 let g:ycm_server_python_interpreter='/usr/bin/python3'
 let g:ycm_global_ycm_extra_conf='/home/angel/.config/ycmd/ycmd_conf.py'
-let g:ycm_python_binary_path = '/usr/bin/python3.8'
+let g:ycm_python_binary_path = '/usr/bin/python3'
 let g:ycm_min_num_indentifier_candidate_chars=2
 let g:ycm_key_invoke_completion='<c-d>'
 " let g:ycm_key_invoke_completion='<c-@>'

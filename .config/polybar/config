@@ -124,7 +124,7 @@ modules-right = filesystem-slash filesystem-hd temperature cpu memory
 
 [module/xwindow]
 type = internal/xwindow
-label = "%{F#5b5b5b}%{F-} %title:0:60:...%"
+label = "%{F#5b5b5b}%{F-} %title:0:30:...%"
 
 [module/xkeyboard]
 type = internal/xkeyboard
