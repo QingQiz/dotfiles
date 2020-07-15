@@ -1,8 +1,38 @@
-#!/usr/bin/env sh
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 
-killall -q polybar
+import re
+import os
+import subprocess
 
-for m in $(xrandr | grep '\<connec' | cut -d\  -f1); do
-    MONITOR=$m polybar --reload top &
-    MONITOR=$m polybar --reload bottom &
-done
+
+def run(cmd: str):
+    res = subprocess.Popen(cmd.split(' '), stdout=subprocess.PIPE)
+    a, b = res.communicate()
+    return (a if a is None else a.decode('utf8'), b if b is None else b.decode('utf8'))
+
+
+run('killall -q polybar')
+
+monitor_info = run('xrandr')[0]
+active_monitor = (re.findall(r'(.*) connect.*?(\d+)x(\d+)', monitor_info))
+
+if len(active_monitor) == 1:
+    env = f'MONITOR={active_monitor[0][0]}'
+    os.system(f'{env} polybar --reload top &')
+    os.system(f'{env} polybar --reload bottom &')
+    exit(0)
+
+for i in active_monitor:
+    env = f'MONITOR={i[0]}'
+    if i[1] == '1080':
+        cmd1 = f'{env} polybar -c ~/.config/polybar/config_left --reload top_l &'
+        cmd2 = f'{env} polybar -c ~/.config/polybar/config_left --reload bottom_l &'
+    else:
+        cmd1 = f'{env} polybar -c ~/.config/polybar/config_left --reload top_r &'
+        cmd2 = f'{env} polybar -c ~/.config/polybar/config_left --reload bottom_r &'
+
+    os.system(cmd1)
+    os.system(cmd2)
+
+

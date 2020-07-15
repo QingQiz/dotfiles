@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-socat TCP4-LISTEN:10086,reuseaddr,fork TCP6:[2001:19f0:9002:3ad:5400:01ff:fe3e:99a7]:8388 &
+# socat TCP4-LISTEN:10086,reuseaddr,fork TCP6:[2001:19f0:9002:3ad:5400:01ff:fe3e:99a7]:8388 &
 
 #nohup socat UDP4-LISTEN:10086,reuseaddr,fork UDP6:[2001:19f0:9002:3ad:5400:01ff:fe3e:99a7]:8388 > /dev/null &
 

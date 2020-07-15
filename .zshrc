@@ -5,7 +5,8 @@ export PAGER='most'
 export TERM='termite'
 export ZSH=$HOME/.oh-my-zsh
 export JAVA_HOME=/usr/lib/jvm/java-10-openjdk
-export PATH=$PATH:/home/angel/.scr
+export PATH=$PATH:$HOME/.scr
+export PATH=$PATH:$HOME/.local/bin
 export PATH=$PATH:$HOME/.dotnet/tools
 # export PATH=$PATH:$HOME/.stack/programs/x86_64-linux/ghc-tinfo6-8.8.3/bin
 export MANPAGER=cat
@@ -90,10 +91,11 @@ alias aria2='aria2c --conf-path=/home/angel/.config/aria2/aria2.conf'
 
 alias sqlserver='sudo /opt/mssql/bin/sqlservr'
 
-alias g='/home/angel/workspace/you-get/you-get'
-alias gs='/home/angel/workspace/you-get/you-get -s 127.0.0.1:1080'
+alias g='you-get'
+alias gs='you-get -x 127.0.0.1:2340'
 
 alias sl='ls'
+alias pc='proxychains4'
 
 ##-----------------------------------------------------------------------
 
