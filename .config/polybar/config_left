@@ -45,7 +45,7 @@ foreground = ${colors.foreground}
 
 overline-size = 0
 overline-color = #f00
-underline-size = 3
+underline-size = 2
 underline-color = #00f
 
 border-bottom-size = 0
@@ -107,7 +107,7 @@ font-3 = FontAwesome:pixelsize=14;2
 
 modules-left = memory cpu 
 modules-center =
-modules-right = filesystem-slash filesystem-hd temperature
+modules-right =temperature date
 
 [bar/top_r]
 monitor = ${env:MONITOR}
@@ -125,7 +125,7 @@ foreground = ${colors.foreground}
 
 overline-size = 0
 overline-color = #f00
-underline-size = 3
+underline-size = 2
 underline-color = #00f
 
 border-bottom-size = 0
@@ -144,18 +144,9 @@ font-3 = FontAwesome:pixelsize=14;2
 
 modules-left = i3 xwindow
 modules-center =
-modules-right = pmenu backlight alsa wlan eth battery date
+modules-right = pmenu backlight alsa
 
-; wm-restack = bspwm
 wm-restack = i3
-
-;override-redirect = true
-
-; scroll-up = bspwm-desknext
-; scroll-down = bspwm-deskprev
-
-; scroll-up = i3wm-wsnext
-; scroll-down = i3wm-wsprev
 
 [bar/bottom_r]
 monitor = ${env:MONITOR}
@@ -182,7 +173,7 @@ border-bottom-color = ${colors.background}
 spacing = 1
 padding-left = 0
 padding-right = 2
-module-margin-left = 2
+module-margin-left = 1
 module-margin-right = 2
 
 font-0 = hack:pixelsize=12;2
@@ -190,9 +181,9 @@ font-1 = unifont:size=10;2
 font-2 = "Wuncon Siji:pixelsize=10;3"
 font-3 = FontAwesome:pixelsize=14;2
 
-modules-left = 
+modules-left = memory cpu  
 modules-center = networkspeedup networkspeeddown
-modules-right = temperature cpu memory
+modules-right = filesystem-slash filesystem-hd temperature wlan eth battery date
 
 [module/xwindow]
 type = internal/xwindow
@@ -402,7 +393,8 @@ format-disconnected-underline = #df0000
 ; label-connected = "%{A1:connman-gtk &:}%essid%%{A}"
 label-connected = "%essid%%{A}"
 ; label-disconnected = "%{A1:connman-gtk &:}%{A}"
-label-disconnected = "%ifname%"
+; label-disconnected = "%ifname%"
+label-disconnected =
 label-disconnected-foreground = #5b
 
 ramp-signal-0 = 
@@ -418,13 +410,14 @@ interface = enp0s25
 interval = 3.0
 
 format-connected-underline = #9f78e1
-; format-connected-prefix = " "
+format-connected-prefix = " "
 format-connected-foreground-foreground = ${colors.foreground-alt}
 label-connected = %ifname%
 
 ; format-disconnected-underline = ${self.format-connected-underline}
 format-disconnected-underline = #df0000
-label-disconnected = %ifname%
+; label-disconnected = %ifname%
+label-disconnected =
 label-disconnected-foreground = ${colors.foreground-alt}
 
 [module/networkspeedup]
@@ -497,13 +490,13 @@ full-at = 90
 time-format = %H:%M
 
 format-charging = <animation-charging><label-charging>
-format-charging-underline = #00ffaf
+;format-charging-underline = #00ffaf
 
 format-discharging = <ramp-capacity><label-discharging>
-format-discharging-underline = #ffb52a
+;format-discharging-underline = #ffb52a
 
 format-full = <ramp-capacity><label-full>
-format-full-underline = #00ffaf
+;format-full-underline = #00ffaf
 
 label-charging = %percentage%
 label-discharging = %percentage%
@@ -531,9 +524,9 @@ type = internal/temperature
 warn-temperature = 60
 interval = 0.5
 
-format = <ramp> <label>
+format = <ramp><label>
 format-underline = #f50a4d
-format-warn = <ramp> <label-warn>
+format-warn = <ramp><label-warn>
 format-warn-underline = ${self.format-underline}
 
 label = %temperature%
@@ -544,17 +537,6 @@ ramp-0 = 
 ramp-1 = 
 ramp-2 = 
 ramp-foreground = ${colors.foreground-alt}
-
-[module/pkg]
-type = custom/script
-tail = true
-interval = 1200
-format = <label>
-format-underline = #ff5c57
-label = "%output:0:50%"
-exec = ~/.config/polybar/pkg.sh
-; exec = /usr/bin/checkupdates | /usr/bin/wc -l
-exec-if = "ping -q -w 2 -c 1 111.161.64.4 > /dev/null"
 
 [module/vpncheck]
 type = custom/script
@@ -585,23 +567,13 @@ label-close-foreground = ${colors.secondary}
 label-separator = |
 label-separator-foreground = ${colors.foreground-alt}
 
-menu-0-0 = power
-menu-0-0-exec = menu-open-1
+menu-0-0 = lock
+menu-0-0-exec = sleep 1 && xset dpms force off
 menu-0-1 = terminal
 menu-0-1-exec = termite &
 
-menu-1-0 = reboot
-menu-1-0-exec = menu-open-2
-menu-1-1 = power off
-menu-1-1-exec = menu-open-3
-menu-1-2 = log out
-menu-1-2-exec = menu-open-4
-menu-1-3 = sleep
-menu-1-3-exec = systemctl suspend
-; menu-1-4 = lock
-; menu-1-4-exec = "betterlockscreen --lock &"
-menu-1-5 = cancel
-menu-1-5-exec = menu-open-0
+menu-0-2 = kill xrdp
+menu-0-2-exec = killall xfreerdp &
 
 menu-2-0 = cancel
 menu-2-0-exec = menu-open-0

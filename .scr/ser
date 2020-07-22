@@ -73,7 +73,7 @@ if args.ser is not None:
     user = name.get('user')
     port = '3389' if name.get('port') is None else name.get('port').strip()
 
-    cmd = 'rdp -u {} -s -au -aun 20 -d angel,{} {}'\
+    cmd = 'rdp -u {} -s -d angel,{} {}'\
             .format(user, '/home/angel' if args.share is None else args.share[0], ip + ':{}'.format(port))
 
     if args.monitors is not None:
