@@ -18,3 +18,7 @@ test
 install.py
 
 .idea
+
+dotfiles_new
+
+__pycache__

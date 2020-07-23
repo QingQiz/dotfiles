@@ -84,7 +84,9 @@ install_n yaourt make cmake git gcc g++ clang
 ln_ .gitconfig .scr
 cd $script_dir/config
 ln_ ser.json
-cd -
+
+cd $script_dir
+ln_ .python
 
 # rc-local
 cd $script_dir/archlinux
