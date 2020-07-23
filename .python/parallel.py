@@ -70,8 +70,8 @@ def init(job=1):
         if job <= 1:
             return [target(*i) for i in params_list]
 
-        if use_thread:
-            res = parallel_in_thread(target, params_list, sort_result)
+        if thread:
+            res = parallel_in_thread(target, params_list, sort)
         else:
             res = parallel_in_process(target, params_list)
         return res
