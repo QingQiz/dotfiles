@@ -1,69 +1,47 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+from threading import Thread
+from multiprocessing import Pool
+
 
 def init(job=1):
-    def parallel_in_process(target, params_list):
-        from multiprocessing import Pool
+    def do_with_retry(n, act, args):
+        while n >= 0:
+            try:
+                return act(*args)
+            except:
+                n -= 1
 
+
+    def parallel_in_process(target, params_list):
         global lambda_to_function
         def lambda_to_function(params):
-            return target(*params)
+            return do_with_retry(3, target, params)
 
         return Pool(job).map(lambda_to_function, params_list)
 
 
-    def parallel_in_thread(target, params_list, sort):
-        import queue
-        from threading import Thread
+    def parallel_in_thread(target, params_list):
+        length = len(params_list)
+        step = (length + job - 1) // job
 
-        tasks = queue.Queue()
-        result = queue.Queue()
+        result = [None for i in range(length)]
 
-        for i in (params_list if not sort else enumerate(params_list)):
-            tasks.put(i)
+        def action(j):
+            for i in range(step * j, min(length, step * (j + 1))):
+                params = params_list[i]
+                result[i] = (do_with_retry(3, target, params))
 
-        def action_sort():
-            while not tasks.empty():
-                try:
-                    idx, params = tasks.get(block=False)
-                    result.put((idx, target(*params)))
-                except:
-                    tasks.put((idx, params))
-
-        def action_not_sort():
-            while not tasks.empty():
-                try:
-                    params = tasks.get(block=False)
-                    result.put(target(*params))
-                except:
-                    tasks.put(params)
-
-        def action():
-            try:
-                if sort:
-                    action_sort()
-                else:
-                    action_not_sort()
-            except queue.Empty:
-                return
-
-        pool = [Thread(target=action) for i in range(job)]
+        pool = [Thread(target=action, args=(i,)) for i in range(job)]
 
         [i.start() for i in pool]
+        [i.join() for i in pool]
 
-        ret = [result.get() for i in range(len(params_list))]
-
-        if not ret:
-            return []
-
-        if sort:
-            ret = sorted(ret)
-            return list(zip(*ret))[1]
-        return ret
+        return result
 
 
-    def parallel_run(target, params_list, sort=False, thread=True):
+    def parallel_run(target, params_list, thread=True):
         if len(params_list) == 0:
             return []
 
@@ -71,7 +49,7 @@ def init(job=1):
             return [target(*i) for i in params_list]
 
         if thread:
-            res = parallel_in_thread(target, params_list, sort)
+            res = parallel_in_thread(target, params_list)
         else:
             res = parallel_in_process(target, params_list)
         return res
