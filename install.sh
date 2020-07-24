@@ -86,6 +86,7 @@ cd $script_dir/config
 ln_ ser.json
 
 cd $script_dir
+git submodule update --init --recursive
 ln_ .python
 
 # rc-local
