@@ -1,47 +1,40 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+import log
+import netreq
+import parallel
+
 import requests
 import re
 import json
 import os
 import sys
+import functools
+import operator
 from shutil import which
 
 DEBUG = 0
-proxy = {
-    'http': 'http://p.inori.ren:65500',
-    'https': 'http://p.inori.ren:65500',
-}
 
 s = requests.Session()
-s.proxies.update(proxy)
-
-def D(s='', end='\n'):
-    if not DEBUG:
-        return
-    print(s if len(s) < 80 else (s[:80] + '...'), end=end)
 
 
 def get_sndcd_apikey():
-    D('GET: https://soundcloud.com')
-    r = s.get('https://soundcloud.com')
-    x = re.findall(r'script crossorigin src="(.+?)"></script>', r.text)
+    log.i('Get apikey...')
+    r = netreq.url_html('https://soundcloud.com', s=s)
+    x = re.findall(r'script crossorigin src="(.+?)"></script>', r)
 
-    D(f'GET: {x[-1]}')
-    r = s.get(x[-1])
-    x = re.search(r'client_id:"(.+?)"', r.text)
+    r = netreq.url_html(x[-1], s=s)
+    x = re.search(r'client_id:"(.+?)"', r)
 
     return x.group(1)
 
 
 def get_resource_info(resource_url, client_id, resource=None):
     if resource is None:
-        D('GET: ' + resource_url)
-        r = s.get(resource_url)
-        r.encoding = 'utf-8'
+        r = netreq.url_html(resource_url, encoding='utf-8')
 
         x = re.escape('forEach(function(e){n(e)})}catch(t){}})},')
-        x = re.search(r'' + x + r'(.*)\);</script>', r.text)
+        x = re.search(r'' + x + r'(.*)\);</script>', r)
 
         info = json.loads(x.group(1))[-1]['data'][0]
     else:
@@ -54,14 +47,16 @@ def get_resource_info(resource_url, client_id, resource=None):
     ids_split = ['%2C'.join(ids[i:i+10]) for i in range(0, len(ids), 10)]
     api_url = 'https://api-v2.soundcloud.com/tracks?ids={ids}&client_id={client_id}&%5Bobject%20Object%5D=&app_version=1584348206&app_locale=en'
 
-    res = []
-    for ids in ids_split:
-        uri = api_url.format(ids=ids, client_id=client_id)
-        D(f'GET: {uri}')
-        r = s.get(uri)
-        r.encoding = 'utf-8'
-        res += json.loads(r.text)
+    urll = [api_url.format(ids=ids, client_id=client_id) for ids in ids_split]
+
+    log.i('Get resource info')
+    res = netreq.urls_json(urll, s=s)
+
+    if res:
+        res = functools.reduce(operator.iconcat, res)
+
     res = iter(res)
+
     info = [next(res) if i.get('comment_count') is None else i for i in info]
 
     return info
@@ -76,11 +71,7 @@ def download(resource_info, client_id):
         name = name.replace('<', '[').replace('>', ']')
         name = name.replace('|', '丨')
         
-        artwork = info['artwork_url']
-        artwork = artwork.replace('large', 't500x500')
         metadata = info['publisher_metadata']
-
-        print('Dowload: ' + name)
 
         transcodings = info['media']['transcodings']
         sq = [i for i in transcodings if i['quality'] == 'sq']
@@ -89,33 +80,27 @@ def download(resource_info, client_id):
         surl = surl['url']
 
         uri = surl + '?client_id=' + client_id
-        D(f'GET: {uri}')
-        r = s.get(uri)
-        surl = json.loads(r.text)['url']
+        surl = netreq.url_json(uri, s=s)['url']
 
-        D(f'GET: {surl}')
-        m3u8 = s.get(surl)
-        m3u8 = m3u8.text
+        log.i('Get m3u8 playlist...')
+        m3u8 = netreq.url_html(surl, s=s)
         urll = re.findall(r'http.*?(?=\n)', m3u8)
 
-        resource = b''
-        for url in urll:
-            D(f'GET: {url}')
-            r = s.get(url)
-            resource += r.content
+        log.i(f'Download {name}...')
+        resource = b''.join(netreq.urls_content(urll, s=s))
 
-        D('GET: ' + artwork, end='')
-        r = s.get(artwork)
-        if r.text == 'not found':
-            D('...not found', end='')
-            artwork = artwork.replace('t500x500', 'large')
-            r = s.get(artwork)
-        D()
+        artwork = info.get('artwork_url')
+        if artwork:
+            artwork = artwork.replace('large', 't500x500')
+            r = netreq.url_content(artwork, s=s)
+            if r == 'not found':
+                artwork = artwork.replace('t500x500', 'large')
+                r = netreq.url_content(artwork, s=s)
 
         yield {
             'title': name,
             'sound': resource,
-            'artwork': r.content,
+            'artwork': r,
             'metadata': metadata
         }
 
@@ -124,6 +109,7 @@ def add_metadata(sound_name, image_name, metadata):
     if which('ffmpeg') == None:
         return
 
+    log.i('Add metadata...')
     metadata_opt = ' '
     for i in metadata:
         metadata_opt += f'-metadata {i}="{metadata[i]}" '
@@ -166,10 +152,7 @@ def sndcd_search(q, client_id):
         "offset": 0,
     }
 
-    D(f"GET: {url}")
-    r = s.get(url, params=param)
-    r.encoding = 'utf-8'
-    tracks = json.loads(r.text)
+    tracks = netreq.url_json(url, encoding='utf-8', params=param)
     total = tracks['total_results']
     tracks = [i for i in tracks['collection'] if i.get('kind') in ['playlist', 'track']]
 
