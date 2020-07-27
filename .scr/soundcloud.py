@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-import log
-import netreq
-import parallel
+from QingQiz import *
 
 import requests
 import re

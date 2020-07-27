@@ -87,7 +87,8 @@ ln_ ser.json
 
 cd $script_dir
 git submodule update --init --recursive
-ln_ .python
+mkdir -p $HOME/.python
+ln -sf $script_dir/.python $HOME/.python/QingQiz
 
 # rc-local
 cd $script_dir/archlinux
