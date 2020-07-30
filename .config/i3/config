@@ -15,7 +15,8 @@ bindsym Mod4+Return exec termite
 
 # start drofi dmenu
 # bindsym Mod1+Tab exec --no-startup-id rofi -show window
-bindsym Mod4+Tab exec --no-startup-id rofi -show window
+# bindsym Mod4+Tab exec --no-startup-id rofi -show window
+bindsym Mod4+Tab exec --no-startup-id i3-msg 'workspace back_and_forth'
 bindsym Mod4+d   exec --no-startup-id rofi -show drun
 
 # Use Mouse+$mod to drag floating windows to their wanted position
@@ -96,7 +97,7 @@ smart_gaps on
 smart_borders on
 
 #rofi_power menu
-#bindsym Mod4+Shift+q exec ~/.config/rofi/powermenu.sh
+bindsym Mod4+Shift+q exec ~/.config/rofi/powermenu.sh
 
 # apps
 bindsym Mod4+Control+t exec thunar
