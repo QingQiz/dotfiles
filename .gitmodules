@@ -1,3 +1,6 @@
 [submodule ".python"]
 	path = .python
 	url = https://github.com/QingQiz/python_modules
+[submodule ".scr"]
+	path = .scr
+	url = https://github.com/QingQiz/scripts
