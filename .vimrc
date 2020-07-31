@@ -503,7 +503,7 @@ augroup filetype_frmats " {{{
         \ let b:AutoPairs = {"<": ">", '"': '"', "'": "'", '{': '}', '(': ')', '[': ']'}
   au FileType haskell
         \ let b:AutoPairs = {'"': '"', "{": "}", "[": "]", "(": ")"}
-  au FileType {asm,sh,zsh}
+  au FileType {asm,sh,zsh,crontab}
         \ setlocal noexpandtab
   au FileType {c,cpp,python,vim,sh,zsh}
         \ match BadWhiteSpace /\v\s+$/
