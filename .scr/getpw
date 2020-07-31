@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 
+import re
 import os
 import json
 import random
@@ -44,7 +45,7 @@ def getPw(pwl, key, site):
 
     res = []
     for x in pwl:
-        if site not in x:
+        if re.search(site, x) is None:
             continue
         for i in pwl[x]:
             res.append((i, pwl[x][i], x))
