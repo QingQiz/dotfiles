@@ -1,7 +1,0 @@
-#!/usr/bin/env zsh
-
-killall fcitx
-for i in `ps aux | grep fcitx | grep -v launch | head -n -1 | awk '{print $2}'`; do
-    kill $i
-done
-fcitx-autostart&

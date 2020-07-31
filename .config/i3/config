@@ -207,9 +207,6 @@ bindsym --release Mod4+c exec "xkill"
 # sound & brightness
 bindsym XF86AudioRaiseVolume  exec --no-startup-id amixer -q sset Master 3%+
 bindsym XF86AudioLowerVolume  exec --no-startup-id amixer -q sset Master 3%-
-bindsym XF86MonBrightnessUp   exec brightness +5
-bindsym XF86MonBrightnessDown exec brightness -5
-exec_always brightness
 
 # Audio
 # bindsym Ctrl+Left  exec mpc --port=6699 prev
@@ -257,11 +254,9 @@ focus_follows_mouse true
 # Others
 # bindsym Mod4+n exec wallpaper +1
 # bindsym Mod4+p exec wallpaper -1
-bindsym Mod4+n exec __random_wallpaper
 
 exec_always emacs --bg-daemon
 # exec_always wallpaper 0
-# exec_always __random_wallpaper
 exec i3-config-wizard
 # exec --no-startup-id i3-msg "workspace 2"
 exec compton &

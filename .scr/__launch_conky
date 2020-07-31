@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-
-killall conky
-sleep 2
-# conky -c $HOME/.conky/conkyleft
-startConky
