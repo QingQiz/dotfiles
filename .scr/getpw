@@ -50,9 +50,12 @@ def getPw(pwl, key, site):
             res.append((i, pwl[x][i], x))
     res = map(lambda x: f'site: {x[2]}\nusername: {x[0]}\npassword: {cipher.decrypt(key, x[1])}', res)
     print('=' * 60 + '\n' + ('\n' + '-' * 60 + '\n').join(res) + '\n' + '=' * 60 + '\n')
-
-    input('\nENTER to exit...')
-    os.system('reset')
+    try:
+        input('\nENTER to exit...')
+    except:
+        pass
+    finally:
+        os.system('reset')
 
 
 if __name__ == '__main__':
