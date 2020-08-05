@@ -118,7 +118,7 @@ plugin_list2=(\
     "mbbill/undotree" \
     "easymotion/vim-easymotion" \
     "junegunn/vim-easy-align" \
-    "lilydjwg/fcitx.vim.git"\
+    "lilydjwg/fcitx.vim"\
     "tenfyzhong/CompleteParameter.vim" \
     )
 echo "config vim? (y/n)"

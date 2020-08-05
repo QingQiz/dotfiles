@@ -43,6 +43,7 @@ else
 fi
 
 # ls color
+export SHELL=/bin/zsh
 eval "$( dircolors ~/.colorrc )"
 export LC_CTYPE=zh_CN.UTF-8
 
