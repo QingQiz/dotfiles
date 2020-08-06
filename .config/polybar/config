@@ -164,6 +164,7 @@ interval = 25
 mount-0 = /media/sdb1
 
 label-mounted = "%{F#5b5b5b}hd%{F-} %percentage_used%%"
+label-unmounted = 
 
 [module/bspwm]
 type = internal/bspwm
