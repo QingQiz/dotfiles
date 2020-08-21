@@ -24,5 +24,10 @@
         "name": "169.254.39.78",
         "port": "3389",
         "user": "hktkqj"
+    },
+    "myf": {
+        "name": "pc.sagiri.ren",
+        "port": "3389",
+        "user": "hktkqj"
     }
 }

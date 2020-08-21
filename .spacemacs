@@ -34,7 +34,6 @@ values."
      yaml
      (chinese :variables chinese-enable-fcitx t)
      latex
-     haskell
      sql
      php
      html
@@ -53,15 +52,13 @@ values."
      (shell :variables
             shell-default-height 30
             shell-default-position 'bottom)
-     ;; spell-checking
-     ;; syntax-checking
-     ;; version-control
+     (haskell :variables haskell-process-type 'stack-ghci)
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
    ;; packages, then consider creating a layer. You can also put the
    ;; configuration in `dotspacemacs/user-config'.
-   dotspacemacs-additional-packages '(hexl-mode nhexl-mode)
+   dotspacemacs-additional-packages '()
    ;; A list of packages that cannot be updated.
    dotspacemacs-frozen-packages '()
    ;; A list of packages that will not be installed and loaded.
@@ -324,6 +321,7 @@ values."
   ;; set powerline
   (setq powerline-default-separator 'slant)
 
+  ;; expand code snippets
   (global-set-key (kbd "C-<return>") 'yas-expand)
 
   (setq display-buffer-alist '(("\\`\\*e?shell" display-buffer-same-window)))
@@ -345,6 +343,8 @@ values."
   (evil-define-key 'visual global-map (kbd "L") 'evil-end-of-line)
   (evil-define-key 'normal global-map (kbd "C-x p") (kbd "\" + p"))
   ;; (evil-set-initial-state 'shell-mode 'emacs)
+  ;; force completion
+  (evil-define-key 'insert global-map (kbd "C-d") 'completion-at-point)
 
   (global-set-key (kbd "<f3>") 'neotree-toggle)
 
@@ -402,9 +402,14 @@ values."
           (command nil))
       (cond
        ;; run compiled result
-       ((or (find fn-ex '("c" "cpp" "c++" "cc" "asm" "s" "hs") :test #'equal)
-            (find major-mode '(c-mode c++-mode asm-mode haskell-mode)))
+       ((or (find fn-ex '("c" "cpp" "c++" "cc" "asm" "s") :test #'equal)
+            (find major-mode '(c-mode c++-mode asm-mode)))
         (setq command "/tmp/now"))
+       ;; haskell
+       ((or (find fn-ex '("hs") :test #'equal)
+            (find major-mode '(haskell-mode)))
+        (setq command (format "%s %s" "runhaskell" buffer-file-name))
+        )
        ;; python
        ((or (find fn-ex '("py") :test #'equal)
             (find major-mode '(python-mode)))
@@ -448,14 +453,11 @@ values."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   (quote
-    ("bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" default)))
+   '("bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" default))
  '(evil-want-Y-yank-to-eol nil)
- '(org-agenda-files (quote ("~/todo.org")))
+ '(org-agenda-files '("~/todo.org"))
  '(org-format-latex-options
-   (quote
-    (:foreground default :background default :scale 1.9 :html-foreground "Black" :html-background "Transparent" :html-scale 1.5 :matchers
-                 ("begin" "$1" "$" "$$" "\\(" "\\["))))
+   '(:foreground default :background default :scale 1.9 :html-foreground "Black" :html-background "Transparent" :html-scale 1.5 :matchers
+                 ("begin" "$1" "$" "$$" "\\(" "\\[")))
  '(package-selected-packages
-   (quote
-    (nhexl-mode yaml-mode pyim pyim-basedict fcitx xr pangu-spacing find-by-pinyin-dired ace-pinyin pinyinlib company-auctex auctex-latexmk auctex cdlatex intero hlint-refactor hindent helm-hoogle haskell-snippets flycheck-haskell company-ghci company-ghc ghc haskell-mode company-cabal cmm-mode sql-indent skewer-mode powerline spinner simple-httpd json-snatcher json-reformat js2-mode parent-mode company iedit smartparens evil flycheck helm multiple-cursors avy markdown-mode projectile hydra yasnippet dash web-mode tagedit slim-mode scss-mode sass-mode pug-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data phpunit phpcbf php-extras php-auto-yasnippets drupal-mode php-mode org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download htmlize gnuplot flyspell-correct-helm flyspell-correct auto-dictionary unfill mwim emms yapfify xterm-color ws-butler winum which-key web-beautify volatile-highlights vimrc-mode vi-tilde-fringe uuidgen use-package toc-org spaceline shell-pop restart-emacs rainbow-delimiters pyvenv pytest pyenv-mode py-isort popwin pip-requirements persp-mode pcre2el paradox org-plus-contrib org-bullets open-junk-file neotree multi-term move-text mmm-mode markdown-toc macrostep lorem-ipsum livid-mode live-py-mode linum-relative link-hint json-mode js2-refactor js-doc indent-guide hy-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gh-md fuzzy flycheck-ycmd flycheck-pos-tip flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help elisp-slime-nav dumb-jump disaster diminish define-word dactyl-mode cython-mode company-ycmd company-tern company-statistics company-c-headers company-anaconda column-enforce-mode coffee-mode cmake-mode clean-aindent-mode clang-format auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell))))
+   '(lv ht lsp-mode nhexl-mode yaml-mode pyim pyim-basedict fcitx xr pangu-spacing find-by-pinyin-dired ace-pinyin pinyinlib company-auctex auctex-latexmk auctex cdlatex intero hlint-refactor hindent helm-hoogle haskell-snippets flycheck-haskell company-ghci company-ghc ghc haskell-mode company-cabal cmm-mode sql-indent skewer-mode powerline spinner simple-httpd json-snatcher json-reformat js2-mode parent-mode company iedit smartparens evil flycheck helm multiple-cursors avy markdown-mode projectile hydra yasnippet dash web-mode tagedit slim-mode scss-mode sass-mode pug-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data phpunit phpcbf php-extras php-auto-yasnippets drupal-mode php-mode org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download htmlize gnuplot flyspell-correct-helm flyspell-correct auto-dictionary unfill mwim emms yapfify xterm-color ws-butler winum which-key web-beautify volatile-highlights vimrc-mode vi-tilde-fringe uuidgen use-package toc-org spaceline shell-pop restart-emacs rainbow-delimiters pyvenv pytest pyenv-mode py-isort popwin pip-requirements persp-mode pcre2el paradox org-plus-contrib org-bullets open-junk-file neotree multi-term move-text mmm-mode markdown-toc macrostep lorem-ipsum livid-mode live-py-mode linum-relative link-hint json-mode js2-refactor js-doc indent-guide hy-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gh-md fuzzy flycheck-ycmd flycheck-pos-tip flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help elisp-slime-nav dumb-jump disaster diminish define-word dactyl-mode cython-mode company-ycmd company-tern company-statistics company-c-headers company-anaconda column-enforce-mode coffee-mode cmake-mode clean-aindent-mode clang-format auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell)))

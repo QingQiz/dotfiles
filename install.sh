@@ -82,8 +82,6 @@ fi
 mkdir -p "$script_dir/backup/.config"
 install_n yaourt make cmake git gcc g++ clang
 ln_ .gitconfig .scr
-cd $script_dir/config
-ln_ ser.json
 
 cd $script_dir
 git submodule update --init --recursive
