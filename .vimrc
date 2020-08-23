@@ -107,7 +107,10 @@ function! InitColors()
   hi NonText       ctermfg=234   ctermbg=NONE
   hi Search        ctermfg=red   ctermbg=NONE
   hi MatchParen    ctermfg=red   ctermbg=NONE cterm=underline
-  hi YcmErrorSign  ctermfg=red   ctermbg=NONE guibg=NONE guifg=red
+  hi YcmErrorSign  ctermfg=red   ctermbg=NONE
+  "hi YcmWarningSign ctermfg= ctermbg=NONE
+  hi YcmErrorSection ctermfg=None
+  hi YcmWarningSection ctermfg=NONE
   hi PMenu         ctermfg=111
   hi ColorColumn   ctermbg=0
   hi vimOption     ctermfg=141   ctermbg=NONE cterm=bold
@@ -722,9 +725,11 @@ let g:ycm_key_invoke_completion='<c-d>'
 let g:ycm_complete_in_comments=1
 let g:ycm_complete_in_strings=1
 let g:ycm_collect_identifiers_from_comments_and_strings=1
-let g:ycm_enable_diagnostic_highlighting=0
-let g:ycm_enable_diagnostic_signs = 0
+let g:ycm_enable_diagnostic_highlighting=1
+let g:ycm_enable_diagnostic_signs = 1
 let g:ycm_confirm_extra_conf = 0
+let g:ycm_error_symbol = '>>'
+let g:ycm_warning_symbol = '>>'
 set completeopt=longest,menuone
 
 let g:ycm_semantic_triggers =  {
@@ -735,5 +740,12 @@ let g:ycm_semantic_triggers =  {
 nn <silent>gd :YcmCompleter GoTo<CR>
 nn <silent>gD :YcmCompleter GoToDefinition<CR>
 nn <silent><F12> :YcmDiags<CR>
+
+let g:ycm_language_server = [{
+      \ 'name': 'haskell',
+      \ 'filetypes': [ 'haskell', 'hs', 'lhs'  ],
+      \ 'cmdline': [ 'hie-wrapper' , '--lsp' ],
+      \ 'project_root_files': [ '.stack.yaml', 'cabal.config', 'package.yaml'  ]
+      \ }]
 " }}}
 " }}}
