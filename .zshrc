@@ -6,7 +6,7 @@ export TERM='termite'
 export ZSH=$HOME/.oh-my-zsh
 export JAVA_HOME=/usr/lib/jvm/java-10-openjdk
 export PATH=$PATH:$HOME/.scr
-export PATH=$PATH:$HOME/.local/bin
+export PATH=$HOME/.local/bin:$PATH
 export PATH=$PATH:$HOME/.dotnet/tools
 export PYTHONPATH=$HOME/.python
 # export PATH=$PATH:$HOME/.stack/programs/x86_64-linux/ghc-tinfo6-8.8.3/bin
@@ -14,6 +14,7 @@ export MANPAGER=cat
 export PAGER=less
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
 export fpath=( "$HOME/.zsh/zfunctions" $fpath )
+export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true'
 
 source $ZSH/oh-my-zsh.sh
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
