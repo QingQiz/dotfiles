@@ -80,13 +80,14 @@ if [ "$chc" = "y" ]; then
 fi
 
 mkdir -p "$script_dir/backup/.config"
-install_n yaourt make cmake git gcc g++ clang
+install_n yaourt make cmake git gcc g++ clang python3 python-pip
 ln_ .gitconfig .scr
 
 cd $script_dir
 git submodule update --init --recursive
-mkdir -p $HOME/.python
-ln -sf $script_dir/.python $HOME/.python/QingQiz
+
+cd $script_dir/.python
+pip install .
 
 # rc-local
 cd $script_dir/archlinux

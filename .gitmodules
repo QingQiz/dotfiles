@@ -6,4 +6,4 @@
 	url = https://github.com/QingQiz/scripts
 [submodule "install"]
 	path = install
-	url = git@github.com:QingQiz/docker-dotfiles.git
+	url = https://github.com/QingQiz/docker-dotfiles

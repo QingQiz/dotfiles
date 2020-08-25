@@ -8,7 +8,6 @@ export JAVA_HOME=/usr/lib/jvm/java-10-openjdk
 export PATH=$PATH:$HOME/.scr
 export PATH=$HOME/.local/bin:$PATH
 export PATH=$PATH:$HOME/.dotnet/tools
-export PYTHONPATH=$HOME/.python
 # export PATH=$PATH:$HOME/.stack/programs/x86_64-linux/ghc-tinfo6-8.8.3/bin
 export MANPAGER=cat
 export PAGER=less
@@ -99,6 +98,7 @@ alias gs='you-get -x 127.0.0.1:2340'
 
 alias sl='ls'
 alias pc='proxychains4'
+alias getpw='pwManager get'
 
 ##-----------------------------------------------------------------------
 
