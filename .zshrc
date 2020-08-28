@@ -99,6 +99,7 @@ alias gs='you-get -x 127.0.0.1:2340'
 alias sl='ls'
 alias pc='proxychains4'
 alias getpw='pwManager get'
+alias rdp='ser rdp'
 
 ##-----------------------------------------------------------------------
 

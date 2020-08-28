@@ -7,6 +7,7 @@ set endofline binary fixeol
 set modeline
 set autoread
 " set nowrap
+set hidden
 
 set mouse=
 set nu relativenumber
@@ -327,8 +328,6 @@ fun! g:UltiSnips_Complete()
   return ""
 endf
 
-au BufEnter * exec "inoremap <silent> " . g:UltiSnipsExpandTrigger . " <C-R>=g:UltiSnips_Complete()<cr>"
-
 let g:ulti_expand_res = 1
 fun! Ulti_ExpandOrEnter()
   call UltiSnips#ExpandSnippet()
@@ -338,7 +337,7 @@ fun! Ulti_ExpandOrEnter()
     return "\<return>"
   endif
 endf
-inoremap <return> <C-R>=Ulti_ExpandOrEnter()<CR>
+inoremap <c-o> <C-R>=Ulti_ExpandOrEnter()<CR>
 " }}}
 
 " go indent {{{
