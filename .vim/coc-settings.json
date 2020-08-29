@@ -1,0 +1,41 @@
+{
+    "languageserver": {
+        "haskell": {
+            "command": "hie-wrapper",
+            "args": ["--lsp"],
+            "rootPatterns": [
+                "*.cabal",
+                "stack.yaml",
+                "cabal.project",
+                "package.yaml"
+            ],
+            "filetypes": [
+                "hs",
+                "lhs",
+                "haskell"
+            ],
+            "initializationOptions": {
+                "haskell": {
+                }
+            }
+        }
+    },
+    "git.addedSign.text": "▎",
+    "git.changedSign.text": "▎",
+    "git.removedSign.text": "▎",
+    "git.topRemovedSign.text": "▔",
+    "git.changeRemovedSign.text": "▁",
+    "git.addedSign.hlGroup": "GitAdd",
+    "git.removedSign.hlGroup": "GitDelete",
+    "git.changedSign.hlGroup": "GitChange",
+    "git.topRemovedSign.hlGroup": "GitDelete",
+    "git.changeRemovedSign.hlGroup": "GitDelete",
+    "diagnostic.signOffset": 1,
+    "diagnostic.errorSign": "✗",
+    "diagnostic.warningSign": "✱",
+    "diagnostic.infoSign": "✿",
+    "diagnostic.hintSign": "✒",
+    "diagnostic.virtualTextPrefix": " ❯❯❯ ",
+    "diagnostic.refreshOnInsertMode": false,
+    "codeLens.enable": true
+}

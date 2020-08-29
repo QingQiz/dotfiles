@@ -39,8 +39,8 @@ set undofile
 
 set tags=./tags,../tags,../../tags,../../../tags,../../../../tags,../../../../../tags
 set path+=**
-set rtp+=/home/angel/.vim/vimfiles/*
-set rtp+=/home/angel/.vim/vimfiles/indentLine/after
+" set rtp+=/home/angel/.vim/vimfiles/*
+" set rtp+=/home/angel/.vim/vimfiles/indentLine/after
 " }}}
 
 " map {{{
@@ -310,6 +310,7 @@ fun! Ulti_ExpandOrEnter()
     return "\<return>"
   endif
 endf
+let g:UltiSnipsExpandTrigger="<c-o>"
 inoremap <c-o> <C-R>=Ulti_ExpandOrEnter()<CR>
 " }}}
 
@@ -507,11 +508,12 @@ au BufReadPost *
 " }}}
 
 " Plugin {{{
+" pulglist {{{
 call plug#begin('~/.vim/vimfiles')
 Plug 'tomasr/molokai'
 Plug 'tpope/vim-surround'
 Plug 'majutsushi/tagbar'
-Plug 'preservim/nerdtree', {'on': 'NERDTreeToggle' }
+"Plug 'preservim/nerdtree', {'on': 'NERDTreeToggle' }
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'mhinz/vim-startify'
@@ -523,12 +525,77 @@ Plug 'mbbill/undotree'
 Plug 'easymotion/vim-easymotion'
 Plug 'junegunn/vim-easy-align'
 " Plug 'lilydjwg/fcitx.vim'
-Plug 'tenfyzhong/CompleteParameter.vim'
+" Plug 'tenfyzhong/CompleteParameter.vim'
 Plug 'jeaye/color_coded', { 'for': ['c', 'cpp'], 'do': 'cmake . && make -j && make install' }
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
+" Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer', 'for': [] }
 Plug 'itchyny/vim-haskell-indent', {'for': 'haskell'}
 Plug 'guns/xterm-color-table.vim', { 'on': 'XtermColorTable'}
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
+" }}}
+
+" coc {{{
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+let g:coc_global_extensions = [
+	\ 'coc-explorer',
+	\ 'coc-gitignore',
+	\ 'coc-json',
+	\ 'coc-prettier',
+	\ 'coc-python',
+	\ 'coc-snippets',
+	\ 'coc-syntax',
+	\ 'coc-translator',
+	\ 'coc-tsserver',
+	\ 'coc-vimlsp',
+	\ 'coc-clangd',
+	\ 'coc-yaml',
+  \ 'coc-git',
+  \ 'coc-sh']
+
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+ 
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+imap <silent><expr> <c-d> coc#refresh()
+imap <expr><cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+nmap <silent> K :call <SID>show_documentation()<CR>
+nmap <f2> <Plug>(coc-rename)
+command! -nargs=0 Format :call CocAction('format')
+
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+xmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
+
+xmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>a  <Plug>(coc-codeaction-selected)
+
+nmap <silent><leader>t :CocCommand translator.popup<CR>
+nmap <silent><f4> :CocCommand explorer<cr>
+" }}}
 
 " startify {{{
 let g:startify_bookmarks = [
@@ -545,7 +612,7 @@ let g:startify_custom_indices = ['a', 's', 'd']
 let g:indentLine_fileType = [
       \ 'c', 'cpp', 'html', 'php', 'cs', 'shell',
       \ 'config', 'vim', 'python', 'java', 'zsh', 'sh', 'javascript',
-      \ 'conf'
+      \ 'conf', 'json'
       \ ]
 let g:indentLine_char = '┆'
 " }}}
@@ -558,8 +625,6 @@ nmap ga <Plug>(EasyAlign)
 " vim-easymotion {{{
 let g:EasyMotion_do_mapping = 0
 let g:EasyMotion_smartcase = 1
-nmap <leader>f <Plug>(easymotion-overwin-f)
-nmap <leader>f <Plug>(easymotion-overwin-f2)
 nmap <leader>w <Plug>(easymotion-bd-w)
 map <leader>w <Plug>(easymotion-overwin-w)
 map <Leader>j <Plug>(easymotion-j)
@@ -570,15 +635,6 @@ omap / <Plug>(easymotion-tn)
 
 map  n <Plug>(easymotion-next)
 map  N <Plug>(easymotion-prev)
-" }}}
-
-" Complete Parameters {{{
-inoremap <silent><expr> <c-l> complete_parameter#pre_complete("()")
-smap <c-j> <Plug>(complete_parameter#goto_next_parameter)
-imap <c-j> <Plug>(complete_parameter#goto_next_parameter)
-smap <c-k> <Plug>(complete_parameter#goto_previous_parameter)
-imap <c-k> <Plug>(complete_parameter#goto_previous_parameter)
-let g:complete_parameter_use_ultisnips_mappings=1
 " }}}
 
 " AutoPairs & rainbow {{{
@@ -603,12 +659,8 @@ let g:rainbow_conf = {
 \ }
 " }}}
 
-" NERDTree & tagbar & undotree {{{
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-
-let g:tagbar_left=0
-let g:tagbar_width=25
-let g:tagbar_autoclose=1
+" undotree {{{
+"autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 nn <F7> :UndotreeToggle<CR>
 " }}}
@@ -668,37 +720,37 @@ let g:airline#extensions#fugitiveline#enabled = 0
 let g:airline#extensions#hunks#enabled = 0
 " }}}
 
-" YouCompleteMe & color coded {{{
-let g:ycm_server_python_interpreter='/usr/bin/python3'
-let g:ycm_global_ycm_extra_conf='/home/angel/.config/ycmd/ycmd_conf.py'
-let g:ycm_python_binary_path = '/usr/bin/python3'
-let g:ycm_min_num_indentifier_candidate_chars=2
-let g:ycm_key_invoke_completion='<c-d>'
-" let g:ycm_key_invoke_completion='<c-@>'
-let g:ycm_complete_in_comments=1
-let g:ycm_complete_in_strings=1
-let g:ycm_collect_identifiers_from_comments_and_strings=1
-let g:ycm_enable_diagnostic_highlighting=1
-let g:ycm_enable_diagnostic_signs = 1
-let g:ycm_confirm_extra_conf = 0
-let g:ycm_error_symbol = '>>'
-let g:ycm_warning_symbol = '>>'
-set completeopt=longest,menuone
+" YouCompleteMe {{{
+"let g:ycm_server_python_interpreter='/usr/bin/python3'
+"let g:ycm_global_ycm_extra_conf='/home/angel/.config/ycmd/ycmd_conf.py'
+"let g:ycm_python_binary_path = '/usr/bin/python3'
+"let g:ycm_min_num_indentifier_candidate_chars=2
+"let g:ycm_key_invoke_completion='<c-d>'
+"" let g:ycm_key_invoke_completion='<c-@>'
+"let g:ycm_complete_in_comments=1
+"let g:ycm_complete_in_strings=1
+"let g:ycm_collect_identifiers_from_comments_and_strings=1
+"let g:ycm_enable_diagnostic_highlighting=1
+"let g:ycm_enable_diagnostic_signs = 1
+"let g:ycm_confirm_extra_conf = 0
+"let g:ycm_error_symbol = '>>'
+"let g:ycm_warning_symbol = '>>'
+"
+"let g:ycm_semantic_triggers =  {
+"      \   'c' : ['->', '.', '-> '],
+"      \   'python' : ['.'],
+"      \   'cpp,objcpp' : ['->', '.', '::', '-> '],
+"      \ }
+"
+"function s:config_ycmd()
+"  if exists(':YcmCompleter')
+"    set completeopt=longest,menuone
+"    nn <silent>gd :YcmCompleter GoTo<CR>
+"    nn <silent>gD :YcmCompleter GoToDefinition<CR>
+"    nn <silent><F12> :YcmDiags<CR>
+"  endif
+"endf
 
-let g:ycm_semantic_triggers =  {
-      \   'c' : ['->', '.', '-> '],
-      \   'python' : ['.'],
-      \   'cpp,objcpp' : ['->', '.', '::', '-> '],
-      \ }
-nn <silent>gd :YcmCompleter GoTo<CR>
-nn <silent>gD :YcmCompleter GoToDefinition<CR>
-nn <silent><F12> :YcmDiags<CR>
-
-let g:ycm_language_server = [{
-      \ 'name': 'haskell',
-      \ 'filetypes': [ 'haskell', 'hs', 'lhs'  ],
-      \ 'cmdline': [ 'hie-wrapper' , '--lsp' ],
-      \ 'project_root_files': [ '.stack.yaml', 'cabal.config', 'package.yaml'  ]
-      \ }]
+"au BufEnter * call s:config_ycmd()
 " }}}
 " }}}
