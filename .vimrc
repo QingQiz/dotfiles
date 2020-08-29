@@ -155,21 +155,16 @@ hi YcmErrorSign  guifg=red     guibg=NONE    gui=NONE
 
 " commands {{{
 " autocmd BufWritePost .vimrc source %
-cabbrev c call SmartComplier()
-cabbrev r call RunResult()
 cabbrev w!! w !sudo tee %
-cabbrev vimrc e $HOME/.vimrc
+command! C call SmartComplier()
+command! R call RunResult()
 command! Compile call SmartComplier();
 command! Run call RunResult();
 command! W w
 command! Format !clang-format -i --sort-includes=false
       \ -style="{BasedOnStyle: Google, IndentWidth: 4}" %
 command! Cls %s/\s*$//
-" command! Vimrc e $HOME/.vimrc
-" command! AddHead call AddHead()
-" command! Comments call Comments()
-" command! Reload source ~/.vimrc
-" command! MakeTags !ctags -R .
+command! Vimrc e $HOME/.vimrc
 " }}}
 
 " functions {{{
@@ -232,28 +227,6 @@ func! Comments()
   noh
 endf
 
-" }}}
-
-" Tittle {{{
-fun! AddHead()
-  call append(0, "=============================================================================")
-  " call append(2, "Last modified: ".strftime("%Y-%m-%d %H-%M"))
-  " call append(3, "file name: ".expand("%:t"))
-  call append(1, "Dsp: ")
-  call append(2, "URL: ")
-  call append(3, "Author: Sofee ( _s@mail.nwpu.edu.cn )")
-  call append(4, "=============================================================================")
-  1,5 call Comments()
-endf
-
-fun! AddTail()
-  call append('$', "=============================================================================")
-  call append('$', "Keys:")
-  call append('$', "Description:")
-  call append('$', "Solution:")
-  call append('$', "=============================================================================")
-  $-4,$ call Comments()
-endf
 " }}}
 
 " Compiler {{{
@@ -465,19 +438,6 @@ EOF
 endf
 au bufenter * if (winnr("$") == 1 && bufexists('TranslationResult')) | q | endif
 " }}}
-
-" change for {{{
-func! ChangeFor()
-  let line = getline('.')
-  if line =~ '^\s*for\s*(.*=\s*0.*'
-    s/\(=\s*\)\@<=0/1/
-    s/<\(=\)\@!/<=/
-  elseif line =~ '^\s*for\s*(.*=\s*1.*'
-    s/\(=\s*\)\@<=1/0/
-    s/<=/</
-  endif
-endf
-" }}}
 " }}}
 
 " Autocmd {{{
@@ -537,7 +497,6 @@ augroup AddFileHeaders " {{{
         \ call setline(3, '#endif')                                |
         \ normal! Go
 augroup END "}}}
-" }}}
 
 " jump to the last known position {{{
 au BufReadPost *
@@ -545,36 +504,31 @@ au BufReadPost *
       \   exe "normal! g`\""                                               |
       \ endif
 " }}}
+" }}}
 
 " Plugin {{{
-" plugin list {{{
-" PluginList = [ \
-      \ ['Yggdroot/indentLine'],
-      \ ['scrooloose/nerdtree'],
-      \ ['vim-airline/vim-airline'],
-      \ ['vim-airline/vim-airline-themes'],
-      \ ['tpope/vim-surround'],
-      \ ['Valloric/YouCompleteMe'],
-      \ ['majutsushi/tagbar'],
-      \ ['jiangmiao/auto-pairs'],
-      \ ['kshenoy/vim-signature'],
-      \ ['jeaye/color_coded'],
-      \ ['guns/xterm-color-table.vim'],
-      \ ['luochen1990/rainbow'],
-      \ ['mbbill/undotree'],
-      \ ['easymotion/vim-easymotion'],
-      \ ['junegunn/vim-easy-align'],
-      \ ['mhinz/vim-startify'],
-      \ ['tenfyzhong/CompleteParameter.vim']
-      \ ]
-" }}}
-
-" Language Client {{{
-" let g:LanguageClient_serverCommands = {
-      " \ 'haskell': ['hie-wrapper', '--lsp']
-      " \ }
-" let g:LanguageClient_rootMarkers = ['Makefile']
-" }}}
+call plug#begin('~/.vim/vimfiles')
+Plug 'tomasr/molokai'
+Plug 'tpope/vim-surround'
+Plug 'majutsushi/tagbar'
+Plug 'preservim/nerdtree', {'on': 'NERDTreeToggle' }
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'mhinz/vim-startify'
+Plug 'Yggdroot/indentLine', {'rtp': 'after'}
+Plug 'jiangmiao/auto-pairs'
+Plug 'kshenoy/vim-signature'
+Plug 'luochen1990/rainbow'
+Plug 'mbbill/undotree'
+Plug 'easymotion/vim-easymotion'
+Plug 'junegunn/vim-easy-align'
+" Plug 'lilydjwg/fcitx.vim'
+Plug 'tenfyzhong/CompleteParameter.vim'
+Plug 'jeaye/color_coded', { 'for': ['c', 'cpp'], 'do': 'cmake . && make -j && make install' }
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
+Plug 'itchyny/vim-haskell-indent', {'for': 'haskell'}
+Plug 'guns/xterm-color-table.vim', { 'on': 'XtermColorTable'}
+call plug#end()
 
 " startify {{{
 let g:startify_bookmarks = [

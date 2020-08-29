@@ -22,3 +22,5 @@ install.py
 dotfiles_new
 
 __pycache__
+
+.vim/autoload

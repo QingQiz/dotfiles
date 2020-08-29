@@ -97,81 +97,12 @@ sudo ln -f "rc.local" /etc/
 #--------------------------------------------------
 # vim
 #--------------------------------------------------
-plugin_list1=(\
-    "gvim" \
-    "vim-molokai" \
-    "vim-surround" \
-    "vim-tagbar" \
-    "vim-nerdtree" \
-    "vim-airline" \
-    "vim-airline-themes" \
-    "vim-ultisnips" \
-    )
-plugin_list2=(\
-    "mhinz/vim-startify" \
-    "Yggdroot/indentLine" \
-    "jiangmiao/auto-pairs" \
-    "kshenoy/vim-signature" \
-    "guns/xterm-color-table.vim" \
-    "luochen1990/rainbow" \
-    "mbbill/undotree" \
-    "easymotion/vim-easymotion" \
-    "junegunn/vim-easy-align" \
-    "lilydjwg/fcitx.vim"\
-    "tenfyzhong/CompleteParameter.vim" \
-    )
 echo "config vim? (y/n)"
 read chc
 if [ "$chc" = "y" ]; then
-    echo "configing vim..."
-    mkdir -p $script_dir/.vim/vimfiles
-    mkdir -p ~/.cache/vim/undo -p
-    cd $script_dir/.vim/vimfiles/
-
-    echo "installint gvim & some plugins..."
-    for gg in ${plugin_list1[@]}; do
-        install_n $gg
-    done
-    echo "installing plugins..."
-    for gg in ${plugin_list2[@]}; do
-        echo "cloning "$gg"..."
-        git clone "https://github.com/"$gg".git"
-    done
-
-    echo "install color_coded? (y/n)"
-    read chc
-    if [ "$chc" = "y" ]; then
-        cd $script_dir/.vim/vimfiles
-        if ! [ -d "color_coded" ]; then
-            git clone "https://github.com/jeaye/color_coded.git"
-            cd $script_dir/.vim/vimfiles/color_coded
-            rm -f CMakeCache.txt
-            if ! [ -f "color_coded.so" ]; then
-                mkdir -p build
-                cd build
-                cmake .. -DDOWNLOAD_CLANG=0
-                make -j && make install
-                make clean
-            fi
-        fi
-        ln -sf $script_dir/.vim/syntax/color_coded.vim $script_dir/.vim/vimfiles/color_coded/after/syntax/color_coded.vim
-        ln_c color_coded
-    fi
-
-    echo "install YouCompleteMe? (y/n)"
-    read chc
-    if [ "$chc" = "y" ]; then
-        cd $script_dir/.vim/vimfiles
-        if ! [ -d "YouCompleteMe" ]; then
-            git clone "https://github.com/Valloric/YouCompleteMe.git"
-            cd $script_dir/.vim/vimfiles/YouCompleteMe
-            git submodule update --init --recursive
-            ./install.py --clang-completer
-            ln_c ycmd
-        fi
-    fi
-
-    ln_ .vim .vimrc
+	cd $script_dir
+	cp $script_dir/install/install_vim.py .
+	./install_vim.py
 fi
 #--------------------------------------------------
 # zsh
@@ -198,7 +129,7 @@ if [ "$chc" = "y" ]; then
     ln -sf "$script_dir/.zsh/pure/async.zsh" zfunctions/async
 
     ln_ .oh-my-zsh .bashrc .zsh .zshrc .colorrc
-    
+
     install_n pkgfile
     sudo pkgfile --update
 fi
