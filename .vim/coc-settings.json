@@ -20,6 +20,33 @@
             }
         }
     },
+    "suggest.completionItemKindLabels": {
+        "class": "",
+        "color": "",
+        "constant": "∁",
+        "default": "",
+        "enum": "",
+        "enumMember": "",
+        "event": "鬒",
+        "field": "綠",
+        "file": "",
+        "folder": "",
+        "function": "ƒ",
+        "interface": "",
+        "keyword": "",
+        "method": "",
+        "module": "",
+        "operator": "洛",
+        "property": "",
+        "reference": "渚",
+        "snippet": "",
+        "struct": "פּ",
+        "text": "",
+        "typeParameter": "",
+        "unit": "",
+        "value": "",
+        "variable": "ⓥ"
+    },
     "git.addedSign.text": "▎",
     "git.changedSign.text": "▎",
     "git.removedSign.text": "▎",
@@ -37,5 +64,6 @@
     "diagnostic.hintSign": "✒",
     "diagnostic.virtualTextPrefix": " ❯❯❯ ",
     "diagnostic.refreshOnInsertMode": false,
-    "codeLens.enable": true
+    "codeLens.enable": true,
+    "http.proxy": "http://127.0.0.1:2340"
 }

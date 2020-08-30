@@ -29,6 +29,7 @@ set wildmenu
 set foldmethod=marker
 set gcr=a:block-blinkon0
 
+set updatetime=100
 set ttimeoutlen=100
 
 set list
