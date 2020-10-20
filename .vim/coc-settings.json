@@ -1,23 +1,10 @@
 {
     "languageserver": {
         "haskell": {
-            "command": "hie-wrapper",
+            "command": "haskell-language-server-wrapper",
             "args": ["--lsp"],
-            "rootPatterns": [
-                "*.cabal",
-                "stack.yaml",
-                "cabal.project",
-                "package.yaml"
-            ],
-            "filetypes": [
-                "hs",
-                "lhs",
-                "haskell"
-            ],
-            "initializationOptions": {
-                "haskell": {
-                }
-            }
+            "rootPatterns": ["*.cabal", "stack.yaml", "cabal.project", "package.yaml", "hie.yaml"],
+            "filetypes": ["haskell", "hs", "lhaskell", "lhs"]
         }
     },
     "suggest.completionItemKindLabels": {
@@ -65,5 +52,6 @@
     "diagnostic.virtualTextPrefix": " ❯❯❯ ",
     "diagnostic.refreshOnInsertMode": false,
     "codeLens.enable": true,
-    "http.proxy": "http://127.0.0.1:2340"
+    "tabnine.priority": 50,
+    "diagnostic.refreshAfterSave": true
 }

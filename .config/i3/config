@@ -259,7 +259,7 @@ focus_follows_mouse true
 # exec_always wallpaper 0
 exec i3-config-wizard
 # exec --no-startup-id i3-msg "workspace 2"
-exec compton &
+exec xcompmgr &
 exec setterm -bleng 0
 exec_always numlockx &
 # exec_always __launch_conky

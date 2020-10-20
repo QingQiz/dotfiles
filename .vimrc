@@ -126,6 +126,8 @@ function! InitColors()
   hi Variable      ctermfg=249   ctermbg=NONE
   hi VarDecl       ctermfg=111
   hi ParmDecl      ctermfg=111
+
+  hi SignColumn    ctermbg=None
 endfunction
 call InitColors()
 
@@ -164,7 +166,7 @@ command! Run call RunResult();
 command! W w
 command! Format !clang-format -i --sort-includes=false
       \ -style="{BasedOnStyle: Google, IndentWidth: 4}" %
-command! Cls %s/\s*$//
+command! Cls %s/\s\+$//
 command! Vimrc e $HOME/.vimrc
 " }}}
 
@@ -463,10 +465,10 @@ augroup filetype_frmats " {{{
   au FileType {c,cc}
         \ setlocal foldmarker=#ifdef,#endif                        |
         \ setlocal foldcolumn=1
-  au FileType html
-        \ let b:AutoPairs = {"<": ">", '"': '"', "'": "'", '{': '}', '(': ')', '[': ']'}
   au FileType haskell
-        \ let b:AutoPairs = {'"': '"', "{": "}", "[": "]", "(": ")"}
+        \ let b:AutoPairs = {'"': '"', "{": "}", "[": "]", "(": ")", '`': '`'}
+  au FileType python
+        \ let b:AutoPairs = AutoPairsDefine({"f'" : "'", "r'" : "'", "b'" : "'"})
   au FileType {asm,sh,zsh,crontab}
         \ setlocal noexpandtab
   au FileType {c,cpp,python,vim,sh,zsh}
@@ -532,6 +534,7 @@ Plug 'jeaye/color_coded', { 'for': ['c', 'cpp'], 'do': 'cmake . && make -j && ma
 Plug 'itchyny/vim-haskell-indent', {'for': 'haskell'}
 Plug 'guns/xterm-color-table.vim', { 'on': 'XtermColorTable'}
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'junegunn/fzf.vim'
 call plug#end()
 " }}}
 
@@ -558,6 +561,7 @@ let g:coc_global_extensions = [
 	\ 'coc-clangd',
 	\ 'coc-yaml',
   \ 'coc-git',
+  \ 'coc-tabnine',
   \ 'coc-sh']
 
 inoremap <silent><expr> <TAB>
