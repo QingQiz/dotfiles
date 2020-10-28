@@ -61,7 +61,7 @@ syn match hsType "\(\<type\>.*\)\@<=[A-Z][a-zA-Z0-9'_]*"
 syn match hsType "\(\(data\|newtype\|type\)\s*\)\@<=[A-Z][a-zA-Z0-9'_]*"
 syn match hsType "\(\(data\|newtype\|type\).*=\s*\([^|]\+\(\s\|(\|\[\|,\)\+\)\+\)\@<=[A-Z][a-zA-Z0-9'_]*"
 syn match hsType "\(|\s*\([^|>`=]\+\(\s\|(\|\[\|,\)\+\)\+\)\@<=[A-Z][a-zA-Z0-9'_]*"
-syn match hsType "\(instance.*\)\@<=[A-Z][a-zA-Z0-9'_]*"
+syn match hsType "\(\(instance\|class\).*\)\@<=[A-Z][a-zA-Z0-9'_]*"
 syn match hsExitCode "\<\(ExitSuccess\)\>"
 syn match hsOrdering "\<\(GT\|LT\|EQ\)\>"
 
