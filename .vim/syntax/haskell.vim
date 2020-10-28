@@ -39,13 +39,17 @@ syn region  hsPragma	       start="{-#" end="#-}"
 " because otherwise they would match as keywords at the start of a
 " "literate" comment (see lhs.vim).
 syn match hsModule		"\<module\>"
-syn match hsImport		"\<import\>.*"he=s+6 contains=hsImportMod,hsLineComment,hsBlockComment,@NoSpell
+syn match hsImport		"^\(\s*\)\@<=\be\<\(import\)\>.*"he=s+6 contains=hsImportMod,hsLineComment,hsBlockComment,@NoSpell
 syn match hsImportMod		contained "\<\(as\|qualified\|hiding\)\>" contains=@NoSpell
 syn match hsInfix		"\<\(infix\|infixl\|infixr\)\>"
 syn match hsStructure		"\<\(class\|data\|deriving\|instance\|default\|where\)\>"
 syn match hsTypedef		"\<\(type\|newtype\)\>"
 syn match hsStatement		"\<\(do\|case\|of\|let\|in\)\>"
 syn match hsConditional		"\<\(if\|then\|else\)\>"
+
+syn match hsForeign		"\<\(foreign\)\>"
+syn match hsForeignImport	"\<\(import\|export\)\>"
+syn match hsCCall		"\<ccall\>"
 
 syn match hsBoolean "\<\(True\|False\)\>"
 
@@ -67,38 +71,41 @@ syn match hsDebug "\<\(undefined\|error\|trace\)\>"
 
 " C Preprocessor directives. Shamelessly ripped from c.vim and trimmed
 " First, see whether to flag directive-like lines or not
-" if (!exists("hs_allow_hash_operator"))
-    " syn match	cError		display "^\s*\(%:\|#\).*$"
-" endif
+if (!exists("hs_allow_hash_operator"))
+    syn match	cError		display "^\s*\(%:\|#\).*$"
+endif
 " Accept %: for # (C99)
-" syn region	cPreCondit	start="^\s*\(%:\|#\)\s*\(if\|ifdef\|ifndef\|elif\)\>" skip="\\$" end="$" end="//"me=s-1 contains=cComment,cCppString,cCommentError
-" syn match	cPreCondit	display "^\s*\(%:\|#\)\s*\(else\|endif\)\>"
-" syn region	cCppOut		start="^\s*\(%:\|#\)\s*if\s\+0\+\>" end=".\@=\|$" contains=cCppOut2
-" syn region	cCppOut2	contained start="0" end="^\s*\(%:\|#\)\s*\(endif\>\|else\>\|elif\>\)" contains=cCppSkip
-" syn region	cCppSkip	contained start="^\s*\(%:\|#\)\s*\(if\>\|ifdef\>\|ifndef\>\)" skip="\\$" end="^\s*\(%:\|#\)\s*endif\>" contains=cCppSkip
-" syn region	cIncluded	display contained start=+"+ skip=+\\\\\|\\"+ end=+"+
-" syn match	cIncluded	display contained "<[^>]*>"
-" syn match	cInclude	display "^\s*\(%:\|#\)\s*include\>\s*["<]" contains=cIncluded
-" syn cluster	cPreProcGroup	contains=cPreCondit,cIncluded,cInclude,cDefine,cCppOut,cCppOut2,cCppSkip,cCommentStartError
-" syn region	cDefine		matchgroup=cPreCondit start="^\s*\(%:\|#\)\s*\(define\|undef\)\>" skip="\\$" end="$"
-" syn region	cPreProc	matchgroup=cPreCondit start="^\s*\(%:\|#\)\s*\(pragma\>\|line\>\|warning\>\|warn\>\|error\>\)" skip="\\$" end="$" keepend
-
-" syn region	cComment	matchgroup=cCommentStart start="/\*" end="\*/" contains=cCommentStartError,cSpaceError contained
-" syntax match	cCommentError	display "\*/" contained
-" syntax match	cCommentStartError display "/\*"me=e-1 contained
-" syn region	cCppString	start=+L\="+ skip=+\\\\\|\\"\|\\$+ excludenl end=+"+ end='$' contains=cSpecial contained
+syn region	cPreCondit	start="^\s*\(%:\|#\)\s*\(if\|ifdef\|ifndef\|elif\)\>" skip="\\$" end="$" end="//"me=s-1 contains=cComment,cCppString,cCommentError
+syn match	cPreCondit	display "^\s*\(%:\|#\)\s*\(else\|endif\)\>"
+syn region	cCppOut		start="^\s*\(%:\|#\)\s*if\s\+0\+\>" end=".\@=\|$" contains=cCppOut2
+syn region	cCppOut2	contained start="0" end="^\s*\(%:\|#\)\s*\(endif\>\|else\>\|elif\>\)" contains=cCppSkip
+syn region	cCppSkip	contained start="^\s*\(%:\|#\)\s*\(if\>\|ifdef\>\|ifndef\>\)" skip="\\$" end="^\s*\(%:\|#\)\s*endif\>" contains=cCppSkip
+syn region	cIncluded	display contained start=+"+ skip=+\\\\\|\\"+ end=+"+
+syn match	cIncluded	display contained "<[^>]*>"
+syn match	cInclude	display "^\s*\(%:\|#\)\s*include\>\s*["<]" contains=cIncluded
+syn cluster	cPreProcGroup	contains=cPreCondit,cIncluded,cInclude,cDefine,cCppOut,cCppOut2,cCppSkip,cCommentStartError
+syn region	cDefine		matchgroup=cPreCondit start="^\s*\(%:\|#\)\s*\(define\|undef\)\>" skip="\\$" end="$"
+syn region	cPreProc	matchgroup=cPreCondit start="^\s*\(%:\|#\)\s*\(pragma\>\|line\>\|warning\>\|warn\>\|error\>\)" skip="\\$" end="$" keepend
+" 
+syn region	cComment	matchgroup=cCommentStart start="/\*" end="\*/" contains=cCommentStartError,cSpaceError contained
+syntax match	cCommentError	display "\*/" contained
+syntax match	cCommentStartError display "/\*"me=e-1 contained
+syn region	cCppString	start=+L\="+ skip=+\\\\\|\\"\|\\$+ excludenl end=+"+ end='$' contains=cSpecial contained
 
 " Define the default highlighting.
 " Only when an item doesn't have highlighting yet
 
+hi def link hsForeign			  hsForeignImport
+hi def link hsForeignImport		  hsImport
+hi def link hsCCall			  hsModule
 hi def link hsModule			  hsStructure
 hi def link hsImport			  Include
 hi def link hsImportMod			  hsImport
 hi def link hsInfix			  PreProc
 hi def link hsStructure			  Structure
 hi def link hsStatement			  Statement
-hi def link hsConditional			  Conditional
-hi def link hsSpecialChar			  SpecialChar
+hi def link hsConditional		  Conditional
+hi def link hsSpecialChar		  SpecialChar
 hi def link hsTypedef			  Typedef
 hi def link hsVarSym			  hsOperator
 hi def link hsConSym			  hsOperator
@@ -123,20 +130,20 @@ hi def link hsEnumConst			  Constant
 hi def link hsDebug			  Debug
 hi def link hsSpecial			  TODO
 
-" hi def link cCppString		hsString
-" hi def link cCommentStart	hsComment
-" hi def link cCommentError	hsError
-" hi def link cCommentStartError	hsError
-" hi def link cInclude		Include
-" hi def link cPreProc		PreProc
-" hi def link cDefine		Macro
-" hi def link cIncluded		hsString
-" hi def link cError		Error
-" hi def link cPreCondit		PreCondit
-" hi def link cComment		Comment
-" hi def link cCppSkip		cCppOut
-" hi def link cCppOut2		cCppOut
-" hi def link cCppOut		Comment
+hi def link cCppString		hsString
+hi def link cCommentStart	hsComment
+hi def link cCommentError	hsError
+hi def link cCommentStartError	hsError
+hi def link cInclude		Include
+hi def link cPreProc		PreProc
+hi def link cDefine		Macro
+hi def link cIncluded		hsString
+hi def link cError		Error
+hi def link cPreCondit		PreCondit
+hi def link cComment		Comment
+hi def link cCppSkip		cCppOut
+hi def link cCppOut2		cCppOut
+hi def link cCppOut		Comment
 
 
 let b:current_syntax = "haskell"

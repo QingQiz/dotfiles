@@ -529,7 +529,7 @@ Plug 'easymotion/vim-easymotion'
 Plug 'junegunn/vim-easy-align'
 " Plug 'lilydjwg/fcitx.vim'
 " Plug 'tenfyzhong/CompleteParameter.vim'
-Plug 'jeaye/color_coded', { 'for': ['c', 'cpp'], 'do': 'cmake . && make -j && make install' }
+" Plug 'jeaye/color_coded', { 'for': ['c', 'cpp'], 'do': 'cmake . && make -j && make install' }
 " Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer', 'for': [] }
 Plug 'itchyny/vim-haskell-indent', {'for': 'haskell'}
 Plug 'guns/xterm-color-table.vim', { 'on': 'XtermColorTable'}
