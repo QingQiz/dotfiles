@@ -39,7 +39,7 @@ syn region  hsPragma	       start="{-#" end="#-}"
 " because otherwise they would match as keywords at the start of a
 " "literate" comment (see lhs.vim).
 syn match hsModule		"\<module\>"
-syn match hsImport		"^\(\s*\)\@<=\be\<\(import\)\>.*"he=s+6 contains=hsImportMod,hsLineComment,hsBlockComment,@NoSpell
+syn match hsImport		"\<\(import\)\>.*"he=s+6 contains=hsImportMod,hsLineComment,hsBlockComment,@NoSpell
 syn match hsImportMod		contained "\<\(as\|qualified\|hiding\)\>" contains=@NoSpell
 syn match hsInfix		"\<\(infix\|infixl\|infixr\)\>"
 syn match hsStructure		"\<\(class\|data\|deriving\|instance\|default\|where\)\>"
@@ -47,9 +47,8 @@ syn match hsTypedef		"\<\(type\|newtype\)\>"
 syn match hsStatement		"\<\(do\|case\|of\|let\|in\)\>"
 syn match hsConditional		"\<\(if\|then\|else\)\>"
 
-syn match hsForeign		"\<\(foreign\)\>"
-syn match hsForeignImport	"\<\(import\|export\)\>"
-syn match hsCCall		"\<ccall\>"
+syn match hsForeignImport	"\<\(foreign\)\>\s\+\<\(import\|export\)\>"
+syn match hsCCall		"\(\(import\|export\)\s\+\)\@<=\<ccall\>"
 
 syn match hsBoolean "\<\(True\|False\)\>"
 
@@ -86,7 +85,6 @@ syn match	cInclude	display "^\s*\(%:\|#\)\s*include\>\s*["<]" contains=cIncluded
 syn cluster	cPreProcGroup	contains=cPreCondit,cIncluded,cInclude,cDefine,cCppOut,cCppOut2,cCppSkip,cCommentStartError
 syn region	cDefine		matchgroup=cPreCondit start="^\s*\(%:\|#\)\s*\(define\|undef\)\>" skip="\\$" end="$"
 syn region	cPreProc	matchgroup=cPreCondit start="^\s*\(%:\|#\)\s*\(pragma\>\|line\>\|warning\>\|warn\>\|error\>\)" skip="\\$" end="$" keepend
-" 
 syn region	cComment	matchgroup=cCommentStart start="/\*" end="\*/" contains=cCommentStartError,cSpaceError contained
 syntax match	cCommentError	display "\*/" contained
 syntax match	cCommentStartError display "/\*"me=e-1 contained
@@ -95,7 +93,6 @@ syn region	cCppString	start=+L\="+ skip=+\\\\\|\\"\|\\$+ excludenl end=+"+ end='
 " Define the default highlighting.
 " Only when an item doesn't have highlighting yet
 
-hi def link hsForeign			  hsForeignImport
 hi def link hsForeignImport		  hsImport
 hi def link hsCCall			  hsModule
 hi def link hsModule			  hsStructure
