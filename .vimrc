@@ -89,9 +89,9 @@ nnoremap <silent><leader>s  viw:<c-u>call VAddSurround(0)<CR>
 nnoremap <silent><leader>S  viw:<c-u>call VAddSurround(1)<CR>
 nnoremap <silent><leader>a  viW:<c-u>call VAddSurround(0)<CR>
 nnoremap <silent><leader>A  viW:<c-u>call VAddSurround(1)<CR>
-vnoremap <silent><leader>t  :<c-u>call GoogleTranslate()<cr>
-nnoremap <silent><leader>t  viw:<c-u>call GoogleTranslate()<cr>
-nnoremap <silent><leader>T  V:<c-u>call GoogleTranslate()<cr>
+" vnoremap <silent><leader>t  :<c-u>call GoogleTranslate()<cr>
+" nnoremap <silent><leader>t  viw:<c-u>call GoogleTranslate()<cr>
+" nnoremap <silent><leader>T  V:<c-u>call GoogleTranslate()<cr>
 nnoremap >                  >>
 nnoremap <                  <<
 vnoremap >                  >gv

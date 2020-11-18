@@ -1,5 +1,8 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhistcnt =5
+let g:netrw_dirhistcnt =8
+let g:netrw_dirhist_8='/home/angel/temp/yqtb'
+let g:netrw_dirhist_7='/home/angel/workspace/NMSqL/src/frontend/compiler/src/Parser'
+let g:netrw_dirhist_6='/home/angel/temp/testhaskell/haskell_call_c'
 let g:netrw_dirhist_5='/home/angel/.dotfiles/.vim/vimfiles/vim-haskell-indent/test/let'
 let g:netrw_dirhist_4='/home/angel/sqlite/src'
 let g:netrw_dirhist_3='/home/angel/sqlite-build/asd'

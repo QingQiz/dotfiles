@@ -15,10 +15,11 @@ export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
 export fpath=( "$HOME/.zsh/zfunctions" $fpath )
 export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true'
 
-source $ZSH/oh-my-zsh.sh
+DISABLE_AUTO_UPDATE=true source $ZSH/oh-my-zsh.sh
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source ~/.zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 source ~/.oh-my-zsh/plugins/z/z.plugin.zsh
+source ~/.oh-my-zsh/plugins/stack/stack.plugin.zsh
 
 
 #turn on comments with # in shell
