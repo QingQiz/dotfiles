@@ -1,5 +1,6 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhistcnt =8
+let g:netrw_dirhistcnt =9
+let g:netrw_dirhist_9='/home/angel/ctf/update_sample/pwn_sample/update'
 let g:netrw_dirhist_8='/home/angel/temp/yqtb'
 let g:netrw_dirhist_7='/home/angel/workspace/NMSqL/src/frontend/compiler/src/Parser'
 let g:netrw_dirhist_6='/home/angel/temp/testhaskell/haskell_call_c'

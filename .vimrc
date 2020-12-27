@@ -55,7 +55,6 @@ nnoremap <c-l>              <c-w>l
 nnoremap <silent>]b         :bn<CR>
 nnoremap <silent>[b         :bp<CR>
 nnoremap <silent><F3>       :NERDTreeToggle<CR>
-nnoremap <silent><F2>       :TagbarToggle<CR>
 nnoremap <silent>[<SPACE>   :call append(line('.') - 1, "")<CR>k
 nnoremap <silent>]<SPACE>   :call append(line('.'), "")<CR>j
 nnoremap <silent>[e         :move -1-1<CR>
@@ -561,7 +560,6 @@ let g:coc_global_extensions = [
 	\ 'coc-clangd',
 	\ 'coc-yaml',
   \ 'coc-git',
-  \ 'coc-tabnine',
   \ 'coc-sh']
 
 inoremap <silent><expr> <TAB>
@@ -599,6 +597,7 @@ xmap <leader>a  <Plug>(coc-codeaction-selected)
 nmap <leader>a  <Plug>(coc-codeaction-selected)
 
 nmap <silent><leader>t :CocCommand translator.popup<CR>
+nmap <silent><f3> :CocCommand explorer<cr>
 nmap <silent><f4> :CocCommand explorer<cr>
 " }}}
 

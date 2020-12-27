@@ -31,17 +31,14 @@ values."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
+     (haskell :variables haskell-completion-backend 'lsp)
+     lsp
      yaml
-     (chinese :variables chinese-enable-fcitx t)
+     ;;(chinese :variables chinese-enable-fcitx t)
      latex
      sql
-     php
-     html
      python
-     vimscript
-     javascript
      c-c++
-     ycmd
      helm
      auto-completion
      better-defaults
@@ -52,7 +49,6 @@ values."
      (shell :variables
             shell-default-height 30
             shell-default-position 'bottom)
-     (haskell :variables haskell-process-type 'stack-ghci)
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -81,6 +77,8 @@ values."
   ;; This setq-default sexp is an exhaustive list of all the supported
   ;; spacemacs settings.
   (setq-default
+   ;; 'spacemacs, 'all-the-icons, 'custom, 'vim-powerline or 'vanilla or a list with `car' one of the previous values and properties one of the following: `:separator' or `:separator-scale'
+   dotspacemacs-mode-line-theme 'spacemacs
    ;; If non nil ELPA repositories are contacted via HTTPS whenever it's
    ;; possible. Set it to nil if you have no way to use HTTPS in your
    ;; environment, otherwise it is strongly recommended to let it set to t.
@@ -284,9 +282,6 @@ values."
                 '((auto-completion :variables
                                    auto-completion-enable-snippets-in-popup t)))
   (setq-default dotspacemacs-configuration-layers
-                '(auto-completion
-                  (haskell :variables haskell-completion-backend 'ghci)))
-  (setq-default dotspacemacs-configuration-layers
                 '(latex :variables latex-enable-folding t))
   (setq-default dotspacemacs-configuration-layers
                 '(latex :variables latex-enable-magic t))
@@ -310,8 +305,6 @@ values."
   (add-hook 'c-mode-common-hook (lambda() (c-set-offset 'case-label '+)))
   (add-hook 'before-save-hook (lambda () (whitespace-cleanup)))
 
-  (add-hook 'haskell-mode 'auto-complete-mode)
-  (remove-hook 'haskell-mode 'flycheck-mode)
   (setq haskell-indentation-starter-offset 4)
   (setq haskell-indentation-left-offset 4)
   (setq haskell-indentation-layout-offset 4)
@@ -433,31 +426,27 @@ values."
   ;; latex privew size
   (require 'org)
   (setq org-format-latex-options (plist-put org-format-latex-options :scale 1.8))
-  (sp-local-pair 'org-mode "$" "$")
+  ;; (sp-local-pair 'org-mode "$" "$")
   )
 
 ;; Do not write anything past this comment. This is where Emacs will
 ;; auto-generate custom variable definitions.
-
+(defun dotspacemacs/emacs-custom-settings ()
+  "Emacs custom settings.
+This is an auto-generated function, do not modify its content directly, use
+Emacs customize menu instead.
+This function is called at the very end of Spacemacs initialization."
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(package-selected-packages
+   '(lsp-ui lsp-python-ms lsp-pyright lsp-origami origami lsp-latex helm-lsp flycheck-ycmd flycheck-rtags flycheck-pos-tip pos-tip flycheck-haskell dap-mode posframe lsp-treemacs bui ccls yasnippet-snippets yapfify yaml-mode xterm-color ws-butler writeroom-mode visual-fill-column winum vterm volatile-highlights vi-tilde-fringe uuidgen unfill undo-tree treemacs-projectile treemacs-persp treemacs-icons-dired treemacs-evil treemacs pfuture toc-org terminal-here symon symbol-overlay string-inflection sql-indent sphinx-doc spaceline-all-the-icons all-the-icons memoize spaceline powerline shell-pop restart-emacs rainbow-delimiters pytest pyim pyim-basedict xr pyenv-mode py-isort popwin pippel pipenv pyvenv pip-requirements persp-mode password-generator paradox pangu-spacing overseer org-superstar org-rich-yank org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download org-cliplink org-brain open-junk-file nameless mwim multi-term move-text mmm-mode markdown-toc macrostep lsp-haskell lsp-mode markdown-mode spinner ht dash-functional lorem-ipsum live-py-mode link-hint indent-guide importmagic epc ctable concurrent hungry-delete htmlize hlint-refactor hl-todo hindent highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-xref helm-themes helm-swoop helm-rtags helm-pydoc helm-purpose window-purpose imenu-list helm-projectile helm-org-rifle helm-org helm-mode-manager helm-make helm-ls-git helm-hoogle helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag haskell-snippets google-translate google-c-style golden-ratio gnuplot gh-md fuzzy flycheck-package package-lint flycheck-elsa flx-ido flx find-by-pinyin-dired fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-surround evil-org evil-numbers evil-nerd-commenter evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-cleverparens smartparens evil-args evil-anzu anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help emr iedit projectile paredit list-utils elisp-slime-nav editorconfig dumb-jump disaster devdocs define-word dante lcr haskell-mode cython-mode cpp-auto-include company-ycmd ycmd request-deferred request deferred company-rtags rtags company-reftex company-cabal company-c-headers company-auctex company-anaconda company column-enforce-mode cmm-mode clean-aindent-mode clang-format chinese-conv centered-cursor-mode blacken auto-yasnippet yasnippet auto-highlight-symbol auto-compile packed auctex-latexmk auctex attrap flycheck pkg-info epl anaconda-mode pythonic f dash s aggressive-indent ace-window ace-pinyin pinyinlib ace-link ace-jump-helm-line helm avy helm-core ac-ispell auto-complete popup which-key use-package pcre2el org-plus-contrib hydra lv hybrid-mode font-lock+ evil goto-chg dotenv-mode diminish bind-map bind-key async)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
-
-;; vim: ft=lisp
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   '("bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" default))
- '(evil-want-Y-yank-to-eol nil)
- '(org-agenda-files '("~/todo.org"))
- '(org-format-latex-options
-   '(:foreground default :background default :scale 1.9 :html-foreground "Black" :html-background "Transparent" :html-scale 1.5 :matchers
-                 ("begin" "$1" "$" "$$" "\\(" "\\[")))
- '(package-selected-packages
-   '(lv ht lsp-mode nhexl-mode yaml-mode pyim pyim-basedict fcitx xr pangu-spacing find-by-pinyin-dired ace-pinyin pinyinlib company-auctex auctex-latexmk auctex cdlatex intero hlint-refactor hindent helm-hoogle haskell-snippets flycheck-haskell company-ghci company-ghc ghc haskell-mode company-cabal cmm-mode sql-indent skewer-mode powerline spinner simple-httpd json-snatcher json-reformat js2-mode parent-mode company iedit smartparens evil flycheck helm multiple-cursors avy markdown-mode projectile hydra yasnippet dash web-mode tagedit slim-mode scss-mode sass-mode pug-mode helm-css-scss haml-mode emmet-mode company-web web-completion-data phpunit phpcbf php-extras php-auto-yasnippets drupal-mode php-mode org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download htmlize gnuplot flyspell-correct-helm flyspell-correct auto-dictionary unfill mwim emms yapfify xterm-color ws-butler winum which-key web-beautify volatile-highlights vimrc-mode vi-tilde-fringe uuidgen use-package toc-org spaceline shell-pop restart-emacs rainbow-delimiters pyvenv pytest pyenv-mode py-isort popwin pip-requirements persp-mode pcre2el paradox org-plus-contrib org-bullets open-junk-file neotree multi-term move-text mmm-mode markdown-toc macrostep lorem-ipsum livid-mode live-py-mode linum-relative link-hint json-mode js2-refactor js-doc indent-guide hy-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation helm-themes helm-swoop helm-pydoc helm-projectile helm-mode-manager helm-make helm-flx helm-descbinds helm-company helm-c-yasnippet helm-ag google-translate golden-ratio gh-md fuzzy flycheck-ycmd flycheck-pos-tip flx-ido fill-column-indicator fancy-battery eyebrowse expand-region exec-path-from-shell evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-surround evil-search-highlight-persist evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-indent-plus evil-iedit-state evil-exchange evil-escape evil-ediff evil-args evil-anzu eval-sexp-fu eshell-z eshell-prompt-extras esh-help elisp-slime-nav dumb-jump disaster diminish define-word dactyl-mode cython-mode company-ycmd company-tern company-statistics company-c-headers company-anaconda column-enforce-mode coffee-mode cmake-mode clean-aindent-mode clang-format auto-yasnippet auto-highlight-symbol auto-compile aggressive-indent adaptive-wrap ace-window ace-link ace-jump-helm-line ac-ispell)))
+)
