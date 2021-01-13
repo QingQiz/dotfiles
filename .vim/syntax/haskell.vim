@@ -32,8 +32,13 @@ syn match   hsFloat		"\v<[0-9]%(_*[0-9])*\.[0-9]%(_*[0-9])*%(_*[eE][-+]?[0-9]%(_
 " Comments
 syn keyword hsSpecial TODO XXX FIXME NOTE contained
 syn match   hsLineComment      "---*\([^-!#$%&\*\+./<=>\?@\\^|~].*\)\?$" contains=hsSpecial
-syn region  hsBlockComment     start="{-"  end="-}" contains=@NoSpell
-syn region  hsPragma	       start="{-#" end="#-}"
+syn region  hsBlockComment     start="{-"  end="-}" contains=@NoSpell,hsSpecial
+
+syn keyword hsPragmaKeyword LANGUAGE OPTIONS_GHC contained nextgroup=hsLanguageExt skipwhite
+syn match   hsLanguageExt      "[a-zA-Z0-9_-]\+\s\@=" contained
+syn region  hsPragma	       start="{-#" end="#-}" contains=hsPragmaKeyword,hsLanguageExt
+
+syn match   hsSpecialComment   "^\v#!/.*"
 
 " Keyword definitions. These must be patterns instead of keywords
 " because otherwise they would match as keywords at the start of a
@@ -70,9 +75,9 @@ syn match hsDebug "\<\(undefined\|error\|trace\)\>"
 
 " C Preprocessor directives. Shamelessly ripped from c.vim and trimmed
 " First, see whether to flag directive-like lines or not
-if (!exists("hs_allow_hash_operator"))
-    syn match	cError		display "^\s*\(%:\|#\).*$"
-endif
+" if (!exists("hs_allow_hash_operator"))
+    " syn match	cError		display "^\s*\(%:\|#\).*$"
+" endif
 " Accept %: for # (C99)
 syn region	cPreCondit	start="^\s*\(%:\|#\)\s*\(if\|ifdef\|ifndef\|elif\)\>" skip="\\$" end="$" end="//"me=s-1 contains=cComment,cCppString,cCommentError
 syn match	cPreCondit	display "^\s*\(%:\|#\)\s*\(else\|endif\)\>"
@@ -119,6 +124,9 @@ hi def link hsBlockComment		  hsComment
 hi def link hsLineComment		  hsComment
 hi def link hsComment			  Comment
 hi def link hsPragma			  SpecialComment
+hi def link hsSpecialComment		  SpecialComment
+hi def link hsPragmaKeyword		  PragmaKeyword
+hi def link hsLanguageExt		  LanguageExt
 hi def link hsBoolean			  Boolean
 hi def link hsType			  Type
 hi def link hsDataConstruct		  hsEnumConst

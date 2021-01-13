@@ -11,6 +11,8 @@ endif
 set t_Co=256
 let g:colors_name = "molokai_modified"
 
+hi PragmaKeyword  ctermfg=123  ctermbg=NONE cterm=BOLD
+hi LanguageExt    ctermfg=222  ctermbg=NONE cterm=italic
 hi IncSearch      ctermfg=186  ctermbg=NONE cterm=NONE
 hi WildMenu       ctermfg=81   ctermbg=NONE cterm=NONE
 hi SignColumn     ctermfg=112  ctermbg=235  cterm=NONE

@@ -53,5 +53,7 @@
     "diagnostic.refreshOnInsertMode": false,
     "codeLens.enable": true,
     "tabnine.priority": 50,
-    "diagnostic.refreshAfterSave": true
+    "diagnostic.refreshAfterSave": true,
+    "diagnostic.maxWindowWidth": 120,
+    "diagnostic.maxWindowHeight": 1200
 }

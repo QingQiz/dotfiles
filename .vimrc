@@ -465,7 +465,7 @@ augroup filetype_frmats " {{{
         \ setlocal foldmarker=#ifdef,#endif                        |
         \ setlocal foldcolumn=1
   au FileType haskell
-        \ let b:AutoPairs = {'"': '"', "{": "}", "[": "]", "(": ")", '`': '`'}
+        \ let b:AutoPairs = {'"': '"', "{": "}", "[": "]", "(": ")", '`': '`', '{-': '-}', '{-#': '#-}'}
   au FileType python
         \ let b:AutoPairs = AutoPairsDefine({"f'" : "'", "r'" : "'", "b'" : "'"})
   au FileType {asm,sh,zsh,crontab}
@@ -567,7 +567,7 @@ inoremap <silent><expr> <TAB>
       \ <SID>check_back_space() ? "\<TAB>" :
       \ coc#refresh()
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
- 
+
 function! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
@@ -614,11 +614,12 @@ let g:startify_custom_indices = ['a', 's', 'd']
 
 " Indentline {{{
 let g:indentLine_fileType = [
-      \ 'c', 'cpp', 'html', 'php', 'cs', 'shell',
+      \ 'c', 'cpp', 'html', 'php', 'cs', 'shell', 'haskell',
       \ 'config', 'vim', 'python', 'java', 'zsh', 'sh', 'javascript',
       \ 'conf', 'json'
       \ ]
-let g:indentLine_char = '┆'
+let g:indentLine_char = '¦'
+let g:indentLine_color_term = 236
 " }}}
 
 " vim-easy-align {{{
