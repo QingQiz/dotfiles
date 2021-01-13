@@ -252,19 +252,24 @@ fun! SmartComplier()
 	elseif &ft == "asm"
 		exec "!nasm -f bin -o now %"
 	elseif &ft == "haskell"
-		exec "!ghc -o now.haskell %"
+
+  elseif &ft == "rust"
+    exec "!cd " . expand('%:p:h') . " && rustc " . expand('%:t')
   endif
 endf
 
 func! RunResult()
-  if &ft == "cpp" || &ft == 'c'
+  if &ft == "rust"
+    if findfile(expand('%:t:r'), '.') == expand('%:r')
+      exec "!./" . expand('%:r')
+    else
+      call SmartComplier()
+      call RunResult()
+    endif
+  elseif &ft == "cpp" || &ft == 'c'
     exec "!./now"
   elseif &ft == "haskell"
-    if findfile('now.haskell', '.') == 'now.haskell'
-      exec "!./now.haskell"
-    else
-      exec "!runghc %"
-    en
+    exec "!stack runhaskell -- %"
   elseif &ft == "python"
     exec "!python3 %"
   elseif &ft == "java"
